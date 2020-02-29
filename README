@@ -1,0 +1,5 @@
+This project provides cores for implementation of test instruments conforming to https://tools.ietf.org/html/draft-vassilev-bmwg-network-interconnect-tester-02 in hardware
+
+lib/hw/cores/lsi/*: Contains cores for implementation of AXI network interconnect testers for ethernet
+
+systems/*: Contains example instantiation of the cores for available open hardware systems

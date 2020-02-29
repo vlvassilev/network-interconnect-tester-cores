@@ -1,0 +1,8 @@
+# Opsero 96B Quad Ethernet Mezzanine
+
+## Description
+
+[96B Quad Ethernet Mezzanine](https://docs.ethernet96.com "96B Quad Ethernet Mezzanine") board when used with the 
+Avnet [Ultra96 v1 and v2](http://zedboard.org/product/ultra96 "Ultra96 v1 and v2").
+
+Original tcl scripts available at [github](https://github.com/fpgadeveloper/ethernet96)

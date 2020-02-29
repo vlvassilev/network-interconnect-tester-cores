@@ -1,0 +1,6 @@
+network-interconnect-tester-cores (0.0) stable; urgency=medium
+
+  * Project template. Minimalistic set of tcl and Verilog files specifying the coding style and project organization.
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 12 Dec 2019 15:35:24 +0100
+
