@@ -4,7 +4,7 @@
 
 module gmii_mux
 #(
-    parameter C_NUM_INPUTS=2,
+    parameter C_NUM_INPUTS=3,
 
  // AXI Registers Data Width
     parameter C_S_AXI_DATA_WIDTH    = 32,          
@@ -26,6 +26,11 @@ module gmii_mux
     input [7:0] gmii_in_1_txd,
     input gmii_in_1_tx_en,
     input gmii_in_1_tx_er,
+
+    // GMII input 2
+    input [7:0] gmii_in_2_txd,
+    input gmii_in_2_tx_en,
+    input gmii_in_2_tx_er,
 
     // GMII output
     output reg [7:0] gmii_out_txd,
@@ -57,9 +62,23 @@ module gmii_mux
    reg      [`REG_ID_BITS]    id_reg = `REG_ID_DEFAULT;
    reg      [`REG_VERSION_BITS]    version_reg = `REG_VERSION_DEFAULT;
    wire     [`REG_SELECT_BITS]    select_reg;
- 
-   // Handle output
-   //assign a = b;
+
+
+   reg [`REG_SELECT_BITS] select_reg_r;
+   // GMII input 0
+   reg [7:0] gmii_in_0_txd_r;
+   reg gmii_in_0_tx_en_r;
+   reg gmii_in_0_tx_er_r;
+
+   // GMII input 1
+   reg [7:0] gmii_in_1_txd_r;
+   reg gmii_in_1_tx_en_r;
+   reg gmii_in_1_tx_er_r;
+
+   // GMII input 2
+   reg [7:0] gmii_in_2_txd_r;
+   reg gmii_in_2_tx_en_r;
+   reg gmii_in_2_tx_er_r;
 
 //Registers section
  gmii_mux_cpu_regs 
@@ -99,18 +118,35 @@ module gmii_mux
     .select_reg          (select_reg)
 );
 
-   //assign q = q_reg[0];
+always @(posedge gtx_clk) begin
+        select_reg_r <= select_reg;
+        gmii_in_0_txd_r <= gmii_in_0_txd;
+        gmii_in_0_tx_en_r <= gmii_in_0_tx_en;
+        gmii_in_0_tx_er_r <= gmii_in_0_tx_er;
+        gmii_in_1_txd_r <= gmii_in_1_txd;
+        gmii_in_1_tx_en_r <= gmii_in_1_tx_en;
+        gmii_in_1_tx_er_r <= gmii_in_1_tx_er;
+        gmii_in_2_txd_r <= gmii_in_2_txd;
+        gmii_in_2_tx_en_r <= gmii_in_2_tx_en;
+        gmii_in_2_tx_er_r <= gmii_in_2_tx_er;
 
-always @(posedge gtx_clk)
-        if(select_reg[0]) begin
-                gmii_out_txd <= #1 gmii_in_0_txd;
-                gmii_out_tx_en <= #1 gmii_in_0_tx_en;
-                gmii_out_tx_er <= #1 gmii_in_0_tx_er;
+        case(select_reg_r)
+        2'b001 : begin
+          gmii_out_txd <= gmii_in_1_txd_r;
+          gmii_out_tx_en <= gmii_in_1_tx_en_r;
+          gmii_out_tx_er <= gmii_in_1_tx_er_r;
         end
-        else begin
-                gmii_out_txd <= #1 gmii_in_1_txd;
-                gmii_out_tx_en <= #1 gmii_in_1_tx_en;
-                gmii_out_tx_er <= #1 gmii_in_1_tx_er;
-        end	
- 
+        2'b010 : begin
+          gmii_out_txd <= gmii_in_2_txd_r;
+          gmii_out_tx_en <= gmii_in_2_tx_en_r;
+          gmii_out_tx_er <= gmii_in_2_tx_er_r;
+        end
+        default : begin
+                gmii_out_txd <= gmii_in_0_txd_r;
+                gmii_out_tx_en <= gmii_in_0_tx_en_r;
+                gmii_out_tx_er <= gmii_in_0_tx_er_r;
+        end
+        endcase
+end
 endmodule // gmii_mux
+

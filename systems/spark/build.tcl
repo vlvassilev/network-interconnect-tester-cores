@@ -1,5 +1,5 @@
 #
-# build.tcl: Tcl script for re-creating project 'axi_eth'
+# build.tcl: Tcl script for re-creating project 'spark'
 #
 #*****************************************************************************************
 
@@ -18,17 +18,15 @@ if {![string equal $ver $version_required]} {
 }
 
 # Work out the board name from arguments
-#set board_ver "[lindex $argv 1]"
-set board_ver {1}
+set design_name spark
+set board_ver "[lindex $argv 0]"
+# set board_ver {1}
 if {$board_ver == "1"} {
   set board_part "em.avnet.com:ultra96v1:part0:1.2"
-  set design_name axi_eth_v1
 } elseif {$board_ver == "2"} {
   set board_part "em.avnet.com:ultra96v2:part0:1.0"
-  set design_name axi_eth_v2
 } else {
   set board_part "em.avnet.com:ultra96v2:part0:1.0"
-  set design_name axi_eth_v2
   puts "Board version incorrect or not specified - defaulting to v2."
   puts "You must specify a valid Ultra96 board version as an argument when"
   puts "running this script. The argument can be 1 or 2."
@@ -76,16 +74,16 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/axi-eth.xdc"]"
+set file "[file normalize "$origin_dir/spark.xdc"]"
 set file_added [add_files -norecurse -fileset $obj $file]
-set file "$origin_dir/axi-eth.xdc"
+set file "$origin_dir/spark.xdc"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
 set_property "file_type" "XDC" $file_obj
 
 # Set 'constrs_1' fileset properties
 set obj [get_filesets constrs_1]
-set_property "target_constrs_file" "[file normalize "$origin_dir/axi-eth.xdc"]" $obj
+set_property "target_constrs_file" "[file normalize "$origin_dir/spark.xdc"]" $obj
 
 # Create 'sim_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sim_1] ""]} {
@@ -129,10 +127,10 @@ current_run -implementation [get_runs impl_1]
 puts "INFO: Project created:${design_name}"
 
 # Input arguments for block design script
-set num_gems 4
+# set num_gems 4
 
 # Create block design
-source $origin_dir/design_1-axi-eth.tcl
+source $origin_dir/design.tcl
 
 # Generate the wrapper
 make_wrapper -files [get_files *${design_name}.bd] -top
@@ -151,14 +149,6 @@ save_bd_design
 #Simulate
 set_property SOURCE_SET sources_1 [get_filesets sim_1]
 add_files -fileset sim_1 -norecurse sim/tb.v
-set_property top axi_eth_v1_tb [get_filesets sim_1]
+set_property top tb [get_filesets sim_1]
 set_property top_lib xil_defaultlib [get_filesets sim_1]
 update_compile_order -fileset sim_1
-
-launch_simulation
-add_wave {{/axi_eth_v1_tb/axi_eth_v1_wrapper_i/axi_eth_v1_i/eth_pcs_pma_2/gmii_txd_0}}
-add_wave {{/axi_eth_v1_tb/axi_eth_v1_wrapper_i/axi_eth_v1_i/eth_pcs_pma_2/gmii_rxd_0}}
-add_wave {{/axi_eth_v1_tb/axi_eth_v1_wrapper_i/axi_eth_v1_i/eth_pcs_pma_2/status_vector_0}}
-add_wave {{/axi_eth_v1_tb/axi_eth_v1_wrapper_i/axi_eth_v1_i/eth_pcs_pma_2/reset}}
-add_wave {{/axi_eth_v1_tb/axi_eth_v1_wrapper_i/axi_eth_v1_i/eth_pcs_pma_shared/reset}}
-run 40 us

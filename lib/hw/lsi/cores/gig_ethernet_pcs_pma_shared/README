@@ -1,0 +1,7 @@
+This module provides the common synchronization and reset signaling logic and is closely based
+on the example provided by Xilinx as part of the gig_ethernet_pcs_pma IP core part of Vivado 2019.2
+
+The only reason this module is needed is the need to use non-differential clock for 625 MHz input
+which is not possible when one selects the shared logic to be included in the IP core. Then only
+differential clock input is available (see hdl/gig_ethernet_pcs_pma_clock_reset.vhd.patch
+for comparison of the logic changes based on the original example source).

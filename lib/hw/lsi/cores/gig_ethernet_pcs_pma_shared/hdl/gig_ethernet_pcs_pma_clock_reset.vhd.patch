@@ -1,0 +1,72 @@
+--- gig_ethernet_pcs_pma_0_Clock_Reset.vhd	2020-03-01 18:41:46.412000000 +0000
++++ gig_ethernet_pcs_pma_clock_reset.vhd	2020-03-01 18:49:27.196000000 +0000
+@@ -235,15 +235,14 @@
+ ---------------------------------------------------------------------------------------------
+ -- Entity pin description
+ ---------------------------------------------------------------------------------------------
+-entity gig_ethernet_pcs_pma_0_Clock_Reset is
++entity gig_ethernet_pcs_pma_clock_reset is
+     generic (
+         C_Part                      : string := "XCKU060";
+         EXAMPLE_SIMULATION          : integer   := 0 ;      
+         C_IoBank                    : integer := 44
+     );
+     port (
+-        ClockIn_p           : in std_logic;
+-        ClockIn_n           : in std_logic;
++        ClockIn             : in std_logic;
+         ClockIn_se_out      : out std_logic; 
+         ResetIn             : in std_logic;
+         Tx_Dly_Rdy          : in std_logic;
+@@ -297,11 +296,11 @@
+         --
+         Debug_Out           : out std_logic_vector(7 downto 0) 
+     );
+-end gig_ethernet_pcs_pma_0_Clock_Reset;
++end gig_ethernet_pcs_pma_clock_reset;
+ ---------------------------------------------------------------------------------------------
+ -- Architecture section
+ ---------------------------------------------------------------------------------------------
+-architecture Clock_Reset_arch of gig_ethernet_pcs_pma_0_Clock_Reset is
++architecture Clock_Reset_arch of gig_ethernet_pcs_pma_clock_reset is
+ ---------------------------------------------------------------------------------------------
+ -- Component Instantiation
+ ---------------------------------------------------------------------------------------------
+@@ -386,7 +385,6 @@
+ signal IntCtrl_RxPllClkOutPhyEn : std_logic;
+ signal IntCtrl_RxLogicRst       : std_logic;
+ 
+-signal ClockIn                  : std_logic;
+ -- Attributes
+ attribute ASYNC_REG : string;
+     attribute ASYNC_REG of IntCtrl_TxLocked  : signal is "TRUE";
+@@ -407,15 +405,15 @@
+ begin
+ 
+ 
+-iclkbuf : IBUFGDS 
+-generic map(
+-      IBUF_LOW_PWR => FALSE
+-)
+-port map (
+-  I  => ClockIn_p,
+-  IB => ClockIn_n,
+-  O  => ClockIn
+-);
++-- iclkbuf : IBUFGDS 
++-- generic map(
++--      IBUF_LOW_PWR => FALSE
++-- )
++-- port map (
++--  I  => ClockIn_p,
++--  IB => ClockIn_n,
++--  O  => ClockIn
++-- );
+ --
+ ---------------------------------------------------------------------------------------------
+ -- Control Clock - Free Running RIU CLOCK 
+@@ -781,3 +779,4 @@
+ Debug_Out <= conv_std_logic_vector(IntCtrl_State,8);
+ end Clock_Reset_arch;
+ --
++

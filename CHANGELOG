@@ -1,6 +1,15 @@
+network-interconnect-tester-cores (0.1) stable; urgency=medium
+
+  * Added support for new system - spark v1 6x SFP+ 96boards extension card compatible with Ultra96
+   * Added clock management tile to generate 625 MHz from the 100 MHz system clock due to lack of oscillator
+   * Moved the shared gig eth pcs pma logic to a dedicated IP module based on the Xilinx example code
+   * eth0,eth1,eth4 and eth5 can be used as general interfaces. eth3 does not have DMA due to depletion of DMA channels. Both eth2 and eth3 have disconnected irq. Should use additional axi interrupt.
+  * Added third port to the gmii_mux and changed behavior so port 0 is selected by default
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Wed, 24 Jun 2020 02:02:17 +0200
+
 network-interconnect-tester-cores (0.0) stable; urgency=medium
 
   * Project template. Minimalistic set of tcl and Verilog files specifying the coding style and project organization.
 
  -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 12 Dec 2019 15:35:24 +0100
-

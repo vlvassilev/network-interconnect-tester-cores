@@ -8,8 +8,8 @@
 `define  REG_VERSION_DEFAULT				32'h1
 `define  REG_VERSION_ADDR				32'h4
 
-`define  REG_SELECT_BITS				15:0
-`define  REG_SELECT_WIDTH				16
+`define  REG_SELECT_BITS				2:0
+`define  REG_SELECT_WIDTH				3
 `define  REG_SELECT_DEFAULT				16'h0
 `define  REG_SELECT_ADDR				32'h8
 

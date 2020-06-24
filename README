@@ -1,5 +1,21 @@
-This project provides cores for implementation of test instruments conforming to https://tools.ietf.org/html/draft-vassilev-bmwg-network-interconnect-tester-02 in hardware
+==Overview==
+This project provides library of cores for implementation of network interconnect tester
+instruments conforming to https://tools.ietf.org/html/draft-vassilev-bmwg-network-interconnect-tester-02
+in hardware.
 
+==Directory structure==
 lib/hw/cores/lsi/*: Contains cores for implementation of AXI network interconnect testers for ethernet
 
-systems/*: Contains example instantiation of the cores for available open hardware systems
+systems/*: Contains example projects for available open hardware systems
+
+==Building a bitstream file==
+cd lib/hw/lsi/cores/traffic_generator
+vivado -mode batch -source traffic_generator.tcl
+cd ../gmii_mux
+vivado -mode batch -source gmii_mux.tcl
+cd ../../../../systems
+cd systems/ethernet96
+vivado -source build-axi-eth.tcl
+
+==Coding style==
+The project coding style is based on the guidelines used in the NetFPGA project.
