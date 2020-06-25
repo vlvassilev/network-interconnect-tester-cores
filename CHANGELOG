@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.2) stable; urgency=medium
+
+  * Added petalinux build scripts and patches
+  * Fixed synthesis bug in IP
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 25 Jun 2020 03:42:09 +0200
+
 network-interconnect-tester-cores (0.1) stable; urgency=medium
 
   * Added support for new system - spark v1 6x SFP+ 96boards extension card compatible with Ultra96

@@ -17,3 +17,8 @@ cd ${top_dir}/systems/spark
 vivado -mode batch -source build.tcl -tclargs 1
 vivado -mode batch -source simulate.tcl
 vivado -mode batch -source bitstream.tcl
+
+#3. Build petalinux
+cd ${top_dir}/systems/spark/petalinux
+./build-petalinux 1
+

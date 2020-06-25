@@ -1,0 +1,114 @@
+# Before running this script, you must source the PetaLinux and Vivado settings:
+# source <petalinux-install-dir>/settings.sh
+# source <vivado-install-dir>/settings64.sh
+
+# Get a list of all the exported projects
+
+if [ $# -ne 1 ] ; then
+    echo "Illegal number of params. expected either or: ./build-petalinux 1 ; ./build-petalinux 2"
+    exit -1
+fi
+
+board_version="v"${1}
+echo "board_version=$board_version"
+
+portconfig="ports-0123-axieth"
+proj="spark"
+
+# Name of the BIT file
+runs="../spark/spark.runs"
+bit="$runs/impl_1/${proj}_wrapper.bit"
+
+f="../spark/spark_wrapper.xsa"
+echo "INFO: Exported Vivado project found: $proj"
+
+# Name of the BIT file
+runs=$(echo $f | sed -e "s/_wrapper.xsa/.runs/g")
+bit="$runs/impl_1/${proj}_wrapper.bit"
+if [ -f "$bit" ]; then
+  echo "> BIT file exists [$bit]"
+else
+  echo "> BIT file does not exist [$bit]"
+  echo "> PetaLinux will not be built for this project"
+  echo
+  continue
+fi
+
+  # CPU type is ZynqMP
+  cpu_type="zynqMP"
+  fsbl_option="--fsbl ./images/linux/zynqmp_fsbl.elf"
+
+  echo "> CPU_TYPE: $cpu_type"
+
+  # Create PetaLinux project if it does not exists
+  if [ -d "./$proj" ]; then
+    echo "> PetaLinux project already exists"
+  else
+    echo "> Creating PetaLinux project"
+    petalinux-create --type project --template $cpu_type --name $proj
+  fi
+
+  #Generate patches
+  rm -rf a b
+  mkdir -p src/common/project-spec/meta-user/recipes-bsp/fsbl/files
+  mkdir -p a/lib/sw_apps/zynqmp_fsbl/src/ ; cp xfsbl_hooks.c.original a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+  mkdir -p b/lib/sw_apps/zynqmp_fsbl/src/ ; cp xfsbl_hooks.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c
+  diff -Naur a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_hooks.c > src/common/project-spec/meta-user/recipes-bsp/fsbl/files/fsbl_hooks.patch || true
+
+  cd $proj
+
+  # Configure PetaLinux project with hardware description if 'components' dir doesn't exist
+  if [ -d "./components" ]; then
+    echo "> PetaLinux project already configured with hardware description"
+  else
+    echo "> Configuring PetaLinux project with hardware description"
+    petalinux-config --get-hw-description="../../spark" --silentconfig
+  fi
+
+
+  # Copy PetaLinux config files
+  if [[ -f "configdone.txt" ]]; then
+    echo "> PetaLinux config files already transferred"
+  else
+    echo "> Transferring PetaLinux config files"
+    cp -R --dereference ../src/common/* .
+    cp -R --dereference ../src/$portconfig/* .
+    cp -R --dereference ../src/$board_version/* .
+    # Append mods to config file
+    config_mod_list=(`find ./project-spec/configs/ -name "config_*.append"`)
+    for f in ${config_mod_list[*]}
+    do
+      cat $f >> ./project-spec/configs/config
+    done
+    # Append mods to rootfs_config file
+    rootfs_config_mod_list=(`find ./project-spec/configs/ -name "rootfs_config_*.append"`)
+    for f in ${rootfs_config_mod_list[*]}
+    do
+      cat $f >> ./project-spec/configs/rootfs_config
+    done
+    # File to indicate that config files have been transferred
+    touch configdone.txt
+    # Run petalinux-config again to register the config files
+    petalinux-config --silentconfig
+  fi
+
+  # Build PetaLinux project if not built already
+  if [ -d "./images" ]; then
+    echo "> PetaLinux project already built"
+  else
+    echo "> Building PetaLinux project"
+    petalinux-build
+  fi
+
+  # Package PetaLinux project if not packaged
+  if [[ -f "./images/linux/BOOT.BIN" && -f "./images/linux/image.ub" ]]; then
+    echo "> PetaLinux project already packaged"
+  else
+    echo "> Packaging PetaLinux project"
+    petalinux-package --boot $fsbl_option --fpga ../$bit --u-boot
+  fi
+  cd ..
+
+
+echo "PetaLinux build script completed"
+

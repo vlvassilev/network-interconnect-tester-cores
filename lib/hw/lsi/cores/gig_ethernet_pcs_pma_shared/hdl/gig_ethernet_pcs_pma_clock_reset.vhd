@@ -72,6 +72,8 @@ entity gig_ethernet_pcs_pma_clock_reset is
         debug_out           : out std_logic_vector(7 downto 0) 
     );
 end gig_ethernet_pcs_pma_clock_reset;
+
+architecture clock_reset_arch of gig_ethernet_pcs_pma_clock_reset is
 constant low  : std_logic	:= '0';
 constant lowvec : std_logic_vector(15 downto 0) := x"0000";
 constant high : std_logic	:= '1';
