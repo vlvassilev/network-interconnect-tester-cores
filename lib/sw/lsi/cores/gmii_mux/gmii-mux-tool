@@ -1,0 +1,6 @@
+#!/bin/bash -e
+#Usage: gmii-mux-tool [core-index] [selected-input-index]
+#Example: gmii-mux-tool 0 2
+
+address="`get-core-offset gmii_mux $1`"
+devmem32 "0x`printf '%x\n' $((${address}+8))`" $2

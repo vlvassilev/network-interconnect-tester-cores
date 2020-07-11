@@ -131,12 +131,12 @@ always @(posedge gtx_clk) begin
         gmii_in_2_tx_er_r <= gmii_in_2_tx_er;
 
         case(select_reg_r)
-        2'b001 : begin
+        8'h01 : begin
           gmii_out_txd <= gmii_in_1_txd_r;
           gmii_out_tx_en <= gmii_in_1_tx_en_r;
           gmii_out_tx_er <= gmii_in_1_tx_er_r;
         end
-        2'b010 : begin
+        2'h02 : begin
           gmii_out_txd <= gmii_in_2_txd_r;
           gmii_out_tx_en <= gmii_in_2_tx_en_r;
           gmii_out_tx_er <= gmii_in_2_tx_er_r;

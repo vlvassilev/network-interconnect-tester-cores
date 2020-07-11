@@ -1,0 +1,13 @@
+#!/bin/sh -e
+#Usage: get-core-offset gmii_mux 0
+CORE_NAME=$1
+CORE_INDEX=$2
+result=`mktemp`
+find /proc/device-tree/ -name ${CORE_NAME}'@*' -exec basename {} \; | sed 's/.*@//g' | sort > $result
+if [ "`wc -l $result | cut -f 1 -d ' '`" -le "$CORE_INDEX" ] ; then
+    rm $result
+    exit -1
+fi
+echo -n "0x"
+cat $result | head -n$(($CORE_INDEX+1)) | tail -n 1
+rm $result

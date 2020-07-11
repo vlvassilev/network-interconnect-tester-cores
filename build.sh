@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+#Use 1 for v1 and 2 for v2
+board_ver=1
+
 #1. Build IP core modules
 top_dir=`pwd`
 
@@ -14,11 +17,11 @@ vivado -mode batch -source gig_ethernet_pcs_pma_shared.tcl
 
 #2. Build system
 cd ${top_dir}/systems/spark
-vivado -mode batch -source build.tcl -tclargs 1
+vivado -mode batch -source build.tcl -tclargs $board_ver
 vivado -mode batch -source simulate.tcl
+! grep -R 'Too few frames received at eth1' spark/spark.sim/sim_1/behav/xsim/simulate.log
 vivado -mode batch -source bitstream.tcl
 
 #3. Build petalinux
 cd ${top_dir}/systems/spark/petalinux
-./build-petalinux 1
-
+./build-petalinux $board_ver
