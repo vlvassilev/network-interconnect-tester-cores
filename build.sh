@@ -9,6 +9,9 @@ top_dir=`pwd`
 cd ${top_dir}/lib/hw/lsi/cores/traffic_generator
 vivado -mode batch -source traffic_generator.tcl
 
+cd ${top_dir}/lib/hw/lsi/cores/traffic_generator_gmii
+vivado -mode batch -source traffic_generator_gmii.tcl
+
 cd ${top_dir}/lib/hw/lsi/cores/gmii_mux
 vivado -mode batch -source gmii_mux.tcl
 
