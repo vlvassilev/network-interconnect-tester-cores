@@ -995,10 +995,10 @@ connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_1] [get_bd_pins a
 connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_er_1] [get_bd_pins axi_ethernet_4/gmii_rx_er]
 connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_dv_1] [get_bd_pins axi_ethernet_4/gmii_rx_dv]
 
-#connect_bd_intf_net [get_bd_intf_pins gmii_mux_4/gmii_out] [get_bd_intf_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_pcs_pma_0]
-connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_txd] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_txd_0]
-connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_tx_en] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_tx_en_0]
-connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_tx_er] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_tx_er_0]
+#connect_bd_intf_net [get_bd_intf_pins gmii_mux_4/gmii_out] [get_bd_intf_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_pcs_pma_1]
+connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_txd] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_txd_1]
+connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_tx_en] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_tx_en_1]
+connect_bd_net [get_bd_pins gmii_mux_4/gmii_out_tx_er] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_tx_er_1]
 
 
 

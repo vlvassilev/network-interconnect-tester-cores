@@ -162,17 +162,17 @@ always @(posedge gtx_clk) begin
           gmii_out_tx_en <= gmii_in_1_tx_en_r;
           gmii_out_tx_er <= gmii_in_1_tx_er_r;
         end
-        2'h02 : begin
+        8'h02 : begin
           gmii_out_txd <= gmii_in_2_txd_r;
           gmii_out_tx_en <= gmii_in_2_tx_en_r;
           gmii_out_tx_er <= gmii_in_2_tx_er_r;
         end
-        2'h03 : begin
+        8'h03 : begin
           gmii_out_txd <= gmii_in_3_txd_r;
           gmii_out_tx_en <= gmii_in_3_tx_en_r;
           gmii_out_tx_er <= gmii_in_3_tx_er_r;
         end
-        2'h04 : begin
+        8'h04 : begin
           gmii_out_txd <= gmii_in_4_txd_r;
           gmii_out_tx_en <= gmii_in_4_tx_en_r;
           gmii_out_tx_er <= gmii_in_4_tx_er_r;
