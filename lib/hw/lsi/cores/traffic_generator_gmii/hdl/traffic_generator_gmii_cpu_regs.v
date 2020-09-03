@@ -38,7 +38,15 @@ parameter C_BASE_ADDRESS        = 32'h00000000
     input      [`REG_VERSION_BITS]    version_reg,
     input      [`REG_FLIP_BITS]    ip2cpu_flip_reg,
     output reg [`REG_FLIP_BITS]    cpu2ip_flip_reg,
-    output reg [`REG_CONTROL_BITS]    control_reg
+    output reg [`REG_CONTROL_BITS]    control_reg,
+    output reg [`REG_INTERFRAME_GAP_BITS] interframe_gap_reg,
+    output reg [`REG_INTERBURST_GAP_BITS] interburst_gap_reg,
+    output reg [`REG_FRAMES_PER_BURST_BITS] frames_per_burst_reg,
+    output reg [`REG_TOTAL_FRAMES_BITS] total_frames_reg,
+    output reg [`REG_FRAME_SIZE_BITS] frame_size_reg,
+    output reg [`REG_FRAME_BUF_BITS] frame_buf_data,
+    output reg [7:0] frame_buf_address,
+    output reg frame_buf_wr
 );
 
     // AXI4LITE signals
@@ -58,8 +66,9 @@ parameter C_BASE_ADDRESS        = 32'h00000000
     wire                                reg_wren;
     reg [C_S_AXI_DATA_WIDTH-1:0]        reg_data_out;
     integer                             byte_index;
-    reg                                 pktin_reg_clear_d;
-    reg                                 pktout_reg_clear_d;
+
+    reg [7:0] frame_buf_address_next;
+    reg frame_buf_cycle_onetime;
 
     // I/O Connections assignments
     assign S_AXI_AWREADY    = axi_awready;
@@ -235,7 +244,7 @@ parameter C_BASE_ADDRESS        = 32'h00000000
 
     // Implement memory mapped register select and write logic generation
 
-    assign reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;
+    assign reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID && S_AXI_WSTRB==4'hF;
 
 //////////////////////////////////////////////////////////////
 // write registers
@@ -247,10 +256,15 @@ parameter C_BASE_ADDRESS        = 32'h00000000
         if (!resetn) begin
 
             cpu2ip_flip_reg <= #1 `REG_FLIP_DEFAULT;
-            control_reg <= #1 1;
+            control_reg <= #1 `REG_CONTROL_DEFAULT;
+            interframe_gap_reg <= #1 `REG_INTERFRAME_GAP_DEFAULT;
+            interburst_gap_reg <= #1 `REG_INTERBURST_GAP_DEFAULT;
+            frames_per_burst_reg <= #1 `REG_FRAMES_PER_BURST_DEFAULT;
+            total_frames_reg <= #1 `REG_TOTAL_FRAMES_DEFAULT;
+            frame_size_reg <= #1 `REG_FRAME_SIZE_DEFAULT;
         end
         else begin
-           if (reg_wren) //write event
+           if (reg_wren) begin //write event
             case (axi_awaddr)
             //Flip Register
                 `REG_FLIP_ADDR : begin
@@ -263,8 +277,40 @@ parameter C_BASE_ADDRESS        = 32'h00000000
                 `REG_CONTROL_ADDR : begin
                     control_reg[`REG_CONTROL_WIDTH-1:0] <=  S_AXI_WDATA[`REG_CONTROL_WIDTH-1:0];
                 end
-
+                `REG_INTERFRAME_GAP_ADDR : begin
+                    interframe_gap_reg[`REG_INTERFRAME_GAP_WIDTH-1:0] <=  S_AXI_WDATA[`REG_INTERFRAME_GAP_WIDTH-1:0];
+                end
+                `REG_INTERBURST_GAP_ADDR : begin
+                    interburst_gap_reg[`REG_INTERBURST_GAP_WIDTH-1:0] <=  S_AXI_WDATA[`REG_INTERBURST_GAP_WIDTH-1:0];
+                end
+                `REG_FRAMES_PER_BURST_ADDR : begin
+                    frames_per_burst_reg[`REG_FRAMES_PER_BURST_WIDTH-1:0] <=  S_AXI_WDATA[`REG_FRAMES_PER_BURST_WIDTH-1:0];
+                end
+                `REG_TOTAL_FRAMES_ADDR : begin
+                    total_frames_reg[63:32] <=  S_AXI_WDATA[31:0];
+                end
+                `REG_TOTAL_FRAMES_ADDR+4 : begin
+                    total_frames_reg[31:0] <=  S_AXI_WDATA[31:0];
+                end
+                `REG_FRAME_SIZE_ADDR : begin
+                    frame_size_reg[`REG_FRAME_SIZE_WIDTH-1:0] <=  S_AXI_WDATA[`REG_FRAME_SIZE_WIDTH-1:0];
+                    frame_buf_address_next <= 0;
+                    frame_buf_wr <= 0;
+                end
+                `REG_FRAME_BUF_ADDR : begin
+                    if(frame_buf_cycle_onetime == 0) begin
+                        frame_buf_data[`REG_FRAME_BUF_WIDTH-1:0] <=  S_AXI_WDATA[`REG_FRAME_BUF_WIDTH-1:0];
+                        frame_buf_address <= frame_buf_address_next;
+                        frame_buf_address_next <= frame_buf_address_next + 1;
+                        frame_buf_wr <= 1;
+                        frame_buf_cycle_onetime <= 1;
+                    end
+                end
             endcase
+           end
+           else begin
+             frame_buf_cycle_onetime <= 0;
+           end
         end
   end
 
@@ -300,7 +346,7 @@ parameter C_BASE_ADDRESS        = 32'h00000000
             end
             //Default return value
             default: begin
-                reg_data_out [31:0] =  32'hDEADBEEF;
+                reg_data_out [31:0] =  32'hZZZZZZZZ;
             end
 
         endcase

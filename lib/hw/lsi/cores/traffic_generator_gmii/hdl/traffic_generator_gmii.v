@@ -3,6 +3,7 @@
 `include "traffic_generator_gmii_cpu_regs_defines.v"
 
 `define C_GMII_DATA_WIDTH 8
+`define C_FRAME_BUF_ADDRESS_WIDTH 8
 
 module traffic_generator_gmii
 #(
@@ -16,11 +17,14 @@ module traffic_generator_gmii
     input resetn,
 
     // GMII OUT ports
-    output reg [8 - 1:0] gmii_out_txd,
-    output reg gmii_out_tx_en,
-    output reg gmii_out_tx_er,
+    output reg [8 - 1:0] gmii_d,
+    output reg gmii_en,
+    output reg gmii_er,
 
-// Slave AXI Ports
+    input [47:0] sec,
+    input [29:0] nsec,
+
+    // Slave AXI Ports
     input                                     S_AXI_ACLK,
     input                                     S_AXI_ARESETN,
     input      [C_S_AXI_ADDR_WIDTH-1 : 0]     S_AXI_AWADDR,
@@ -47,16 +51,31 @@ module traffic_generator_gmii
    reg      [`REG_FLIP_BITS]    ip2cpu_flip_reg;
    wire     [`REG_FLIP_BITS]    cpu2ip_flip_reg;
    wire     [`REG_CONTROL_BITS] control_reg;
+   wire     [`REG_INTERFRAME_GAP_BITS] interframe_gap_reg;
+   wire     [`REG_INTERBURST_GAP_BITS] interburst_gap_reg;
+   wire     [`REG_FRAMES_PER_BURST_BITS] frames_per_burst_reg;
+   wire     [`REG_TOTAL_FRAMES_BITS] total_frames_reg;
+   wire     [`REG_FRAME_SIZE_BITS] frame_size_reg;
+   wire     [31:0] frame_buf_in_data;
+   wire     [7:0] frame_buf_in_address;
+   wire     frame_buf_in_wr;
 
    reg      [2-1:0]     state;
    reg                  run;
-   reg      [16-1:0]    interframe_gap;
-   reg      [16-1:0]    frame_size;
-   reg      [16-1:0]    gap_counter;
-   reg      [16-1:0]    gap_counter_last;
-   reg      [16-1:0]    data_counter;
-   reg      [16-1:0]    data_counter_last;
-   reg      [7:0]       ethernet_frame[71:0];
+   reg      [31:0]      interframe_gap;
+   reg      [10:0]      frame_size;
+   reg      [31:0]    gap_counter;
+   reg      [31:0]    gap_counter_last;
+   reg      [31:0]    data_counter;
+   reg      [31:0]    data_counter_last;
+   reg      [7:0]     ethernet_frame[71:0];
+
+   integer     data;
+
+   reg    [`C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_out_address;
+   reg    [`C_FRAME_BUF_ADDRESS_WIDTH-1:0]  next_frame_buf_out_address;
+   wire   [31:0] frame_buf_out_data;
+
 
    integer i;
 
@@ -98,48 +117,59 @@ module traffic_generator_gmii
    .version_reg          (version_reg),
    .ip2cpu_flip_reg          (ip2cpu_flip_reg),
    .cpu2ip_flip_reg          (cpu2ip_flip_reg),
-   .control_reg          (control_reg)
+   .control_reg          (control_reg),
+   .interframe_gap_reg(interframe_gap_reg),
+   .interburst_gap_reg(interburst_gap_reg),
+   .frames_per_burst_reg(frames_per_burst_reg),
+   .total_frames_reg(total_frames_reg),
+   .frame_size_reg(frame_size_reg),
+   .frame_buf_address(frame_buf_in_address),
+   .frame_buf_data(frame_buf_in_data),
+   .frame_buf_wr(frame_buf_in_wr)
+
 );
 
+bram_io #(
+            .DATA_WIDTH(32),
+            .ADDR_WIDTH(8) // 2048 bytes
+        ) bram_io_inst (
+            .rst(~resetn),
+
+            .i_clk(S_AXI_ACLK),
+            .i_wr(frame_buf_in_wr),
+            .i_addr(frame_buf_in_address),
+            .i_data(frame_buf_in_data),
+
+            .o_clk(clk),
+            .o_addr(frame_buf_out_address),
+            .o_data(frame_buf_out_data)
+        );
 
 always @(posedge clk) begin
 
     run <= control_reg[0];
 
     if(~resetn) begin
-          gmii_out_txd <= 0;
-          gmii_out_tx_en <= 0;
-          gmii_out_tx_er <= 0;
+          gmii_d <= 0;
+          gmii_en <= 0;
+          gmii_er <= 0;
 
           state <= 2'b00;
-          frame_size <= 72; /* 7+1 preamble + 60 payload including MAC src and destination + 4 CRC */
-          interframe_gap <= 12;
 	  gap_counter <= 0;
     end
     else begin
           case(state)
           2'b00 : begin
-           gmii_out_txd <= 0;
-           gmii_out_tx_en <= 0;
-           gmii_out_tx_er <= 0;
+           gmii_d <= 0;
+           gmii_en <= 0;
+           gmii_er <= 0;
 
            if(run != 0) begin
                data_counter<=0;
-               data_counter_last<=frame_size-1;
+               data_counter_last<=frame_size_reg-1;
 
                gap_counter<=0;
-               gap_counter_last<=interframe_gap-2;
-
-               for (i=0;i<=7;i=i+1)
-                   ethernet_frame[i] = 8'h55;
-
-               ethernet_frame[7] = 8'hD5;
-               for (i=0;i<=60;i=i+1)
-                   ethernet_frame[i+8] = i+1;
-               ethernet_frame[8+60+0]=8'h34;
-               ethernet_frame[8+60+1]=8'h4c;
-               ethernet_frame[8+60+2]=8'ha0;
-               ethernet_frame[8+60+3]=8'h62;
+               gap_counter_last<=interframe_gap_reg-2;
 
                state <= 2'b01;
            end
@@ -150,9 +180,26 @@ always @(posedge clk) begin
           2'b01 : begin
            data_counter<=data_counter+1;
 
-           gmii_out_txd <= ethernet_frame[data_counter];
-           gmii_out_tx_en <= 1;
-           gmii_out_tx_er <= 0;
+           case(data_counter[1:0])
+               2'b00 : begin
+                   data = frame_buf_out_data[31:24];
+               end
+               2'b01 : begin
+                   data = frame_buf_out_data[23:16];
+               end
+               2'b10 : begin
+                   data = frame_buf_out_data[15:8];
+               end
+               2'b11 : begin
+                   data = frame_buf_out_data[7:0];
+               end
+           endcase
+           if(data_counter[1:0] == 2'b10) begin
+               frame_buf_out_address <= frame_buf_out_address+1;
+           end
+           gmii_d <= data; //ethernet_frame[data_counter];
+           gmii_en <= 1;
+           gmii_er <= 0;
 
            if(data_counter<data_counter_last) begin
                state <= 2'b01;
@@ -164,14 +211,15 @@ always @(posedge clk) begin
           2'b10 : begin
            gap_counter<=gap_counter+1;
 
-           gmii_out_txd <= 0;
-           gmii_out_tx_en <= 0;
-           gmii_out_tx_er <= 0;
+           gmii_d <= 0;
+           gmii_en <= 0;
+           gmii_er <= 0;
            if(gap_counter<gap_counter_last) begin
                state <= 2'b10;
            end
            else begin
                state <= 2'b00;
+               frame_buf_out_address <= 0;
            end
           end
 

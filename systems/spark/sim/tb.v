@@ -75,6 +75,8 @@ module tb();
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.fpga_soft_reset(32'h0);
 
+    #1000 ;
+
     /* enable port0 traffic generator */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_0_address, 4, read_data, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(gmii_mux_0_address+8, 4, 32'h00000003, resp);
@@ -82,6 +84,31 @@ module tb();
     /* enable port1 traffic generator */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_1_address, 4, read_data, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(gmii_mux_1_address+8, 4, 32'h00000003, resp);
+
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h14, 4, 32'h0000000C, resp); /* interframe gap */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h44, 4, 32'h00000048, resp); /* layer 1 frame size */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h55555555, resp); /* frame data */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h555555d5, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h01020304, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h05060708, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h090a0b0c, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h0d0e0f10, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h11121314, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h15161718, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h191a1b1c, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h1d1e1f20, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h21222324, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h25262728, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h292a2b2c, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h2d2e2f30, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h31323334, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h35363738, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h393a3b3c, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h344ca062, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h14, 4, 32'h0000000C, resp); /* interframe gap */
+
+
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000001, resp); /* set the enable bit reg control[0] */
 
     #50000 ;
 

@@ -129,6 +129,8 @@ create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux_5
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_generator:1.0 traffic_generator_0
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_generator_gmii:1.0 traffic_generator_gmii_0
+create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_analyzer_gmii:1.0 traffic_analyzer_gmii_0
+create_bd_cell -type ip -vlnv lightside-instruments.com:ip:rtclock:1.0 rtclock_0
 create_bd_cell -type ip -vlnv xilinx.com:ip:tri_mode_ethernet_mac:9.0 tri_mode_ethernet_mac_0
 
 # Add the AXI Ethernet Subsystem cores
@@ -246,7 +248,7 @@ connect_bd_net [get_bd_pins const_clk_en/dout] [get_bd_pins axi_ethernet_5/clk_e
 # Connect GMII TX interface of port 2
 ##connect_bd_net [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_txclk_0] [get_bd_pins axi_ethernet_2/gmii_tx_clk]
 #connect_bd_net [get_bd_pins axi_ethernet_2/gmii_tx_en] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_en_0]
-#connect_bd_net [get_bd_pins axi_ethernet_2/gmii_tx_er] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_er_0]
+#connect_bd_net [get_bd_pins axi_ethernet_2/gmii_tx_er] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_dv_0]
 #connect_bd_net [get_bd_pins axi_ethernet_2/gmii_txd] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_txd_0]
 
 # GMII connections for port 3
@@ -422,6 +424,8 @@ connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/pl_clk0] [get_bd_pins axi_ethernet
 
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins traffic_generator_0/axis_aclk]
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins traffic_generator_gmii_0/clk]
+connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins traffic_analyzer_gmii_0/clk]
+connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins rtclock_0/clk]
 
 # Resets
 create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic reset_invert
@@ -760,6 +764,8 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_generator_0_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_generator_gmii_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_generator_gmii_0/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_generator_gmii_0_Reg0}]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_analyzer_gmii_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_analyzer_gmii_0/S_AXI]
+set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_analyzer_gmii_0_Reg0}]
 
 # Create ports for Bluetooth UART0
 create_bd_port -dir I BT_ctsn
@@ -810,9 +816,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_0/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_0/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_0/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_0/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_0/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_0/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_0/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_1] [get_bd_pins gmii_mux_0/gmii_in_4_txd]
@@ -856,9 +862,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_1/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_1/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_1/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_1/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_1/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_1/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_1/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_0] [get_bd_pins gmii_mux_1/gmii_in_4_txd]
@@ -898,9 +904,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_2/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_2/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_2/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_2/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_2/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_2/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_2/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_0] [get_bd_pins gmii_mux_2/gmii_in_4_txd]
@@ -939,9 +945,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_3/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_3/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_3/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_3/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_3/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_3/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_3/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_2_rx/gmii_rxd_0] [get_bd_pins gmii_mux_3/gmii_in_4_txd]
@@ -981,9 +987,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_4/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_4/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_4/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_4/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_4/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_4/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_4/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_2] [get_bd_pins gmii_mux_4/gmii_in_4_txd]
@@ -1022,9 +1028,9 @@ connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_en] [get_bd_pins gmi
 connect_bd_net [get_bd_pins tri_mode_ethernet_mac_0/gmii_tx_er] [get_bd_pins gmii_mux_5/gmii_in_2_tx_er]
 
 #traffic-generator-gmii - 4 of 5
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_txd] [get_bd_pins gmii_mux_5/gmii_in_3_txd]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_en] [get_bd_pins gmii_mux_5/gmii_in_3_tx_en]
-connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_out_tx_er] [get_bd_pins gmii_mux_5/gmii_in_3_tx_er]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_d] [get_bd_pins gmii_mux_5/gmii_in_3_txd]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_en] [get_bd_pins gmii_mux_5/gmii_in_3_tx_en]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/gmii_er] [get_bd_pins gmii_mux_5/gmii_in_3_tx_er]
 
 #neighbour passthrough - 5 of 5
 connect_bd_net [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_1] [get_bd_pins gmii_mux_5/gmii_in_4_txd]
@@ -1041,6 +1047,15 @@ connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_txd] [get_bd_pins eth_pcs_pma_2_
 connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_tx_en] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_en_2]
 connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_tx_er] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_er_2]
 
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_0]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_dv_0]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_er_0]
+
+#rtclock
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/sec] [get_bd_pins rtclock_0/sec]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/nsec] [get_bd_pins rtclock_0/nsec]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/sec] [get_bd_pins rtclock_0/sec]
+connect_bd_net [get_bd_pins traffic_generator_gmii_0/nsec] [get_bd_pins rtclock_0/nsec]
 
 
 #delete_bd_objs [get_bd_intf_nets axi_ethernet_2_dma_M_AXIS_MM2S]
@@ -1061,6 +1076,8 @@ disconnect_bd_net /zynq_ultra_ps_e_0_pl_resetn2 [get_bd_pins traffic_generator_0
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_generator_0/axis_resetn]
 disconnect_bd_net /zynq_ultra_ps_e_0_pl_resetn2 [get_bd_pins traffic_generator_gmii_0/resetn]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_generator_gmii_0/resetn]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_analyzer_gmii_0/resetn]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_0/resetn]
 
 delete_bd_objs [get_bd_intf_nets traffic_generator_0_m_axis]
 create_bd_cell -type ip -vlnv xilinx.com:ip:axis_data_fifo:2.0 axis_data_fifo_0

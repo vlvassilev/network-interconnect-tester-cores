@@ -1,3 +1,11 @@
+network-interconnect-tester-cores (0.6) stable; urgency=medium
+
+  * Added realtime clock core - rtclock
+  * Added traffic analyzer core - traffic_analyzer_gmii. Supports basic counters and single frame capture to block ram
+  * Enhanced traffic generator. Added frame data buffer block ram
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 03 Sep 2020 13:02:26 +0200
+
 network-interconnect-tester-cores (0.5) stable; urgency=medium
 
   * Fixed bug in gmii_mux input select logic overlap e.g. 2'h04 was interpreted as 0
