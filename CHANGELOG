@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.7) stable; urgency=medium
+
+  * lib/sw: Added traffic-generator-gmii and traffic-analyzer-gmii tools
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 26 Oct 2020 14:24:10 +0100
+
 network-interconnect-tester-cores (0.6) stable; urgency=medium
 
   * Added realtime clock core - rtclock

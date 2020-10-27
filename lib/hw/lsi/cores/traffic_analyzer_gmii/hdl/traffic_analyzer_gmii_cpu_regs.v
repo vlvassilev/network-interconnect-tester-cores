@@ -340,7 +340,8 @@ always @(*) begin
         end
         //Default return value
         default: begin
-            reg_data_out [31:0] =  32'hZZZZZZZZ;
+            reg_data_out [31:0] =  32'hDEADBEEF;
+        //    reg_data_out [31:0] =  32'hZZZZZZZZ;
         end
 
     endcase

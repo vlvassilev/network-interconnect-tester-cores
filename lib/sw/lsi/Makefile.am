@@ -1,3 +1,6 @@
 SUBDIRS=\
 common \
-cores/gmii_mux
+cores/gmii-mux \
+cores/traffic-analyzer-gmii \
+cores/traffic-generator-gmii
+

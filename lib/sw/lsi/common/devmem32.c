@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <inttypes.h>
 #include <assert.h>
-#include <devmem-map.h>
+#include "devmem-map.h"
 
 int main(int argc, char* argv[])
 {

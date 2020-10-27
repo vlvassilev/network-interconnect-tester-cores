@@ -226,5 +226,18 @@ always @(posedge clk) begin
           endcase
     end
 end
+
+always @(posedge clk) begin
+    if (~resetn) begin
+        id_reg <= #1    `REG_ID_DEFAULT;
+        version_reg <= #1    `REG_VERSION_DEFAULT;
+        ip2cpu_flip_reg <= #1    `REG_FLIP_DEFAULT;
+    end
+    else begin
+        id_reg <= #1    `REG_ID_DEFAULT;
+        version_reg <= #1    `REG_VERSION_DEFAULT;
+        ip2cpu_flip_reg <= #1    ~cpu2ip_flip_reg;
+    end
+end
  
 endmodule // traffic_generator_gmii
