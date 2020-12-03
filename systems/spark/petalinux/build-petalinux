@@ -88,9 +88,14 @@ fi
     done
     # File to indicate that config files have been transferred
     touch configdone.txt
+
     # Run petalinux-config again to register the config files
     petalinux-config --silentconfig
+
+    #cat ../kernel-config.patch | patch -p1 build/tmp/work/ultra96_zynqmp-xilinx-linux/linux-xlnx/4.19-xilinx-v2019.2+git999-r0/linux-xlnx-4.19-xilinx-v2019.2+git999/.config
+    #petalinux-config -c kernel --silentconfig
   fi
+
 
   # Build PetaLinux project if not built already
   if [ -d "./images" ]; then

@@ -1,5 +1,5 @@
 &axi_ethernet_0 {
-    local-mac-address = [00 0a 35 00 01 22];
+    local-mac-address = [70 b3 d5 ec 20 00];
     phy-handle = <&phy0>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
@@ -15,7 +15,7 @@
 };
 
 &axi_ethernet_1 {
-    local-mac-address = [00 0a 35 00 01 23];
+    local-mac-address = [70 b3 d5 ec 20 01];
     phy-handle = <&phy1>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
@@ -31,7 +31,7 @@
 };
 
 &axi_ethernet_2 {
-    local-mac-address = [00 0a 35 00 01 24];
+    local-mac-address = [70 b3 d5 ec 20 02];
     phy-handle = <&phy2>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
@@ -52,7 +52,7 @@
 };
 
 &axi_ethernet_3 {
-    local-mac-address = [00 0a 35 00 01 25];
+    local-mac-address = [70 b3 d5 ec 20 03];
     phy-handle = <&phy3>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
@@ -73,7 +73,7 @@
 };
 
 &axi_ethernet_4 {
-    local-mac-address = [00 0a 35 00 01 26];
+    local-mac-address = [70 b3 d5 ec 20 04];
     phy-handle = <&phy4>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
@@ -89,7 +89,7 @@
 };
 
 &axi_ethernet_5 {
-    local-mac-address = [00 0a 35 00 01 27];
+    local-mac-address = [70 b3 d5 ec 20 05];
     phy-handle = <&phy5>;
     xlnx,has-mdio = <0x1>;
     phy-mode = "gmii";
