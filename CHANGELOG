@@ -1,3 +1,12 @@
+network-interconnect-tester-cores (0.9) stable; urgency=medium
+
+  * Implemented total-frames generator parameter
+  * Fixed capture synchronization so that a frame is atomically completed even if freeze_stats gets set underway
+  * Added --disable to traffic-generator-gmii parameters
+  * Software implementing the capture functionality in the analyzer model
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 10 Dec 2020 19:40:23 +0100
+
 network-interconnect-tester-cores (0.8) stable; urgency=medium
 
   * system/spark: Added wifi kernel module and firmware package

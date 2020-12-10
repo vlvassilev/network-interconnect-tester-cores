@@ -62,6 +62,7 @@ reg     [`REG_FRAME_BUF_BITS] frame_buf_reg;
 reg     [2-1:0]                    state;
 reg                                run;
 reg                                freeze_stats;
+reg                                freeze_stats_sync; // synced to the first octet of the frame
 reg                                frame_complete;
 reg     [`REG_PKTS_BITS]           pkts;
 reg     [`REG_OCTETS_BITS]         octets;
@@ -161,6 +162,7 @@ always @(posedge clk) begin
         frame_complete <= 0;
         frame_buf_in_wr <= 0;
         frame_buf_in_address <= 0;
+        freeze_stats_sync <= 0;
 
     end
     else begin
@@ -173,19 +175,22 @@ always @(posedge clk) begin
                     pkts <= pkts + 1;
                     data <= gmii_d;
                     frame_size <= 0;
+
+                    freeze_stats_sync <= freeze_stats;
                 end
-                else begin
-                    octets_idle <= octets_idle + 1;
-                end
-                if(frame_complete & !freeze_stats) begin
+                if(frame_complete) begin
                     frame_complete <= 0;
-                    pkts_reg <= pkts;
-                    octets_reg <= octets;
-                    timestamp_sec_reg <= timestamp_sec;
-                    timestamp_nsec_reg <= timestamp_nsec;
-                    frame_size_reg <= frame_size;
+                    frame_buf_in_wr <= 0;
+                    frame_buf_in_address <= 0;
+
+                    if (!freeze_stats_sync) begin
+                        pkts_reg <= pkts;
+                        octets_reg <= octets;
+                        timestamp_sec_reg <= timestamp_sec;
+                        timestamp_nsec_reg <= timestamp_nsec;
+                        frame_size_reg <= frame_size;
+                    end
                 end
-                frame_buf_in_wr <= 0;
             end
             2'b01 : begin
                 frame_size <= frame_size + 1;
@@ -193,7 +198,6 @@ always @(posedge clk) begin
                 if(gmii_en != 1'b1) begin
                     state <= 2'b00;
                     frame_complete <= 1;
-                    octets_idle <= octets_idle + 1;
                     frame_buf_in_wr <= 0;
                 end
                 else begin
@@ -214,11 +218,12 @@ always @(posedge clk) begin
                     end
                 endcase
                 frame_buf_in_address <= frame_size/4;
-                if(!freeze_stats) begin
-                    frame_buf_in_wr <= 1;
-                end
+                frame_buf_in_wr <= !freeze_stats_sync;
             end
         endcase
+        if(!gmii_en) begin
+            octets_idle <= octets_idle + 1;
+        end
         if(!freeze_stats) begin
             octets_idle_reg <= octets_idle;
         end

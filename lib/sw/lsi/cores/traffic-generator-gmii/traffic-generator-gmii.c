@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
 
 static struct option const long_options[] =
 {
+    {"disable", no_argument, NULL, 'D'},
     {"interface-name", required_argument, NULL, 'i'},
     {"frame-size", required_argument, NULL, 's'},
     {"frame-data", required_argument, NULL, 'd'},
@@ -42,11 +44,12 @@ void print_frame(uint64_t frame_index, uint32_t frame_size, uint8_t* frame_data,
 #define REG_CONTROL_ADDR 0x10
 #define REG_INTERFRAME_GAP_ADDR 0x14
 #define REG_INTERBURST_GAP_ADDR 0x18
+#define REG_TOTAL_FRAMES_ADDR  0x20
 #define REG_FRAME_SIZE_ADDR 0x44
 #define REG_FRAME_BUF_ADDR 0x50
 
 
-static int traffic_generator_init(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+static int traffic_generator_common(unsigned int disable, char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
 {
     unsigned int i;
     int ioreg_id;
@@ -54,8 +57,6 @@ static int traffic_generator_init(char* interface_name, char* realtime_epoch, ui
     unsigned int core_index;
     char ioreg_init_arg[64];
     uint8_t* frame_data;
-
-    printf("Starting traffic-generator-gmii for %s\n", interface_name);
 
     sscanf(interface_name, "eth%u",&core_index);
 
@@ -65,6 +66,11 @@ static int traffic_generator_init(char* interface_name, char* realtime_epoch, ui
 
     ioreg_id = ioreg_init(ioreg_init_arg);
     assert(ioreg_id>=0);
+
+    if(disable) {
+        ioreg_write(ioreg_id, 0x10, 0x0); /* disable generator */
+        return 0;
+    }
 
     ioreg_read(ioreg_id, 0x0000, &value);
     printf("Read IP id: %08X\n", value);
@@ -96,6 +102,8 @@ static int traffic_generator_init(char* interface_name, char* realtime_epoch, ui
         ioreg_write(ioreg_id, REG_FRAME_BUF_ADDR, value);
     }
 
+    ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR, (uint32_t)(total_frames>>32));
+    ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR+4, (uint32_t)(total_frames&0xFFFFFFFF));
 
     ioreg_write(ioreg_id, 0x10, 0x1); /* enable generator */
 
@@ -104,12 +112,24 @@ static int traffic_generator_init(char* interface_name, char* realtime_epoch, ui
     return 0;
 }
 
+static int traffic_generator_disable(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+{
+    printf("Stopping traffic-generator-gmii for %s\n", interface_name);
+    return traffic_generator_common(1, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+}
+
+static int traffic_generator_init(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+{
+    printf("Starting traffic-generator-gmii for %s\n", interface_name);
+    return traffic_generator_common(0, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+}
+
 int main(int argc, char** argv)
 {
     int ret;
     uint64_t tx_time_sec;
     uint32_t tx_time_nsec;
-
+    unsigned int disable = 0;
     char* interface_name;
     uint32_t frame_size=64;
     char* frame_data_hexstr="000102030405060708090A0B";
@@ -133,8 +153,11 @@ int main(int argc, char** argv)
 
     int stdout_mode = 0;
 
-    while ((optc = getopt_long (argc, argv, "i:s:d:f:b:n:p:t:T:e:S:m", long_options, NULL)) != -1) {
+    while ((optc = getopt_long (argc, argv, "D:i:s:d:f:b:n:p:t:T:e:S:m", long_options, NULL)) != -1) {
         switch (optc) {
+            case 'D':
+                disable = 1;
+                break;
             case 'i':
                 interface_name=optarg;
                 break;
@@ -192,6 +215,12 @@ int main(int argc, char** argv)
         ret = strftime(buf, strlen(buf)+1, "%FT%T.000000000Z", &t);
         assert(ret==strlen("YYYY-MM-DDThh:mm:ss.nnnnnnnnnZ"));
         realtime_epoch = buf;
+    }
+
+    if(disable) {
+        printf("disable\n");
+        traffic_generator_disable(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+        return 0;
     }
 
     traffic_generator_init(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);

@@ -69,6 +69,7 @@ module traffic_generator_gmii
    reg      [31:0]    data_counter;
    reg      [31:0]    data_counter_last;
    reg      [7:0]     ethernet_frame[71:0];
+   reg      [`REG_TOTAL_FRAMES_BITS]    frames;
 
    integer     data;
 
@@ -170,11 +171,13 @@ always @(posedge clk) begin
 
                gap_counter<=0;
                gap_counter_last<=interframe_gap_reg-2;
-
-               state <= 2'b01;
+               if(frames != total_frames_reg || total_frames_reg == 0) begin
+                   state <= 2'b01;
+               end
            end
            else begin
                state <= 2'b00;
+               frames <= 0;
            end
           end
           2'b01 : begin
@@ -220,6 +223,7 @@ always @(posedge clk) begin
            else begin
                state <= 2'b00;
                frame_buf_out_address <= 0;
+               frames <= frames + 1;
            end
           end
 

@@ -182,6 +182,11 @@ initial begin
         $fatal;
     end
 
+    // with less then 10 frames configured the testcase should fail
+    data64 = 10;
+    axi_write(TG_BASEADDR+`REG_TOTAL_FRAMES_ADDR,  data64[63:32]);
+    axi_write(TG_BASEADDR+`REG_TOTAL_FRAMES_ADDR+4,  data64[31:0]);
+
     axi_write(TG_BASEADDR+`REG_CONTROL_ADDR, 32'h00000001);
 
     #(84*10*CLK_PERIOD_NS-1*CLK_PERIOD_NS)

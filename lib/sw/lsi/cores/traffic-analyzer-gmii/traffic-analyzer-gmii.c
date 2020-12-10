@@ -33,6 +33,7 @@ static struct option const long_options[] =
 int main(int argc, char** argv)
 {
     int ret;
+    unsigned int i;
     char* interface_name;
     int verbose=0;
     int optc;
@@ -43,6 +44,8 @@ int main(int argc, char** argv)
     uint32_t msb;
     uint64_t pkts;
     uint64_t octets;
+    uint32_t frame_size;
+    uint32_t frame_data;
 
     while ((optc = getopt_long (argc, argv, "i:v", long_options, NULL)) != -1) {
         switch (optc) {
@@ -79,12 +82,34 @@ int main(int argc, char** argv)
         ioreg_read(ioreg_id, REG_OCTETS_ADDR, &msb);
         ioreg_read(ioreg_id, REG_OCTETS_ADDR+4, &lsb);
         octets = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
+
         ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x1); /* unfreeze status registers */
 
-        ret = fprintf(stdout,"<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets></state>\n",
+        printf("<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets><testframe-stats><testframe-pkts>%llu</testframe-pkts></testframe-stats>",
                 pkts,
-                octets);
+                octets,
+                pkts /*TODO*/);
+        printf("<capture><sequence-number>%llu</sequence-number><data>",
+                pkts);
+
+        for(i=0;i<(frame_size/4);i++) {
+            ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
+            printf("%08X",frame_data);
+        }
+        for(i=0;i<(frame_size%4);i++) {
+            if(i==0) {
+                ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
+                printf("%02X",(frame_data>>24) & 0xFF);
+            } else if(i==1) {
+                printf("%02X",(frame_data>>16) & 0xFF);
+            } else if(i==2) {
+                printf("%02X",(frame_data>>8) & 0xFF);
+            }
+        }
+        printf("</data></capture>");
+        printf("</state>\n");
+
         fflush(stdout);
-        assert(ret>0);
     }
 }
