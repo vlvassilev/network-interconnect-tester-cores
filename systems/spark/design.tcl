@@ -127,6 +127,7 @@ create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux_3
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux_4
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux_5
+create_bd_cell -type ip -vlnv lightside-instruments.com:ip:gmii_mux:1.0 gmii_mux_6
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_generator:1.0 traffic_generator_0
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_generator_gmii:1.0 traffic_generator_gmii_0
 create_bd_cell -type ip -vlnv lightside-instruments.com:ip:traffic_analyzer_gmii:1.0 traffic_analyzer_gmii_0
@@ -748,6 +749,7 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/tri_mode_ethernet_mac_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins tri_mode_ethernet_mac_0/s_axi]
 set_property range 128K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_tri_mode_ethernet_mac_0_Reg}]
+
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/gmii_mux_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins gmii_mux_0/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_gmii_mux_0_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/gmii_mux_1/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins gmii_mux_1/S_AXI]
@@ -760,6 +762,10 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_gmii_mux_4_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/gmii_mux_5/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins gmii_mux_5/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_gmii_mux_5_Reg0}]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/gmii_mux_6/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins gmii_mux_6/S_AXI]
+set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_gmii_mux_6_Reg0}]
+
+
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_generator_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_generator_0/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_generator_0_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_generator_gmii_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_generator_gmii_0/S_AXI]
@@ -790,6 +796,7 @@ connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins gmii_mux
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins gmii_mux_3/gtx_clk]
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins gmii_mux_4/gtx_clk]
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins gmii_mux_5/gtx_clk]
+connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins gmii_mux_6/gtx_clk]
 
 
 set_property -dict [list CONFIG.MAC_Speed {1000_Mbps} CONFIG.Management_Frequency {99} CONFIG.Frame_Filter {false} CONFIG.Number_of_Table_Entries {0} CONFIG.Statistics_Reset {false}] [get_bd_cells tri_mode_ethernet_mac_0]
@@ -1047,9 +1054,39 @@ connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_txd] [get_bd_pins eth_pcs_pma_2_
 connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_tx_en] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_en_2]
 connect_bd_net [get_bd_pins gmii_mux_5/gmii_out_tx_er] [get_bd_pins eth_pcs_pma_2_3_5_tx/gmii_tx_er_2]
 
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_0]
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_dv_0]
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_er_0]
+
+#analyzer mux
+#inputs
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_0_txd] [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_0_tx_en] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_dv_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_0_tx_er] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_er_0]
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_1_txd] [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_1]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_1_tx_en] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_dv_1]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_1_tx_er] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_er_1]
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_2_txd] [get_bd_pins eth_pcs_pma_2_rx/gmii_rxd_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_2_tx_en] [get_bd_pins eth_pcs_pma_2_rx/gmii_rx_dv_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_2_tx_er] [get_bd_pins eth_pcs_pma_2_rx/gmii_rx_er_0]
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_3_txd] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_3_tx_en] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_dv_0]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_3_tx_er] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_er_0]
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_4_txd] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_1]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_4_tx_en] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_dv_1]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_4_tx_er] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_er_1]
+
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_5_txd] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rxd_2]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_5_tx_en] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_dv_2]
+connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_5_tx_er] [get_bd_pins eth_pcs_pma_3_4_5_rx_4_tx/gmii_rx_er_2]
+
+#output
+
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins gmii_mux_5/gmii_out_txd]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins gmii_mux_5/gmii_out_tx_en]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins gmii_mux_5/gmii_out_tx_er]
 
 #rtclock
 connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/sec] [get_bd_pins rtclock_0/sec]

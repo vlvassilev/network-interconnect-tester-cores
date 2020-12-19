@@ -4,7 +4,7 @@
 
 module gmii_mux
 #(
-    parameter C_NUM_INPUTS=3,
+    parameter C_NUM_INPUTS=6,
 
  // AXI Registers Data Width
     parameter C_S_AXI_DATA_WIDTH    = 32,          
@@ -41,6 +41,11 @@ module gmii_mux
     input [7:0] gmii_in_4_txd,
     input gmii_in_4_tx_en,
     input gmii_in_4_tx_er,
+
+    // GMII input 5
+    input [7:0] gmii_in_5_txd,
+    input gmii_in_5_tx_en,
+    input gmii_in_5_tx_er,
 
     // GMII output
     output reg [7:0] gmii_out_txd,
@@ -100,6 +105,11 @@ module gmii_mux
    reg gmii_in_4_tx_en_r;
    reg gmii_in_4_tx_er_r;
 
+   // GMII input 5
+   reg [7:0] gmii_in_5_txd_r;
+   reg gmii_in_5_tx_en_r;
+   reg gmii_in_5_tx_er_r;
+
 //Registers section
  gmii_mux_cpu_regs 
  #(
@@ -155,6 +165,9 @@ always @(posedge gtx_clk) begin
         gmii_in_4_txd_r <= gmii_in_4_txd;
         gmii_in_4_tx_en_r <= gmii_in_4_tx_en;
         gmii_in_4_tx_er_r <= gmii_in_4_tx_er;
+        gmii_in_5_txd_r <= gmii_in_5_txd;
+        gmii_in_5_tx_en_r <= gmii_in_5_tx_en;
+        gmii_in_5_tx_er_r <= gmii_in_5_tx_er;
 
         case(select_reg_r)
         8'h01 : begin
@@ -176,6 +189,11 @@ always @(posedge gtx_clk) begin
           gmii_out_txd <= gmii_in_4_txd_r;
           gmii_out_tx_en <= gmii_in_4_tx_en_r;
           gmii_out_tx_er <= gmii_in_4_tx_er_r;
+        end
+        8'h05 : begin
+          gmii_out_txd <= gmii_in_5_txd_r;
+          gmii_out_tx_en <= gmii_in_5_tx_en_r;
+          gmii_out_tx_er <= gmii_in_5_tx_er_r;
         end
         default : begin
                 gmii_out_txd <= gmii_in_0_txd_r;

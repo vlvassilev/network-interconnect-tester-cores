@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.11) stable; urgency=medium
+
+  * system/spark: Added gmii_mux instance to the design forwarding traffic from any of the interfaces to the traffic analyzer core
+  * cores/gmii_mux: Increased available inputs from 5 to 6
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 19 Dec 2020 22:42:38 +0100
+
 network-interconnect-tester-cores (0.10) stable; urgency=medium
 
   * Added Ethernet CRC checking to the traffic analyzer core with BAD_CRC_PKTS and BAD_CRC_OCTETS registers
