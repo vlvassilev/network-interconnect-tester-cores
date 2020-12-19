@@ -41,6 +41,8 @@ module traffic_analyzer_gmii_cpu_regs #
            output reg [`REG_CONTROL_BITS]    control_reg,
            input      [`REG_PKTS_BITS]       pkts_reg,
            input      [`REG_OCTETS_BITS]     octets_reg,
+           input      [`REG_BAD_CRC_PKTS_BITS]       bad_crc_pkts_reg,
+           input      [`REG_BAD_CRC_OCTETS_BITS]     bad_crc_octets_reg,
            input      [`REG_OCTETS_IDLE_BITS] octets_idle_reg,
            input      [`REG_TIMESTAMP_SEC_BITS]	timestamp_sec_reg,
            input      [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec_reg,
@@ -316,6 +318,18 @@ always @(*) begin
         end
         `REG_OCTETS_ADDR+4 : begin
             reg_data_out [31:0] =  octets_reg[31:0];
+        end
+        `REG_BAD_CRC_PKTS_ADDR : begin
+            reg_data_out [31:0] =  bad_crc_pkts_reg[63:32];
+        end
+        `REG_BAD_CRC_PKTS_ADDR+4 : begin
+            reg_data_out [31:0] =  bad_crc_pkts_reg[31:0];
+        end
+        `REG_BAD_CRC_OCTETS_ADDR : begin
+            reg_data_out [31:0] =  bad_crc_octets_reg[63:32];
+        end
+        `REG_BAD_CRC_OCTETS_ADDR+4 : begin
+            reg_data_out [31:0] =  bad_crc_octets_reg[31:0];
         end
         `REG_OCTETS_IDLE_ADDR : begin
             reg_data_out [31:0] =  octets_idle_reg[63:32];

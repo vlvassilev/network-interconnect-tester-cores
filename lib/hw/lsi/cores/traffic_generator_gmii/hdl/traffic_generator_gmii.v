@@ -164,6 +164,7 @@ always @(posedge clk) begin
            gmii_d <= 0;
            gmii_en <= 0;
            gmii_er <= 0;
+           frame_buf_out_address <= 0;
 
            if(run != 0) begin
                data_counter<=0;

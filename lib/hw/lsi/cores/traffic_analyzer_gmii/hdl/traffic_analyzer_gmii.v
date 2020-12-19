@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 `include "traffic_analyzer_gmii_cpu_regs.v"
 `include "traffic_analyzer_gmii_cpu_regs_defines.v"
+`include "ethernet_crc_8_check.v"
 
 `define C_GMII_DATA_WIDTH 8
 `define C_FRAME_BUF_ADDRESS_WIDTH 8
@@ -53,6 +54,8 @@ wire     [`REG_FLIP_BITS]    cpu2ip_flip_reg;
 wire     [`REG_CONTROL_BITS] control_reg;
 reg     [`REG_PKTS_BITS] pkts_reg;
 reg     [`REG_OCTETS_BITS] octets_reg;
+reg     [`REG_PKTS_BITS] bad_crc_pkts_reg;
+reg     [`REG_OCTETS_BITS] bad_crc_octets_reg;
 reg     [`REG_OCTETS_IDLE_BITS] octets_idle_reg;
 reg     [`REG_TIMESTAMP_SEC_BITS] timestamp_sec_reg;
 reg     [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec_reg;
@@ -66,6 +69,8 @@ reg                                freeze_stats_sync; // synced to the first oct
 reg                                frame_complete;
 reg     [`REG_PKTS_BITS]           pkts;
 reg     [`REG_OCTETS_BITS]         octets;
+reg     [`REG_PKTS_BITS]           bad_crc_pkts;
+reg     [`REG_OCTETS_BITS]         bad_crc_octets;
 reg     [`REG_OCTETS_IDLE_BITS]    octets_idle;
 reg     [`REG_TIMESTAMP_SEC_BITS]  timestamp_sec;
 reg     [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec;
@@ -77,7 +82,14 @@ wire    [31:0]  frame_buf_out_data;
 reg     [`C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_in_address;
 reg     [31:0]  frame_buf_in_data;
 reg             frame_buf_in_wr;
+
+wire crc_ok;
+
 integer i;
+integer octets_delta;
+integer pkts_delta;
+integer bad_crc_octets_delta;
+integer bad_crc_pkts_delta;
 
 //Registers section
 traffic_analyzer_gmii_cpu_regs
@@ -122,6 +134,8 @@ traffic_analyzer_gmii_cpu_regs
         // statistics
         .pkts_reg (pkts_reg),
         .octets_reg (octets_reg),
+        .bad_crc_pkts_reg (bad_crc_pkts_reg),
+        .bad_crc_octets_reg (bad_crc_octets_reg),
         .octets_idle_reg (octets_idle_reg),
 
         // capture
@@ -148,6 +162,14 @@ bram_io #(
             .o_data(frame_buf_out_data)
         );
 
+ethernet_crc_8_check ethernet_crc_8_check_0 (
+            .clk(clk),
+            .reset(~resetn),
+            .d(gmii_d),
+            .en(gmii_en),
+            .er(gmii_er),
+            .crc_ok(crc_ok));
+
 always @(posedge clk) begin
 
     run <= control_reg[0];
@@ -158,12 +180,13 @@ always @(posedge clk) begin
         frame_size <= 0;
         pkts<= 0;
         octets <= 0;
+        bad_crc_pkts<= 0;
+        bad_crc_octets <= 0;
         octets_idle <= 0;
         frame_complete <= 0;
         frame_buf_in_wr <= 0;
         frame_buf_in_address <= 0;
         freeze_stats_sync <= 0;
-
     end
     else begin
         case(state)
@@ -172,7 +195,6 @@ always @(posedge clk) begin
                     state <= 2'b01;
                     timestamp_sec <= sec;
                     timestamp_nsec <= nsec;
-                    pkts <= pkts + 1;
                     data <= gmii_d;
                     frame_size <= 0;
 
@@ -183,9 +205,30 @@ always @(posedge clk) begin
                     frame_buf_in_wr <= 0;
                     frame_buf_in_address <= 0;
 
+                    if(crc_ok) begin
+                        octets_delta = frame_size;
+                        pkts_delta = 1;
+                        bad_crc_octets_delta = 0;
+                        bad_crc_pkts_delta = 0;
+                    end
+                    else begin
+                        octets_delta = 0;
+                        pkts_delta = 0;
+                        bad_crc_octets_delta = frame_size;
+                        bad_crc_pkts_delta = 1;
+                    end
+
+                    octets <= octets + octets_delta;
+                    pkts <= pkts + pkts_delta;
+
+                    bad_crc_octets <= bad_crc_octets + bad_crc_octets_delta;
+                    bad_crc_pkts <= bad_crc_pkts + bad_crc_pkts_delta;
+
                     if (!freeze_stats_sync) begin
-                        pkts_reg <= pkts;
-                        octets_reg <= octets;
+                        pkts_reg <= pkts + pkts_delta;
+                        octets_reg <= octets + octets_delta;
+                        bad_crc_pkts_reg <= bad_crc_pkts + bad_crc_pkts_delta;
+                        bad_crc_octets_reg <= bad_crc_octets + bad_crc_octets_delta;
                         timestamp_sec_reg <= timestamp_sec;
                         timestamp_nsec_reg <= timestamp_nsec;
                         frame_size_reg <= frame_size;
@@ -194,7 +237,6 @@ always @(posedge clk) begin
             end
             2'b01 : begin
                 frame_size <= frame_size + 1;
-                octets <= octets + 1;
                 if(gmii_en != 1'b1) begin
                     state <= 2'b00;
                     frame_complete <= 1;

@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.10) stable; urgency=medium
+
+  * Added Ethernet CRC checking to the traffic analyzer core with BAD_CRC_PKTS and BAD_CRC_OCTETS registers
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 19 Dec 2020 22:27:17 +0100
+
 network-interconnect-tester-cores (0.9) stable; urgency=medium
 
   * Implemented total-frames generator parameter
