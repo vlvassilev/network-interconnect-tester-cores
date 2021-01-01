@@ -1,3 +1,12 @@
+network-interconnect-tester-cores (0.12) stable; urgency=medium
+
+  * Fixed bug in the frame payload buffer implementation
+  * cores/analyzer: preamble is no longer included in the octets statistics added bad_preamble_{pkts,octets} and octets_total counters
+  * lib/sw: Added loopback tool for configuration of local loopback using pcs/pma core mdio access
+  * lib/sw: Added wrapper scripts for systems using multiplexed generator and analyzer cores
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 01 Jan 2021 21:32:05 +0100
+
 network-interconnect-tester-cores (0.11) stable; urgency=medium
 
   * system/spark: Added gmii_mux instance to the design forwarding traffic from any of the interfaces to the traffic analyzer core

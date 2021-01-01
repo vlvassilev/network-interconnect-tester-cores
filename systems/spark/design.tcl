@@ -1084,9 +1084,14 @@ connect_bd_net [get_bd_pins gmii_mux_6/gmii_in_5_tx_er] [get_bd_pins eth_pcs_pma
 
 #output
 
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins gmii_mux_5/gmii_out_txd]
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins gmii_mux_5/gmii_out_tx_en]
-connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins gmii_mux_5/gmii_out_tx_er]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins gmii_mux_6/gmii_out_txd]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins gmii_mux_6/gmii_out_tx_en]
+connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins gmii_mux_6/gmii_out_tx_er]
+
+#connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_d] [get_bd_pins eth_pcs_pma_0_1/gmii_rxd_0]
+#connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_en] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_dv_0]
+#connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/gmii_er] [get_bd_pins eth_pcs_pma_0_1/gmii_rx_er_0]
+
 
 #rtclock
 connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/sec] [get_bd_pins rtclock_0/sec]

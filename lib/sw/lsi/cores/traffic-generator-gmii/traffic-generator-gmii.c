@@ -47,6 +47,7 @@ void print_frame(uint64_t frame_index, uint32_t frame_size, uint8_t* frame_data,
 #define REG_TOTAL_FRAMES_ADDR  0x20
 #define REG_FRAME_SIZE_ADDR 0x44
 #define REG_FRAME_BUF_ADDR 0x50
+#define REG_FRAME_BUF_ADDRESS_ADDR 0x54
 
 
 static int traffic_generator_common(unsigned int disable, char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
@@ -85,8 +86,11 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     hexstr2bin(frame_data_hexstr, frame_data);
 
     /* Ethernet Layer 1 Preamble 8 octets */
+    ioreg_write(ioreg_id, REG_FRAME_BUF_ADDRESS_ADDR, 0);
     ioreg_write(ioreg_id, REG_FRAME_BUF_ADDR, 0x55555555);
+    ioreg_write(ioreg_id, REG_FRAME_BUF_ADDRESS_ADDR, 1);
     ioreg_write(ioreg_id, REG_FRAME_BUF_ADDR, 0x555555d5);
+
     for(i=0;i<frame_size;i+=4) {
         uint32_t value = 0;
         value |= ((uint32_t)frame_data[i])<<24;
@@ -99,7 +103,9 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
         if((i+3)<frame_size) {
             value |= ((uint32_t)frame_data[i+3]);
         }
+        ioreg_write(ioreg_id, REG_FRAME_BUF_ADDRESS_ADDR, 2+i/4);
         ioreg_write(ioreg_id, REG_FRAME_BUF_ADDR, value);
+        printf("[%03d] %08X\n",2+i/4,value);
     }
 
     ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR, (uint32_t)(total_frames>>32));

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ifindex="`echo $@ | perl -ne '$_ =~ /--interface-name=eth(\d)/; print "$1\n";'`"
+args="`echo $@ | sed 's/--interface-name=eth./--interface-name=eth0/'`"
+
+if [[ $args =~ "--disable" ]] ; then
+   # restore tx mux to the linux driver controlled interface (mux input=0)
+   /usr/bin/gmii-mux-tool $ifindex 0
+fi
+
+# configure tx mux to the traffic generator interface (mux input=3)
+/usr/bin/gmii-mux-tool $ifindex 3
+
+# start the generator
+traffic-generator-gmii $args
+

@@ -1,0 +1,4 @@
+==1000BASE-X State Machines==
+Preamble Shrinkage - a single byte of preamble can be lost across the 1000BASE-X system (the actual loss occurs in the 1000BASE-X PCS transmitter state machine)
+==References==
+* pg047-gig-eth-pcs-pma.pdf

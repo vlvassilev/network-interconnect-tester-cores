@@ -1,0 +1,1 @@
+../../common/hdl/ethernet_crc_8.v

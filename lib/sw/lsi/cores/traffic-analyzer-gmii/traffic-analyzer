@@ -1,0 +1,6 @@
+#!/bin/bash
+args="`echo $@ | sed 's/--interface-name=eth./--interface-name=eth0/'`"
+ifindex="`echo $@ | perl -ne '$_ =~ /--interface-name=eth(\d)/; print "$1\n";'`"
+/usr/bin/gmii-mux-tool 6 $ifindex
+traffic-analyzer-gmii $args
+

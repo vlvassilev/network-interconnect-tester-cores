@@ -1,4 +1,4 @@
-#bin_SCRIPTS = traffic-generator-gmii
+bin_SCRIPTS = traffic-generator
 
 bin_PROGRAMS = traffic-generator-gmii
 

@@ -54,12 +54,14 @@ int ioreg_init(char* arg)
 int ioreg_read(int instance_id, uint32_t address, uint32_t* value)
 {
     *value=*((uint32_t*)mem+address/4);
+    usleep(1); /* workaround - seemingly avoids AXI bursts that are not correctly supported by the IPs */
     return 0;
 }
 
 int ioreg_write(int instance_id, uint32_t address, uint32_t value)
 {
     *((uint32_t*)mem+address/4)=value;
+    usleep(1); /* workaround - seemingly avoids AXI bursts that are not correctly supported by the IPs */
     return 0;
 }
 

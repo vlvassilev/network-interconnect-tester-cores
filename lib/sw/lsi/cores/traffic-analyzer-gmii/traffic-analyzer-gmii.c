@@ -22,6 +22,11 @@
 #define REG_TIMESTAMP_NSEC_ADDR	0x40
 #define REG_FRAME_SIZE_ADDR	0x44
 #define REG_FRAME_BUF_ADDR	0x50
+#define REG_BAD_CRC_PKTS_ADDR   0x58
+#define REG_BAD_CRC_OCTETS_ADDR 0x60
+#define REG_BAD_PREAMBLE_PKTS_ADDR   0x68
+#define REG_BAD_PREAMBLE_OCTETS_ADDR 0x70
+#define REG_OCTETS_TOTAL_ADDR 0x78
 
 static struct option const long_options[] =
 {
@@ -44,6 +49,12 @@ int main(int argc, char** argv)
     uint32_t msb;
     uint64_t pkts;
     uint64_t octets;
+    uint64_t octets_idle;
+    uint64_t bad_crc_octets;
+    uint64_t bad_crc_pkts;
+    uint64_t bad_preamble_octets;
+    uint64_t bad_preamble_pkts;
+    uint64_t octets_total;
     uint32_t frame_size;
     uint32_t frame_data;
 
@@ -82,19 +93,49 @@ int main(int argc, char** argv)
         ioreg_read(ioreg_id, REG_OCTETS_ADDR, &msb);
         ioreg_read(ioreg_id, REG_OCTETS_ADDR+4, &lsb);
         octets = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_OCTETS_IDLE_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_OCTETS_IDLE_ADDR+4, &lsb);
+        octets_idle = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_BAD_CRC_OCTETS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_BAD_CRC_OCTETS_ADDR+4, &lsb);
+        bad_crc_octets = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_BAD_CRC_PKTS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_BAD_CRC_PKTS_ADDR+4, &lsb);
+        bad_crc_pkts = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_BAD_PREAMBLE_OCTETS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_BAD_PREAMBLE_OCTETS_ADDR+4, &lsb);
+        bad_preamble_octets = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_BAD_PREAMBLE_PKTS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_BAD_PREAMBLE_PKTS_ADDR+4, &lsb);
+        bad_preamble_pkts = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_OCTETS_TOTAL_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_OCTETS_TOTAL_ADDR+4, &lsb);
+        octets_total = (uint64_t)msb<<32 | lsb;
+
         ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
 
         ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x1); /* unfreeze status registers */
 
-        printf("<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets><testframe-stats><testframe-pkts>%llu</testframe-pkts></testframe-stats>",
+        printf("<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets><octets-idle>%llu</octets-idle>"
+        "<bad-crc-octets>%llu</bad-crc-octets><bad-crc-pkts>%llu</bad-crc-pkts>"
+        "<bad-preamble-octets>%llu</bad-preamble-octets><bad-preamble-pkts>%llu</bad-preamble-pkts>"
+        "<octets-total>%llu</octets-total>"
+        "<testframe-stats><testframe-pkts>%llu</testframe-pkts></testframe-stats>",
                 pkts,
                 octets,
+                octets_idle,
+                bad_crc_octets,
+                bad_crc_pkts,
+                bad_preamble_octets,
+                bad_preamble_pkts,
+                octets_total,
                 pkts /*TODO*/);
         printf("<capture><sequence-number>%llu</sequence-number><data>",
                 pkts);
 
         for(i=0;i<(frame_size/4);i++) {
             ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
+            usleep(1000);
             printf("%08X",frame_data);
         }
         for(i=0;i<(frame_size%4);i++) {

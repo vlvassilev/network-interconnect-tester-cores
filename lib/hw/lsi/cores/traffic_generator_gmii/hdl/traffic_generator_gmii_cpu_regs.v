@@ -3,7 +3,8 @@ module traffic_generator_gmii_cpu_regs #
 (
 parameter C_S_AXI_DATA_WIDTH    = 32,
 parameter C_S_AXI_ADDR_WIDTH    = 12,
-parameter C_BASE_ADDRESS        = 32'h00000000
+parameter C_BASE_ADDRESS        = 32'h00000000,
+parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
 )
 (
     // General ports
@@ -45,7 +46,8 @@ parameter C_BASE_ADDRESS        = 32'h00000000
     output reg [`REG_TOTAL_FRAMES_BITS] total_frames_reg,
     output reg [`REG_FRAME_SIZE_BITS] frame_size_reg,
     output reg [`REG_FRAME_BUF_BITS] frame_buf_data,
-    output reg [7:0] frame_buf_address,
+    input      [`REG_PKTS_BITS]    pkts_reg,
+    output reg [C_FRAME_BUF_ADDRESS_WIDTH-1:0] frame_buf_address,
     output reg frame_buf_wr
 );
 
@@ -67,7 +69,7 @@ parameter C_BASE_ADDRESS        = 32'h00000000
     reg [C_S_AXI_DATA_WIDTH-1:0]        reg_data_out;
     integer                             byte_index;
 
-    reg [7:0] frame_buf_address_next;
+    reg [C_FRAME_BUF_ADDRESS_WIDTH-1:0] frame_buf_address_next;
     reg frame_buf_cycle_onetime;
 
     // I/O Connections assignments
@@ -294,6 +296,7 @@ parameter C_BASE_ADDRESS        = 32'h00000000
                 end
                 `REG_FRAME_SIZE_ADDR : begin
                     frame_size_reg[`REG_FRAME_SIZE_WIDTH-1:0] <=  S_AXI_WDATA[`REG_FRAME_SIZE_WIDTH-1:0];
+                    frame_buf_address <= 0;
                     frame_buf_address_next <= 0;
                     frame_buf_wr <= 0;
                 end
@@ -306,6 +309,12 @@ parameter C_BASE_ADDRESS        = 32'h00000000
                         frame_buf_cycle_onetime <= 1;
                     end
                 end
+                `REG_FRAME_BUF_ADDRESS_ADDR : begin
+                    frame_buf_address[C_FRAME_BUF_ADDRESS_WIDTH-1:0] <=  S_AXI_WDATA[C_FRAME_BUF_ADDRESS_WIDTH-1:0];
+                    frame_buf_address_next <= S_AXI_WDATA[C_FRAME_BUF_ADDRESS_WIDTH-1:0];
+                    frame_buf_wr <= 0;
+                end
+
             endcase
            end
            else begin
@@ -343,6 +352,13 @@ parameter C_BASE_ADDRESS        = 32'h00000000
             //Flip Register
             `REG_FLIP_ADDR : begin
                 reg_data_out [`REG_FLIP_BITS] =  ip2cpu_flip_reg;
+            end
+            //Counters
+           `REG_PKTS_ADDR : begin
+                reg_data_out [31:0] =  pkts_reg[63:32];
+            end
+           `REG_PKTS_ADDR+4 : begin
+                reg_data_out [31:0] =  pkts_reg[31:0];
             end
             //Default return value
             default: begin

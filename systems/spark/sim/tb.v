@@ -6,10 +6,11 @@ module tb();
   // Should be updated according to the generated address map
   localparam [31:0] gmii_mux_0_address = 32'hA0200000;
   localparam [31:0] gmii_mux_1_address = 32'hA0210000;
+  localparam [31:0] gmii_mux_6_address = 32'hA0260000;
   localparam [31:0] axi_ethernet_0_address = 32'hA0000000;
   localparam [31:0] tri_mode_ethernet_mac_2_address = 32'hA01E0000;
-  localparam [31:0] traffic_generator_gmii_0_address = 32'hA0270000;
-  localparam [31:0] traffic_analyzer_gmii_0_address = 32'hA0280000;
+  localparam [31:0] traffic_generator_gmii_0_address = 32'hA0280000;
+  localparam [31:0] traffic_analyzer_gmii_0_address = 32'hA0290000;
   reg aclk =1'b0;
   reg arstn = 1'b0;
 
@@ -78,6 +79,15 @@ module tb();
 
     #1000 ;
 
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h28, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h2C, 4, read_data_64[31:0], resp);
+    $display("traffic_analyzer_gmii OCTETS reg (%x)", read_data_64);
+
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h58, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h5C, 4, read_data_64[31:0], resp);
+    $display("traffic_analyzer_gmii BAD_CRC_PKTS reg (%x)", read_data_64);
+
+
     /* enable port0 traffic generator */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_0_address, 4, read_data, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(gmii_mux_0_address+8, 4, 32'h00000003, resp);
@@ -85,6 +95,10 @@ module tb();
     /* enable port1 traffic generator */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_1_address, 4, read_data, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(gmii_mux_1_address+8, 4, 32'h00000003, resp);
+
+    /* enable port1 traffic analyzer */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_6_address, 4, read_data, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(gmii_mux_6_address+8, 4, 32'h00000001, resp);
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(gmii_mux_0_address+32'h00, 4, read_data, resp);
     $display("gmii_mux IP id (%x)", read_data);
@@ -122,13 +136,13 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h344ca062, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h14, 4, 32'h0000000C, resp); /* interframe gap */
 
-
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_analyzer_gmii_0_address+16, 4, 32'h00000001, resp); /* set the enable bit reg control[0] */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000001, resp); /* set the enable bit reg control[0] */
 
     #50000 ;
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000000, resp); /* clear the enable bit reg control[0] */
-
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_analyzer_gmii_0_address+16, 4, 32'h00000002, resp); /* set the freeze bit reg control[1] */
     #5000
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h0C, 4, 32'h12345678, resp);
@@ -139,17 +153,27 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h0C, 4, read_data, resp);
     $display("traffic_analyzer_gmii FLIP reg (%x)", read_data);
 
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h28, 4, read_data_64[31:0], resp);
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h2C, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h28, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h2C, 4, read_data_64[31:0], resp);
     $display("traffic_analyzer_gmii OCTETS reg (%x)", read_data_64);
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h30, 4, read_data_64[31:0], resp);
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h34, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h30, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h34, 4, read_data_64[31:0], resp);
     $display("traffic_analyzer_gmii OCTETS_IDLE reg (%x)", read_data_64);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h20, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h24, 4, read_data_64[31:0], resp);
+    $display("traffic_analyzer_gmii PKTS reg (%x)", read_data_64);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h58, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h5C, 4, read_data_64[31:0], resp);
+    $display("traffic_analyzer_gmii BAD_CRC_PKTS reg (%x)", read_data_64);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h60, 4, read_data_64[63:32], resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h64, 4, read_data_64[31:0], resp);
+    $display("traffic_analyzer_gmii BAD_CRC_OCTETS reg (%x)", read_data_64);
 
 
     // Read RX Good Frames counter pg051
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(axi_ethernet_0_address+32'h00000290, 4, read_data_64[31:0], resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(axi_ethernet_0_address+32'h00000294, 4, read_data_64[63:32], resp);
+    $display("Read RX Good Frames counter pg051 reg (%x)", read_data_64);
 
     if(read_data_64 < 2) begin
       $error("Too few frames received at eth0");

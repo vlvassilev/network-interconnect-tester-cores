@@ -3,7 +3,8 @@ module traffic_analyzer_gmii_cpu_regs #
        (
            parameter C_S_AXI_DATA_WIDTH    = 32,
            parameter C_S_AXI_ADDR_WIDTH    = 12,
-           parameter C_BASE_ADDRESS        = 32'h00000000
+           parameter C_BASE_ADDRESS        = 32'h00000000,
+           parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
        )
        (
            // General ports
@@ -43,12 +44,15 @@ module traffic_analyzer_gmii_cpu_regs #
            input      [`REG_OCTETS_BITS]     octets_reg,
            input      [`REG_BAD_CRC_PKTS_BITS]       bad_crc_pkts_reg,
            input      [`REG_BAD_CRC_OCTETS_BITS]     bad_crc_octets_reg,
+           input      [`REG_BAD_PREAMBLE_PKTS_BITS]       bad_preamble_pkts_reg,
+           input      [`REG_BAD_PREAMBLE_OCTETS_BITS]     bad_preamble_octets_reg,
            input      [`REG_OCTETS_IDLE_BITS] octets_idle_reg,
+           input      [`REG_OCTETS_TOTAL_BITS] octets_total_reg,
            input      [`REG_TIMESTAMP_SEC_BITS]	timestamp_sec_reg,
            input      [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec_reg,
            input      [`REG_FRAME_SIZE_BITS] frame_size_reg,
            input      [`REG_FRAME_BUF_BITS]  frame_buf_data,
-           output reg [7 : 0]      frame_buf_address
+           output reg [C_FRAME_BUF_ADDRESS_WIDTH-1 : 0]      frame_buf_address
 
        );
 
@@ -331,11 +335,29 @@ always @(*) begin
         `REG_BAD_CRC_OCTETS_ADDR+4 : begin
             reg_data_out [31:0] =  bad_crc_octets_reg[31:0];
         end
+        `REG_BAD_PREAMBLE_PKTS_ADDR : begin
+            reg_data_out [31:0] =  bad_preamble_pkts_reg[63:32];
+        end
+        `REG_BAD_PREAMBLE_PKTS_ADDR+4 : begin
+            reg_data_out [31:0] =  bad_preamble_pkts_reg[31:0];
+        end
+        `REG_BAD_PREAMBLE_OCTETS_ADDR : begin
+            reg_data_out [31:0] =  bad_preamble_octets_reg[63:32];
+        end
+        `REG_BAD_PREAMBLE_OCTETS_ADDR+4 : begin
+            reg_data_out [31:0] =  bad_preamble_octets_reg[31:0];
+        end
         `REG_OCTETS_IDLE_ADDR : begin
             reg_data_out [31:0] =  octets_idle_reg[63:32];
         end
         `REG_OCTETS_IDLE_ADDR+4 : begin
             reg_data_out [31:0] =  octets_idle_reg[31:0];
+        end
+        `REG_OCTETS_TOTAL_ADDR : begin
+            reg_data_out [31:0] =  octets_total_reg[63:32];
+        end
+        `REG_OCTETS_TOTAL_ADDR+4 : begin
+            reg_data_out [31:0] =  octets_total_reg[31:0];
         end
         `REG_TIMESTAMP_SEC_ADDR : begin
             reg_data_out [31:0] =  timestamp_sec_reg[63:32];

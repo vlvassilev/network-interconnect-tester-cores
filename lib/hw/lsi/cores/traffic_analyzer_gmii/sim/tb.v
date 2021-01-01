@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
-`include "traffic_analyzer_gmii_cpu_regs_defines.v"
 `include "traffic_generator_gmii_cpu_regs_defines.v"
+`include "traffic_analyzer_gmii_cpu_regs_defines.v"
 module tb;
 
 localparam CLK_PERIOD_NS=8;
@@ -166,11 +166,10 @@ initial begin
 
     axi_write(TG_BASEADDR+`REG_FRAME_SIZE_ADDR, len);
 
-    for (i = 0; i < len/4; i = i + 1) begin
+    for (i = 0; i < (len+3)/4; i = i + 1) begin
         axi_write(TG_BASEADDR+`REG_FRAME_BUF_ADDR, {frame[4*i],frame[4*i+1], frame[4*i+2], frame[4*i+3]});
         $display("[%d]%x", i, {frame[4*i],frame[4*i+1], frame[4*i+2], frame[4*i+3]});
     end
-    axi_write(TG_BASEADDR+`REG_FRAME_SIZE_ADDR, len); /*workaround*/
 
     #(8*84*50*CLK_PERIOD_NS)
 
@@ -204,8 +203,8 @@ initial begin
     axi_read(TA_BASEADDR+`REG_OCTETS_ADDR+4, data64[31:0]);
     $display("octets=%d", data64);
 
-    if(data64 != 720) begin
-        $error("Received octets counter not 720 (%d)", data64);
+    if(data64 != 640) begin
+        $error("Received octets counter not 640 (%d)", data64);
         $fatal;
     end
 

@@ -1,4 +1,4 @@
-#bin_SCRIPTS = traffic-analyzer-gmii
+bin_SCRIPTS = traffic-analyzer
 
 bin_PROGRAMS = traffic-analyzer-gmii
 

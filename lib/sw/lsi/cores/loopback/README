@@ -1,0 +1,9 @@
+==Description==
+Configures internal loopback on specified interface
+
+==Usage==
+Enable loopback on eth0
+ $ loopback eth0 1
+
+Disable loopback on eth0
+ $ loopback eth0 0

@@ -9,7 +9,8 @@ module traffic_generator_gmii
 #(
     parameter C_S_AXI_DATA_WIDTH    = 32,
     parameter C_S_AXI_ADDR_WIDTH    = 12,
-    parameter C_BASEADDR            = 32'h00000000
+    parameter C_BASEADDR            = 32'h00000000,
+    parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
 )
 (
     // Global Ports
@@ -56,8 +57,9 @@ module traffic_generator_gmii
    wire     [`REG_FRAMES_PER_BURST_BITS] frames_per_burst_reg;
    wire     [`REG_TOTAL_FRAMES_BITS] total_frames_reg;
    wire     [`REG_FRAME_SIZE_BITS] frame_size_reg;
+   reg      [`REG_PKTS_BITS]    pkts_reg;
    wire     [31:0] frame_buf_in_data;
-   wire     [7:0] frame_buf_in_address;
+   wire     [C_FRAME_BUF_ADDRESS_WIDTH-1:0] frame_buf_in_address;
    wire     frame_buf_in_wr;
 
    reg      [2-1:0]     state;
@@ -73,9 +75,9 @@ module traffic_generator_gmii
 
    integer     data;
 
-   reg    [`C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_out_address;
-   reg    [`C_FRAME_BUF_ADDRESS_WIDTH-1:0]  next_frame_buf_out_address;
+   reg    [C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_out_address;
    wire   [31:0] frame_buf_out_data;
+   reg    [31:0] frame_buf_out_data_r;
 
 
    integer i;
@@ -85,7 +87,8 @@ module traffic_generator_gmii
  #(
    .C_S_AXI_DATA_WIDTH (C_S_AXI_DATA_WIDTH),
    .C_S_AXI_ADDR_WIDTH (C_S_AXI_ADDR_WIDTH),
-   .C_BASE_ADDRESS        (C_BASEADDR)
+   .C_BASE_ADDRESS        (C_BASEADDR),
+   .C_FRAME_BUF_ADDRESS_WIDTH (C_FRAME_BUF_ADDRESS_WIDTH)
  ) opl_cpu_regs_inst
  (
    // General ports
@@ -124,6 +127,7 @@ module traffic_generator_gmii
    .frames_per_burst_reg(frames_per_burst_reg),
    .total_frames_reg(total_frames_reg),
    .frame_size_reg(frame_size_reg),
+   .pkts_reg(pkts_reg),
    .frame_buf_address(frame_buf_in_address),
    .frame_buf_data(frame_buf_in_data),
    .frame_buf_wr(frame_buf_in_wr)
@@ -132,11 +136,11 @@ module traffic_generator_gmii
 
 bram_io #(
             .DATA_WIDTH(32),
-            .ADDR_WIDTH(8) // 2048 bytes
+            .ADDR_WIDTH(C_FRAME_BUF_ADDRESS_WIDTH) // 2048 bytes
         ) bram_io_inst (
             .rst(~resetn),
 
-            .i_clk(S_AXI_ACLK),
+            .i_clk(clk),
             .i_wr(frame_buf_in_wr),
             .i_addr(frame_buf_in_address),
             .i_data(frame_buf_in_data),
@@ -157,6 +161,9 @@ always @(posedge clk) begin
 
           state <= 2'b00;
 	  gap_counter <= 0;
+
+          pkts_reg <= 0;
+          frame_buf_out_address <= 0;
     end
     else begin
           case(state)
@@ -164,7 +171,6 @@ always @(posedge clk) begin
            gmii_d <= 0;
            gmii_en <= 0;
            gmii_er <= 0;
-           frame_buf_out_address <= 0;
 
            if(run != 0) begin
                data_counter<=0;
@@ -174,6 +180,8 @@ always @(posedge clk) begin
                gap_counter_last<=interframe_gap_reg-2;
                if(frames != total_frames_reg || total_frames_reg == 0) begin
                    state <= 2'b01;
+                   frame_buf_out_data_r <= frame_buf_out_data;
+                   frame_buf_out_address <= 1;
                end
            end
            else begin
@@ -186,20 +194,21 @@ always @(posedge clk) begin
 
            case(data_counter[1:0])
                2'b00 : begin
-                   data = frame_buf_out_data[31:24];
+                   data = frame_buf_out_data_r[31:24];
                end
                2'b01 : begin
-                   data = frame_buf_out_data[23:16];
+                   data = frame_buf_out_data_r[23:16];
                end
                2'b10 : begin
-                   data = frame_buf_out_data[15:8];
+                   data = frame_buf_out_data_r[15:8];
                end
                2'b11 : begin
-                   data = frame_buf_out_data[7:0];
+                   data = frame_buf_out_data_r[7:0];
                end
            endcase
-           if(data_counter[1:0] == 2'b10) begin
+           if(data_counter[1:0] == 2'b11) begin
                frame_buf_out_address <= frame_buf_out_address+1;
+               frame_buf_out_data_r <= frame_buf_out_data;
            end
            gmii_d <= data; //ethernet_frame[data_counter];
            gmii_en <= 1;
@@ -210,6 +219,7 @@ always @(posedge clk) begin
            end
            else begin
                state <= 2'b10;
+               pkts_reg <= pkts_reg + 1;
            end
           end
           2'b10 : begin
@@ -218,12 +228,13 @@ always @(posedge clk) begin
            gmii_d <= 0;
            gmii_en <= 0;
            gmii_er <= 0;
+
+           frame_buf_out_address <= 0;
            if(gap_counter<gap_counter_last) begin
                state <= 2'b10;
            end
            else begin
                state <= 2'b00;
-               frame_buf_out_address <= 0;
                frames <= frames + 1;
            end
           end

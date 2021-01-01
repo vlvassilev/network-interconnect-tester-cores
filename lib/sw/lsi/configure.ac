@@ -1,4 +1,4 @@
-AC_INIT([network-interconnect-tester-cores-sw], [0.7], [vladimir@lightside-instruments.com])
+AC_INIT([network-interconnect-tester-cores-sw], [0.12], [vladimir@lightside-instruments.com])
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign])
@@ -18,6 +18,7 @@ AC_CONFIG_FILES([
         cores/gmii-mux/Makefile
         cores/traffic-analyzer-gmii/Makefile
         cores/traffic-generator-gmii/Makefile
+        cores/loopback/Makefile
 ])
 
 AC_OUTPUT
