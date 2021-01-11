@@ -58,6 +58,7 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     unsigned int core_index;
     char ioreg_init_arg[64];
     uint8_t* frame_data;
+    unsigned int dynamic_len;
 
     sscanf(interface_name, "eth%u",&core_index);
 
@@ -78,7 +79,14 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
 
     ioreg_write(ioreg_id, REG_INTERFRAME_GAP_ADDR, interframe_gap-8);
     ioreg_write(ioreg_id, REG_INTERBURST_GAP_ADDR, interburst_gap-8);
-    ioreg_write(ioreg_id, REG_FRAME_SIZE_ADDR, frame_size+8);
+
+    if(testframe!=NULL) {
+        dynamic_len = 8+10+4; // sequence num(8), timestamp(10), crc(4)
+    } else {
+        dynamic_len = 0;
+    }
+
+    ioreg_write(ioreg_id, REG_FRAME_SIZE_ADDR, frame_size+8-dynamic_len);
 
     frame_data = malloc(frame_size);
     memset(frame_data,0,frame_size);
@@ -91,6 +99,7 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     ioreg_write(ioreg_id, REG_FRAME_BUF_ADDRESS_ADDR, 1);
     ioreg_write(ioreg_id, REG_FRAME_BUF_ADDR, 0x555555d5);
 
+    frame_size = frame_size - dynamic_len;
     for(i=0;i<frame_size;i+=4) {
         uint32_t value = 0;
         value |= ((uint32_t)frame_data[i])<<24;
@@ -111,9 +120,14 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR, (uint32_t)(total_frames>>32));
     ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR+4, (uint32_t)(total_frames&0xFFFFFFFF));
 
-    ioreg_write(ioreg_id, 0x10, 0x1); /* enable generator */
+    if(testframe!=NULL) {
+        value = 0x3;
+    } else {
+        value = 0x1;
+    }
+    ioreg_write(ioreg_id, 0x10, value); /* enable generator */
 
-    printf("Write CONTROL: %08X\n", 0x1);
+    printf("Write CONTROL: %08X\n", value);
 
     return 0;
 }
@@ -233,3 +247,4 @@ int main(int argc, char** argv)
 
     return 0;
 }
+

@@ -65,10 +65,22 @@ reg     [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec_reg;
 reg     [`REG_FRAME_SIZE_BITS] frame_size_reg;
 reg     [`REG_FRAME_BUF_BITS] frame_buf_reg;
 
+reg     [`REG_TESTFRAME_PKTS_BITS] testframe_pkts_reg;
+reg     [`REG_SEQUENCE_ERRORS_BITS] sequence_errors_reg;
+reg     [`REG_LATENCY_MAX_SEC_BITS] latency_max_sec_reg;
+reg     [`REG_LATENCY_MAX_NSEC_BITS] latency_max_nsec_reg;
+reg     [`REG_LATENCY_MIN_SEC_BITS] latency_min_sec_reg;
+reg     [`REG_LATENCY_MIN_NSEC_BITS] latency_min_nsec_reg;
+reg     [`REG_LATENCY_SEC_BITS] latency_sec_reg;
+reg     [`REG_LATENCY_NSEC_BITS] latency_nsec_reg;
+
+
 reg     [2-1:0]                    state;
 reg                                run;
 reg                                freeze_stats;
 reg                                freeze_stats_sync; // synced to the first octet of the frame
+reg                                update_latency; // second cycle of the pipeline updating the latency statistics
+reg                                update_latency_regs;
 reg                                frame_complete;
 reg     [`REG_PKTS_BITS]           pkts;
 reg     [`REG_OCTETS_BITS]         octets;
@@ -83,12 +95,27 @@ reg     [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec;
 reg     [`REG_FRAME_SIZE_BITS]      frame_size;
 reg     [`REG_FRAME_SIZE_BITS]      l2_frame_size;
 
+reg     [`REG_TESTFRAME_PKTS_BITS] testframe_pkts;
+reg     [`REG_SEQUENCE_ERRORS_BITS] sequence_errors;
+reg     [`REG_LATENCY_MIN_SEC_BITS] latency_min_sec;
+reg     [`REG_LATENCY_MIN_NSEC_BITS] latency_min_nsec;
+reg     [`REG_LATENCY_MAX_SEC_BITS] latency_max_sec;
+reg     [`REG_LATENCY_MAX_NSEC_BITS] latency_max_nsec;
+
+reg     [47:0] latency_sec;
+reg     [31:0] latency_nsec;
+wire    [47:0] timestamp_tx_sec;
+wire    [31:0] timestamp_tx_nsec;
+wire    [63:0] sequence_num;
+
+
 reg     [7:0]   data;
 wire    [C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_out_address;
 wire    [31:0]  frame_buf_out_data;
 reg     [C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_in_address;
 reg     [31:0]  frame_buf_in_data;
 reg             frame_buf_in_wr;
+reg     [31:0]  expected_sequence_num;
 
 wire crc_ok;
 
@@ -99,6 +126,8 @@ integer bad_crc_octets_delta;
 integer bad_crc_pkts_delta;
 integer bad_preamble_octets_delta;
 integer bad_preamble_pkts_delta;
+integer testframe_pkts_delta;
+integer sequence_errors_delta;
 
 //Registers section
 traffic_analyzer_gmii_cpu_regs
@@ -157,7 +186,17 @@ traffic_analyzer_gmii_cpu_regs
         .timestamp_nsec_reg(timestamp_nsec_reg),
         .frame_size_reg(frame_size_reg),
         .frame_buf_address(frame_buf_out_address),
-        .frame_buf_data(frame_buf_out_data)
+        .frame_buf_data(frame_buf_out_data),
+
+         // stamped testframe stats
+        .testframe_pkts_reg(testframe_pkts_reg),
+        .sequence_errors_reg(sequence_errors_reg),
+        .latency_max_sec_reg(latency_max_sec_reg),
+        .latency_max_nsec_reg(latency_max_nsec_reg),
+        .latency_min_sec_reg(latency_min_sec_reg),
+        .latency_min_nsec_reg(latency_min_nsec_reg),
+        .latency_sec_reg(latency_sec_reg),
+        .latency_nsec_reg(latency_nsec_reg)
     );
 
 bram_io #(
@@ -176,6 +215,7 @@ bram_io #(
             .o_data(frame_buf_out_data)
         );
 
+
 ethernet_crc_8_check ethernet_crc_8_check_0 (
             .clk(clk),
             .reset(~resetn),
@@ -185,12 +225,23 @@ ethernet_crc_8_check ethernet_crc_8_check_0 (
             .crc_ok(crc_ok),
             .preamble_ok(preamble_ok));
 
+testframe_parser testframe_parser_0 (
+            .clk(clk),
+            .reset(~resetn),
+            .d(gmii_d),
+            .en(gmii_en),
+            .er(gmii_er),
+            .testframe_match(testframe_match),
+            .sequence_num(sequence_num),
+            .timestamp_sec(timestamp_tx_sec),
+            .timestamp_nsec(timestamp_tx_nsec));
+
 always @(posedge clk) begin
 
     run <= control_reg[0];
     freeze_stats <= control_reg[1];
 
-    if(~resetn) begin
+    if(~resetn || run==0) begin
         state <= 2'b00;
         frame_size <= 0;
         l2_frame_size <= 0;
@@ -207,6 +258,13 @@ always @(posedge clk) begin
         frame_buf_in_address <= 0;
         freeze_stats_sync <= 0;
 
+        testframe_pkts <= 0;
+        sequence_errors <= 0;
+        latency_min_sec <= 48'hFFFFFFFFFFFF;
+        latency_min_nsec <= 32'hFFFFFFFF;
+        latency_max_sec <= 0;
+        latency_max_nsec <= 0;
+
         pkts_reg <= 0;
         octets_reg <= 0;
         bad_crc_pkts_reg <= 0;
@@ -218,6 +276,18 @@ always @(posedge clk) begin
         timestamp_sec_reg <= 0;
         timestamp_nsec_reg <= 0;
         frame_size_reg <= 0;
+
+        testframe_pkts_reg <= 0;
+        sequence_errors_reg <= 0;
+        latency_min_sec_reg <= 48'hFFFFFFFFFFFF;
+        latency_min_nsec_reg <= 32'hFFFFFFFF;
+        latency_max_sec_reg <= 0;
+        latency_max_nsec_reg <= 0;
+
+        expected_sequence_num <= 0;
+
+        update_latency <= 0;
+        update_latency_regs <= 0;
 
     end
     else begin
@@ -244,6 +314,7 @@ always @(posedge clk) begin
                         bad_crc_pkts_delta = 0;
                         bad_preamble_octets_delta = frame_size;
                         bad_preamble_pkts_delta = 1;
+                        sequence_errors_delta = 0;
                     end
                     else if(crc_ok) begin
                         octets_delta = l2_frame_size;
@@ -252,6 +323,31 @@ always @(posedge clk) begin
                         bad_crc_pkts_delta = 0;
                         bad_preamble_octets_delta = 0;
                         bad_preamble_pkts_delta = 0;
+
+                        if(testframe_match) begin
+                            testframe_pkts_delta <= 1;
+                            if(sequence_num != expected_sequence_num) begin
+                                sequence_errors_delta = 1;
+                            end
+                            else begin
+                                sequence_errors_delta = 0;
+                            end
+
+                            expected_sequence_num <= sequence_num + 1;
+
+                            update_latency <= 1;
+                            if (!freeze_stats_sync) begin
+                                update_latency_regs <= 1;
+                            end
+
+                            //$display("Timestamp TX %018d.%09d", timestamp_tx_sec, timestamp_tx_nsec);
+                            //$display("Timestamp RX %018d.%09d", timestamp_sec, timestamp_nsec);
+
+                        end
+                        else begin
+                            testframe_pkts_delta = 0;
+                            sequence_errors_delta = 0;
+                        end
                     end
                     else begin
                         octets_delta = 0;
@@ -260,6 +356,8 @@ always @(posedge clk) begin
                         bad_crc_pkts_delta = 1;
                         bad_preamble_octets_delta = 0;
                         bad_preamble_pkts_delta = 0;
+                        testframe_pkts_delta = 0;
+                        sequence_errors_delta = 0;
                     end
 
                     octets <= octets + octets_delta;
@@ -271,6 +369,20 @@ always @(posedge clk) begin
                     bad_preamble_octets <= bad_preamble_octets + bad_preamble_octets_delta;
                     bad_preamble_pkts <= bad_preamble_pkts + bad_preamble_pkts_delta;
 
+                    testframe_pkts <= testframe_pkts + testframe_pkts_delta;
+                    sequence_errors <= sequence_errors + sequence_errors_delta;
+
+                    //latency
+                    //$display("timestamp_nsec=%x, timestamp_tx_nsec=%x", timestamp_nsec, timestamp_tx_nsec);
+                    if(timestamp_nsec<timestamp_tx_nsec) begin
+                        latency_sec <= timestamp_sec - timestamp_tx_sec - 1;
+                        latency_nsec <= 32'd1000000000 - timestamp_tx_nsec + timestamp_nsec;
+                    end
+                    else begin
+                        latency_sec <= timestamp_sec - timestamp_tx_sec;
+                        latency_nsec <= timestamp_nsec - timestamp_tx_nsec;
+                    end
+
                     if (!freeze_stats_sync) begin
                         pkts_reg <= pkts + pkts_delta;
                         octets_reg <= octets + octets_delta;
@@ -281,7 +393,13 @@ always @(posedge clk) begin
                         timestamp_sec_reg <= timestamp_sec;
                         timestamp_nsec_reg <= timestamp_nsec;
                         frame_size_reg <= frame_size;
+                        testframe_pkts_reg <= testframe_pkts + testframe_pkts_delta;
+                        sequence_errors_reg <= sequence_errors + sequence_errors_delta;
                     end
+                end
+                else begin
+                    update_latency <= 0;
+                    update_latency_regs <= 0;
                 end
             end
             2'b01 : begin
@@ -326,6 +444,45 @@ always @(posedge clk) begin
         end
     end
 end
+
+always @(posedge clk) begin
+    if (update_latency) begin
+        if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
+            latency_max_sec <= latency_sec;
+            latency_max_nsec <= latency_nsec;
+        end
+        if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
+            latency_min_sec <= latency_sec;
+            latency_min_nsec <= latency_nsec;
+        end
+
+        //$display("Latency %018d.%09d", latency_sec, latency_nsec);
+    end
+
+    if (update_latency_regs) begin
+
+        latency_sec_reg <= latency_sec;
+        latency_nsec_reg <= latency_nsec;
+
+        if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
+            latency_max_sec_reg <= latency_sec;
+            latency_max_nsec_reg <= latency_nsec;
+        end
+        else begin
+            latency_max_sec_reg <= latency_max_sec;
+            latency_max_nsec_reg <= latency_max_nsec;
+        end
+        if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
+            latency_min_sec_reg <= latency_sec;
+            latency_min_nsec_reg <= latency_nsec;
+        end
+        else begin
+            latency_min_sec_reg <= latency_min_sec;
+            latency_min_nsec_reg <= latency_min_nsec;
+        end
+    end
+end
+
 
 always @(posedge clk) begin
     if (~resetn) begin

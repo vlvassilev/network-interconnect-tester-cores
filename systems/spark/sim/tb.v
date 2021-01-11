@@ -115,7 +115,7 @@ module tb();
     $display("traffic_analyzer_gmii FLIP reg (%x)", read_data);
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h14, 4, 32'h0000000C, resp); /* interframe gap */
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h44, 4, 32'h00000048, resp); /* layer 1 frame size */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h44, 4, 32'd50, resp); /* layer 1 frame size -seqnum(8) - timestamp(10) - crc(4) */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h55555555, resp); /* frame data */
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h555555d5, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h01020304, resp);
@@ -127,7 +127,7 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h191a1b1c, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h1d1e1f20, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h21222324, resp);
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h25262728, resp);
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h00072728, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h292a2b2c, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h2d2e2f30, resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h50, 4, 32'h31323334, resp);
@@ -137,12 +137,12 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h14, 4, 32'h0000000C, resp); /* interframe gap */
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_analyzer_gmii_0_address+16, 4, 32'h00000001, resp); /* set the enable bit reg control[0] */
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000001, resp); /* set the enable bit reg control[0] */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000003, resp); /* set the enable bit reg control[0] and dynamic mode control[1]*/
 
     #50000 ;
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+16, 4, 32'h00000000, resp); /* clear the enable bit reg control[0] */
-    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_analyzer_gmii_0_address+16, 4, 32'h00000002, resp); /* set the freeze bit reg control[1] */
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_analyzer_gmii_0_address+16, 4, 32'h00000003, resp); /* set the freeze bit reg control[1] */
     #5000
 
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.write_data(traffic_generator_gmii_0_address+32'h0C, 4, 32'h12345678, resp);
@@ -168,6 +168,12 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h60, 4, read_data_64[63:32], resp);
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h64, 4, read_data_64[31:0], resp);
     $display("traffic_analyzer_gmii BAD_CRC_OCTETS reg (%x)", read_data_64);
+
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'h98, 4, read_data, resp);
+    $display("traffic_analyzer_gmii LATENCY_MIN_NSEC reg (%u)", read_data);
+
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'hA8, 4, read_data, resp);
+    $display("traffic_analyzer_gmii LATENCY_MAX_NSEC reg (%u)", read_data);
 
 
     // Read RX Good Frames counter pg051

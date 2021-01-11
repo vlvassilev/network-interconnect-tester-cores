@@ -52,7 +52,16 @@ module traffic_analyzer_gmii_cpu_regs #
            input      [`REG_TIMESTAMP_NSEC_BITS] timestamp_nsec_reg,
            input      [`REG_FRAME_SIZE_BITS] frame_size_reg,
            input      [`REG_FRAME_BUF_BITS]  frame_buf_data,
-           output reg [C_FRAME_BUF_ADDRESS_WIDTH-1 : 0]      frame_buf_address
+           output reg [C_FRAME_BUF_ADDRESS_WIDTH-1 : 0]      frame_buf_address,
+
+           input      [`REG_TESTFRAME_PKTS_BITS] testframe_pkts_reg,
+           input      [`REG_SEQUENCE_ERRORS_BITS] sequence_errors_reg,
+           input      [`REG_LATENCY_MIN_SEC_BITS]	latency_min_sec_reg,
+           input      [`REG_LATENCY_MIN_NSEC_BITS]	latency_min_nsec_reg,
+           input      [`REG_LATENCY_MAX_SEC_BITS]	latency_max_sec_reg,
+           input      [`REG_LATENCY_MAX_NSEC_BITS]	latency_max_nsec_reg,
+           input      [`REG_LATENCY_SEC_BITS]	latency_sec_reg,
+           input      [`REG_LATENCY_NSEC_BITS]	latency_nsec_reg
 
        );
 
@@ -374,10 +383,51 @@ always @(*) begin
         `REG_FRAME_BUF_ADDR : begin
             reg_data_out [31:0] =  frame_buf_data;
         end
+        `REG_TESTFRAME_PKTS_ADDR : begin
+            reg_data_out [31:0] =  testframe_pkts_reg[63:32];
+        end
+        `REG_TESTFRAME_PKTS_ADDR+4 : begin
+            reg_data_out [31:0] =  testframe_pkts_reg[31:0];
+        end
+        `REG_SEQUENCE_ERRORS_ADDR : begin
+            reg_data_out [31:0] =  sequence_errors_reg[63:32];
+        end
+        `REG_SEQUENCE_ERRORS_ADDR+4 : begin
+            reg_data_out [31:0] =  sequence_errors_reg[31:0];
+        end
+        `REG_LATENCY_MIN_SEC_ADDR : begin
+            reg_data_out [31:0] =  latency_min_sec_reg[63:32];
+        end
+        `REG_LATENCY_MIN_SEC_ADDR+4 : begin
+            reg_data_out [31:0] =  latency_min_sec_reg[31:0];
+        end
+        `REG_LATENCY_MIN_NSEC_ADDR : begin
+            reg_data_out [31:0] =  latency_min_nsec_reg[31:0];
+        end
+        `REG_LATENCY_MAX_SEC_ADDR : begin
+            reg_data_out [31:0] =  latency_max_sec_reg[63:32];
+        end
+        `REG_LATENCY_MAX_SEC_ADDR+4 : begin
+            reg_data_out [31:0] =  latency_max_sec_reg[31:0];
+        end
+        `REG_LATENCY_MAX_NSEC_ADDR : begin
+            reg_data_out [31:0] =  latency_max_nsec_reg[31:0];
+        end
+        `REG_LATENCY_SEC_ADDR : begin
+            reg_data_out [31:0] =  latency_sec_reg[63:32];
+        end
+        `REG_LATENCY_SEC_ADDR+4 : begin
+            reg_data_out [31:0] =  latency_sec_reg[31:0];
+        end
+        `REG_LATENCY_NSEC_ADDR : begin
+            reg_data_out [31:0] =  latency_nsec_reg[31:0];
+        end
+
+ 
         //Default return value
         default: begin
             reg_data_out [31:0] =  32'hDEADBEEF;
-        //    reg_data_out [31:0] =  32'hZZZZZZZZ;
+        //   reg_data_out [31:0] =  32'hZZZZZZZZ;
         end
 
     endcase

@@ -27,6 +27,12 @@
 #define REG_BAD_PREAMBLE_PKTS_ADDR   0x68
 #define REG_BAD_PREAMBLE_OCTETS_ADDR 0x70
 #define REG_OCTETS_TOTAL_ADDR 0x78
+#define REG_TESTFRAME_PKTS_ADDR 0x80
+#define REG_SEQUENCE_ERRORS_ADDR 0x88
+#define REG_LATENCY_MIN_SEC_ADDR 0x90
+#define REG_LATENCY_MIN_NSEC_ADDR 0x98
+#define REG_LATENCY_MAX_SEC_ADDR 0xA0
+#define REG_LATENCY_MAX_NSEC_ADDR 0xA8
 
 static struct option const long_options[] =
 {
@@ -57,6 +63,13 @@ int main(int argc, char** argv)
     uint64_t octets_total;
     uint32_t frame_size;
     uint32_t frame_data;
+    uint64_t testframe_pkts;
+    uint64_t sequence_errors;
+    uint64_t latency_min_sec;
+    uint32_t latency_min_nsec;
+    uint64_t latency_max_sec;
+    uint32_t latency_max_nsec;
+    uint32_t timestamp_nsec;
 
     while ((optc = getopt_long (argc, argv, "i:v", long_options, NULL)) != -1) {
         switch (optc) {
@@ -78,6 +91,8 @@ int main(int argc, char** argv)
     ioreg_id = ioreg_init(ioreg_init_arg);
     assert(ioreg_id>=0);
 
+    ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x0); /* start */
+    usleep(1000);
     ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x1); /* start */
 
     while(1) {
@@ -111,16 +126,31 @@ int main(int argc, char** argv)
         ioreg_read(ioreg_id, REG_OCTETS_TOTAL_ADDR, &msb);
         ioreg_read(ioreg_id, REG_OCTETS_TOTAL_ADDR+4, &lsb);
         octets_total = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_TESTFRAME_PKTS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_TESTFRAME_PKTS_ADDR+4, &lsb);
+        testframe_pkts = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_SEQUENCE_ERRORS_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_SEQUENCE_ERRORS_ADDR+4, &lsb);
+        sequence_errors = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_LATENCY_MIN_SEC_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LATENCY_MIN_SEC_ADDR+4, &lsb);
+        latency_min_sec = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_LATENCY_MIN_NSEC_ADDR, &latency_min_nsec);
+        ioreg_read(ioreg_id, REG_LATENCY_MAX_SEC_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LATENCY_MAX_SEC_ADDR+4, &lsb);
+        latency_max_sec = (uint64_t)msb<<32 | lsb;
+        ioreg_read(ioreg_id, REG_LATENCY_MAX_NSEC_ADDR, &latency_max_nsec);
+
+        ioreg_read(ioreg_id, REG_TIMESTAMP_NSEC_ADDR, &timestamp_nsec);
 
         ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
-
-        ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x1); /* unfreeze status registers */
 
         printf("<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets><octets-idle>%llu</octets-idle>"
         "<bad-crc-octets>%llu</bad-crc-octets><bad-crc-pkts>%llu</bad-crc-pkts>"
         "<bad-preamble-octets>%llu</bad-preamble-octets><bad-preamble-pkts>%llu</bad-preamble-pkts>"
         "<octets-total>%llu</octets-total>"
-        "<testframe-stats><testframe-pkts>%llu</testframe-pkts></testframe-stats>",
+        "<testframe-stats><testframe-pkts>%llu</testframe-pkts><sequence-errors>%llu</sequence-errors>"
+        "<latency><samples>%llu</samples><min-sec>%llu</min-sec><min>%u</min><max-sec>%llu</max-sec><max>%u</max></latency></testframe-stats>",
                 pkts,
                 octets,
                 octets_idle,
@@ -129,28 +159,39 @@ int main(int argc, char** argv)
                 bad_preamble_octets,
                 bad_preamble_pkts,
                 octets_total,
-                pkts /*TODO*/);
-        printf("<capture><sequence-number>%llu</sequence-number><data>",
-                pkts);
+                testframe_pkts,
+                sequence_errors,
+                testframe_pkts,
+                latency_min_sec,
+                latency_min_nsec,
+                latency_max_sec,
+                latency_max_nsec);
 
-        for(i=0;i<(frame_size/4);i++) {
-            ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
-            usleep(1000);
-            printf("%08X",frame_data);
-        }
-        for(i=0;i<(frame_size%4);i++) {
-            if(i==0) {
+        if(1) {
+            printf("<capture><timestamp0><nsec>%u</nsec></timestamp0><sequence-number>%llu</sequence-number><data>",
+                    timestamp_nsec,
+                    pkts);
+
+            for(i=0;i<(frame_size/4);i++) {
                 ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
-                printf("%02X",(frame_data>>24) & 0xFF);
-            } else if(i==1) {
-                printf("%02X",(frame_data>>16) & 0xFF);
-            } else if(i==2) {
-                printf("%02X",(frame_data>>8) & 0xFF);
+                usleep(1000);
+                printf("%08X",frame_data);
             }
+            for(i=0;i<(frame_size%4);i++) {
+                if(i==0) {
+                    ioreg_read(ioreg_id, REG_FRAME_BUF_ADDR, &frame_data);
+                    printf("%02X",(frame_data>>24) & 0xFF);
+                } else if(i==1) {
+                    printf("%02X",(frame_data>>16) & 0xFF);
+                } else if(i==2) {
+                    printf("%02X",(frame_data>>8) & 0xFF);
+                }
+            }
+            printf("</data></capture>");
         }
-        printf("</data></capture>");
         printf("</state>\n");
 
         fflush(stdout);
+        ioreg_write(ioreg_id, REG_CONTROL_ADDR, 0x1); /* unfreeze status registers */
     }
 }

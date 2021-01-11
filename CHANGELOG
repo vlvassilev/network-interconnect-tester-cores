@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.13) stable; urgency=medium
+
+  * Added dynamic testframe mode generated with 64 bit sequence number and PTP timestamp used for latency calculation
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 11 Jan 2021 12:41:03 +0100
+
 network-interconnect-tester-cores (0.12) stable; urgency=medium
 
   * Fixed bug in the frame payload buffer implementation

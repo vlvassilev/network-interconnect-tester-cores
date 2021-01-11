@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 `include "traffic_generator_gmii_cpu_regs.v"
 `include "traffic_generator_gmii_cpu_regs_defines.v"
+//`include "ethernet_crc_8.v"
 
 `define C_GMII_DATA_WIDTH 8
 `define C_FRAME_BUF_ADDRESS_WIDTH 8
@@ -62,7 +63,8 @@ module traffic_generator_gmii
    wire     [C_FRAME_BUF_ADDRESS_WIDTH-1:0] frame_buf_in_address;
    wire     frame_buf_in_wr;
 
-   reg      [2-1:0]     state;
+   reg      [3-1:0]     state;
+   reg      [3-1:0]     next_state;
    reg                  run;
    reg      [31:0]      interframe_gap;
    reg      [10:0]      frame_size;
@@ -72,12 +74,27 @@ module traffic_generator_gmii
    reg      [31:0]    data_counter_last;
    reg      [7:0]     ethernet_frame[71:0];
    reg      [`REG_TOTAL_FRAMES_BITS]    frames;
+   reg      [4:0]    seqnum_counter;
+   reg      [4:0]    timestamp_counter;
+   reg                timestamp_enable;
+   reg      [7:0]     timestamp[9:0];
+   reg      [4:0]    crc_counter;
+   reg      [7:0]     data_t0;
+   reg      [63:0]    sequence_number;
 
    integer     data;
 
    reg    [C_FRAME_BUF_ADDRESS_WIDTH-1:0]  frame_buf_out_address;
    wire   [31:0] frame_buf_out_data;
    reg    [31:0] frame_buf_out_data_r;
+
+   //crc inputs
+   reg         crc_calc;
+   reg         crc_init;
+   reg         crc_d_valid;
+   //crc outputs
+   wire [31:0] crc_reg;
+   wire [7:0]  crc;
 
 
    integer i;
@@ -150,9 +167,12 @@ bram_io #(
             .o_data(frame_buf_out_data)
         );
 
+ethernet_crc_8 ethernet_crc_8_0 (.clk(clk), .reset(~resetn), .d(data_t0), .calc(crc_calc), .init(crc_init), .d_valid(crc_d_valid), .crc_reg(crc_reg), .crc(crc));
+
 always @(posedge clk) begin
 
     run <= control_reg[0];
+    timestamp_enable <= control_reg[1];
 
     if(~resetn) begin
           gmii_d <= 0;
@@ -164,10 +184,17 @@ always @(posedge clk) begin
 
           pkts_reg <= 0;
           frame_buf_out_address <= 0;
+
+          crc_calc <= 0;
+          crc_init <= 1;
+          crc_d_valid <= 0;
+
     end
     else begin
+           //$display("gmii_d data=%x, crc=%x, crc_reg=%x",gmii_d,crc,crc_reg);
+
           case(state)
-          2'b00 : begin
+          0 : begin
            gmii_d <= 0;
            gmii_en <= 0;
            gmii_er <= 0;
@@ -177,19 +204,24 @@ always @(posedge clk) begin
                data_counter_last<=frame_size_reg-1;
 
                gap_counter<=0;
-               gap_counter_last<=interframe_gap_reg-2;
+               gap_counter_last<=interframe_gap_reg-3;
+
+               seqnum_counter <= 0;
+               timestamp_counter <= 0;
+               crc_counter <= 0;
+
                if(frames != total_frames_reg || total_frames_reg == 0) begin
-                   state <= 2'b01;
+                   state <= 1;
                    frame_buf_out_data_r <= frame_buf_out_data;
                    frame_buf_out_address <= 1;
                end
            end
            else begin
-               state <= 2'b00;
+               state <= 0;
                frames <= 0;
            end
           end
-          2'b01 : begin
+          1 : begin
            data_counter<=data_counter+1;
 
            case(data_counter[1:0])
@@ -210,19 +242,52 @@ always @(posedge clk) begin
                frame_buf_out_address <= frame_buf_out_address+1;
                frame_buf_out_data_r <= frame_buf_out_data;
            end
-           gmii_d <= data; //ethernet_frame[data_counter];
-           gmii_en <= 1;
-           gmii_er <= 0;
+
+           data_t0 <= data; /* delay data 1 cycle for CRC pipeline */
+
+           if(data_counter>0) begin
+               gmii_en <= 1;
+               gmii_d <= data_t0;
+               gmii_er <= 0;
+           end
+
+           if(data_counter == 1) begin
+               timestamp[0]<=sec[47:40];
+               timestamp[1]<=sec[39:32];
+               timestamp[2]<=sec[31:24];
+               timestamp[3]<=sec[23:16];
+               timestamp[4]<=sec[15:8];
+               timestamp[5]<=sec[7:0];
+               timestamp[6]<=nsec[29:24]; //!
+               timestamp[7]<=nsec[23:16];
+               timestamp[8]<=nsec[15:8];
+               timestamp[9]<=nsec[7:0];
+           end
 
            if(data_counter<data_counter_last) begin
                state <= 2'b01;
            end
            else begin
-               state <= 2'b10;
+               state <= next_state; //2'b10;
                pkts_reg <= pkts_reg + 1;
            end
+
+           //next_state
+           if(timestamp_enable) begin
+               next_state <= 3;
+           end
+           else begin
+               next_state <= 6;
+           end
+           if(data_counter == 8) begin
+              crc_calc <= 1;
+              crc_init <= 0;
+              crc_d_valid <= 1;
+           end
+
           end
-          2'b10 : begin
+
+          2 : begin
            gap_counter<=gap_counter+1;
 
            gmii_d <= 0;
@@ -231,12 +296,68 @@ always @(posedge clk) begin
 
            frame_buf_out_address <= 0;
            if(gap_counter<gap_counter_last) begin
-               state <= 2'b10;
+               state <= 2;
            end
            else begin
-               state <= 2'b00;
+               state <= 0;
                frames <= frames + 1;
            end
+
+           crc_calc <= 0;
+           crc_init <= 1;
+           crc_d_valid <= 0;
+
+          end
+
+          3 : begin
+           seqnum_counter<=seqnum_counter+1;
+
+           data = frames[8*(7-seqnum_counter) +: 8];
+
+           data_t0 <= data;
+
+           gmii_d <= data_t0;
+
+           if(seqnum_counter==7) begin
+               state <= 4;
+           end
+          end
+
+          4 : begin
+           timestamp_counter<=timestamp_counter+1;
+
+           data_t0 <= timestamp[timestamp_counter];
+
+           gmii_d <= data_t0;
+
+           if(timestamp_counter==9) begin
+               state <= 5;
+           end
+          end
+
+          5 : begin
+           crc_counter<=crc_counter+1;
+
+           crc_calc <= 0;
+
+           if(crc_counter==0) begin
+               gmii_d <= data_t0;
+           end
+           else begin
+               gmii_d <= crc;
+           end
+
+           gmii_en <= 1;
+           gmii_er <= 0;
+
+           if(crc_counter==4) begin
+               state <= 2;
+           end
+          end
+
+          6 : begin
+              gmii_d <= data_t0;
+              state <= 2;
           end
 
           endcase

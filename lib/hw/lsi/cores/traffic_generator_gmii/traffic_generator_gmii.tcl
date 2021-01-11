@@ -27,6 +27,8 @@ read_verilog "./hdl/traffic_generator_gmii_cpu_regs_defines.v"
 read_verilog "./hdl/traffic_generator_gmii_cpu_regs.v"
 read_verilog "./hdl/traffic_generator_gmii.v"
 read_verilog "./hdl/bram_io.v"
+read_verilog "./hdl/ethernet_crc_8.v"
+
 update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1
 

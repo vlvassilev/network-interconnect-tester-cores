@@ -137,10 +137,6 @@ traffic_analyzer_gmii #(
 always #(CLK_PERIOD_NS / 2) clk = ~clk;
 always #(AXI_CLK_PERIOD_NS / 2) S_AXI_ACLK = ~S_AXI_ACLK;
 
-//  always @(posedge S_AXI_ACLK) begin
-//           $display("axi time=%t, S_AXI_RDATA=%x", $time, S_AXI_RDATA);
-//  end
-
 always @(negedge S_AXI_ACLK) begin
     //    $display("axi time=%t, S_AXI_RDATA=%x", $time, S_AXI_RDATA);
 end
@@ -164,14 +160,18 @@ initial begin
     len = 64+8; // frame includes layer1 preamble 55555555555555d5
     $readmemh("frame.mem", frame, 0, len-1);
 
-    axi_write(TG_BASEADDR+`REG_FRAME_SIZE_ADDR, len);
+
+    /* in dynamic mode 8 bytes sequence number and 10 octets 1588 timestamp are added to the end of the static frame data 4 bytes CRC */
+    axi_write(TG_BASEADDR+`REG_FRAME_SIZE_ADDR, len-8-10-4);
 
     for (i = 0; i < (len+3)/4; i = i + 1) begin
         axi_write(TG_BASEADDR+`REG_FRAME_BUF_ADDR, {frame[4*i],frame[4*i+1], frame[4*i+2], frame[4*i+3]});
         $display("[%d]%x", i, {frame[4*i],frame[4*i+1], frame[4*i+2], frame[4*i+3]});
     end
 
+    $display("nsec=%d",nsec);
     #(8*84*50*CLK_PERIOD_NS)
+    $display("nsec=%d",nsec);
 
     axi_read(TA_BASEADDR+`REG_PKTS_ADDR, data64[63:32]);
     axi_read(TA_BASEADDR+`REG_PKTS_ADDR+4, data64[31:0]);
@@ -186,7 +186,7 @@ initial begin
     axi_write(TG_BASEADDR+`REG_TOTAL_FRAMES_ADDR,  data64[63:32]);
     axi_write(TG_BASEADDR+`REG_TOTAL_FRAMES_ADDR+4,  data64[31:0]);
 
-    axi_write(TG_BASEADDR+`REG_CONTROL_ADDR, 32'h00000001);
+    axi_write(TG_BASEADDR+`REG_CONTROL_ADDR, 32'h00000003);
 
     #(84*10*CLK_PERIOD_NS-1*CLK_PERIOD_NS)
 
@@ -224,9 +224,17 @@ initial begin
     axi_read(TA_BASEADDR+`REG_TIMESTAMP_NSEC_ADDR, data);
     $display("timestamp.nsec=%d", data);
 
+    axi_read(TA_BASEADDR+`REG_LATENCY_MIN_NSEC_ADDR, data);
+    $display("latency_min_nsec=%d", data);
+
+    axi_read(TA_BASEADDR+`REG_LATENCY_MAX_NSEC_ADDR, data);
+    $display("latency_max_nsec=%d", data);
+
+    axi_read(TA_BASEADDR+`REG_LATENCY_NSEC_ADDR, data);
+    $display("Last latency_nsec=%d", data);
+
     axi_read(TA_BASEADDR+`REG_FRAME_SIZE_ADDR, data);
     $display("frame_size=%d", data);
-
 
     axi_write(TG_BASEADDR+`REG_CONTROL_ADDR, 32'h00000002);
 

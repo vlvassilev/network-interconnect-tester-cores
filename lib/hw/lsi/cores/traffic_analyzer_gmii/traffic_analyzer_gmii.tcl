@@ -27,6 +27,9 @@ read_verilog "./hdl/traffic_analyzer_gmii_cpu_regs_defines.v"
 read_verilog "./hdl/traffic_analyzer_gmii_cpu_regs.v"
 read_verilog "./hdl/traffic_analyzer_gmii.v"
 read_verilog "./hdl/bram_io.v"
+read_verilog "./hdl/ethernet_crc_8.v"
+read_verilog "./hdl/ethernet_crc_8_check.v"
+read_verilog "./hdl/testframe_parser.v"
 update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1
 
