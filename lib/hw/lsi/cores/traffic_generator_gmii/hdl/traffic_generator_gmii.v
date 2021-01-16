@@ -157,7 +157,7 @@ bram_io #(
         ) bram_io_inst (
             .rst(~resetn),
 
-            .i_clk(clk),
+            .i_clk(S_AXI_ACLK),
             .i_wr(frame_buf_in_wr),
             .i_addr(frame_buf_in_address),
             .i_data(frame_buf_in_data),

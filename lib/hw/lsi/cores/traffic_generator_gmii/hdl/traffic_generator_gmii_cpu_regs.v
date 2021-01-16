@@ -246,7 +246,7 @@ parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
 
     // Implement memory mapped register select and write logic generation
 
-    assign reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID && S_AXI_WSTRB==4'hF;
+    assign reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;
 
 //////////////////////////////////////////////////////////////
 // write registers
@@ -254,7 +254,7 @@ parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
 
 
 //R/W register, not cleared
-    always @(posedge clk) begin
+    always @(posedge S_AXI_ACLK) begin
         if (!resetn) begin
 
             cpu2ip_flip_reg <= #1 `REG_FLIP_DEFAULT;
@@ -266,7 +266,7 @@ parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
             frame_size_reg <= #1 `REG_FRAME_SIZE_DEFAULT;
         end
         else begin
-           if (reg_wren) begin //write event
+           if (reg_wren && S_AXI_WSTRB==4'hF) begin //write event
             case (axi_awaddr)
             //Flip Register
                 `REG_FLIP_ADDR : begin

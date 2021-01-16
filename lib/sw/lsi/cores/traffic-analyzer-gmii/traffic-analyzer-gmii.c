@@ -33,6 +33,8 @@
 #define REG_LATENCY_MIN_NSEC_ADDR 0x98
 #define REG_LATENCY_MAX_SEC_ADDR 0xA0
 #define REG_LATENCY_MAX_NSEC_ADDR 0xA8
+#define REG_LATENCY_SEC_ADDR 0xB0
+#define REG_LATENCY_NSEC_ADDR 0xB8
 
 static struct option const long_options[] =
 {
@@ -69,6 +71,8 @@ int main(int argc, char** argv)
     uint32_t latency_min_nsec;
     uint64_t latency_max_sec;
     uint32_t latency_max_nsec;
+    uint64_t latency_sec;
+    uint32_t latency_nsec;
     uint32_t timestamp_nsec;
 
     while ((optc = getopt_long (argc, argv, "i:v", long_options, NULL)) != -1) {
@@ -141,6 +145,11 @@ int main(int argc, char** argv)
         latency_max_sec = (uint64_t)msb<<32 | lsb;
         ioreg_read(ioreg_id, REG_LATENCY_MAX_NSEC_ADDR, &latency_max_nsec);
 
+        ioreg_read(ioreg_id, REG_LATENCY_NSEC_ADDR, &latency_nsec);
+        ioreg_read(ioreg_id, REG_LATENCY_SEC_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LATENCY_SEC_ADDR+4, &lsb);
+        latency_sec = (uint64_t)msb<<32 | lsb;
+
         ioreg_read(ioreg_id, REG_TIMESTAMP_NSEC_ADDR, &timestamp_nsec);
 
         ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
@@ -150,7 +159,7 @@ int main(int argc, char** argv)
         "<bad-preamble-octets>%llu</bad-preamble-octets><bad-preamble-pkts>%llu</bad-preamble-pkts>"
         "<octets-total>%llu</octets-total>"
         "<testframe-stats><testframe-pkts>%llu</testframe-pkts><sequence-errors>%llu</sequence-errors>"
-        "<latency><samples>%llu</samples><min-sec>%llu</min-sec><min>%u</min><max-sec>%llu</max-sec><max>%u</max></latency></testframe-stats>",
+        "<latency><samples>%llu</samples><min-sec>%llu</min-sec><min>%u</min><max-sec>%llu</max-sec><max>%u</max><last-sec>%llu</last-sec><last>%u</last></latency></testframe-stats>",
                 pkts,
                 octets,
                 octets_idle,
@@ -165,7 +174,9 @@ int main(int argc, char** argv)
                 latency_min_sec,
                 latency_min_nsec,
                 latency_max_sec,
-                latency_max_nsec);
+                latency_max_nsec,
+                latency_sec,
+                latency_nsec);
 
         if(1) {
             printf("<capture><timestamp0><nsec>%u</nsec></timestamp0><sequence-number>%llu</sequence-number><data>",

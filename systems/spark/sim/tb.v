@@ -175,6 +175,9 @@ module tb();
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'hA8, 4, read_data, resp);
     $display("traffic_analyzer_gmii LATENCY_MAX_NSEC reg (%u)", read_data);
 
+    tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(traffic_analyzer_gmii_0_address+32'hB8, 4, read_data, resp);
+    $display("traffic_analyzer_gmii LATENCY_NSEC reg (%u)", read_data);
+
 
     // Read RX Good Frames counter pg051
     tb.spark_wrapper_i.spark_i.zynq_ultra_ps_e_0.inst.read_data(axi_ethernet_0_address+32'h00000290, 4, read_data_64[31:0], resp);

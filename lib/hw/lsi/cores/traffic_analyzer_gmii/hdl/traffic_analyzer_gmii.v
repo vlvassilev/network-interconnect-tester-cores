@@ -260,10 +260,6 @@ always @(posedge clk) begin
 
         testframe_pkts <= 0;
         sequence_errors <= 0;
-        latency_min_sec <= 48'hFFFFFFFFFFFF;
-        latency_min_nsec <= 32'hFFFFFFFF;
-        latency_max_sec <= 0;
-        latency_max_nsec <= 0;
 
         pkts_reg <= 0;
         octets_reg <= 0;
@@ -279,15 +275,9 @@ always @(posedge clk) begin
 
         testframe_pkts_reg <= 0;
         sequence_errors_reg <= 0;
-        latency_min_sec_reg <= 48'hFFFFFFFFFFFF;
-        latency_min_nsec_reg <= 32'hFFFFFFFF;
-        latency_max_sec_reg <= 0;
-        latency_max_nsec_reg <= 0;
 
         expected_sequence_num <= 0;
 
-        update_latency <= 0;
-        update_latency_regs <= 0;
 
     end
     else begin
@@ -335,14 +325,6 @@ always @(posedge clk) begin
 
                             expected_sequence_num <= sequence_num + 1;
 
-                            update_latency <= 1;
-                            if (!freeze_stats_sync) begin
-                                update_latency_regs <= 1;
-                            end
-
-                            //$display("Timestamp TX %018d.%09d", timestamp_tx_sec, timestamp_tx_nsec);
-                            //$display("Timestamp RX %018d.%09d", timestamp_sec, timestamp_nsec);
-
                         end
                         else begin
                             testframe_pkts_delta = 0;
@@ -372,16 +354,6 @@ always @(posedge clk) begin
                     testframe_pkts <= testframe_pkts + testframe_pkts_delta;
                     sequence_errors <= sequence_errors + sequence_errors_delta;
 
-                    //latency
-                    //$display("timestamp_nsec=%x, timestamp_tx_nsec=%x", timestamp_nsec, timestamp_tx_nsec);
-                    if(timestamp_nsec<timestamp_tx_nsec) begin
-                        latency_sec <= timestamp_sec - timestamp_tx_sec - 1;
-                        latency_nsec <= 32'd1000000000 - timestamp_tx_nsec + timestamp_nsec;
-                    end
-                    else begin
-                        latency_sec <= timestamp_sec - timestamp_tx_sec;
-                        latency_nsec <= timestamp_nsec - timestamp_tx_nsec;
-                    end
 
                     if (!freeze_stats_sync) begin
                         pkts_reg <= pkts + pkts_delta;
@@ -396,10 +368,6 @@ always @(posedge clk) begin
                         testframe_pkts_reg <= testframe_pkts + testframe_pkts_delta;
                         sequence_errors_reg <= sequence_errors + sequence_errors_delta;
                     end
-                end
-                else begin
-                    update_latency <= 0;
-                    update_latency_regs <= 0;
                 end
             end
             2'b01 : begin
@@ -446,39 +414,87 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if (update_latency) begin
-        if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
-            latency_max_sec <= latency_sec;
-            latency_max_nsec <= latency_nsec;
-        end
-        if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
-            latency_min_sec <= latency_sec;
-            latency_min_nsec <= latency_nsec;
-        end
+    if(~resetn || run==0) begin
+        latency_sec <= 0;
+        latency_nsec <= 1;
+        latency_min_sec <= 48'hFFFFFFFFFFFF;
+        latency_min_nsec <= 32'hFFFFFFFF;
+        latency_max_sec <= 0;
+        latency_max_nsec <= 0;
 
-        //$display("Latency %018d.%09d", latency_sec, latency_nsec);
+        latency_sec_reg <= 0;
+        latency_nsec_reg <= 2;
+        latency_min_sec_reg <= 48'hFFFFFFFFFFFF;
+        latency_min_nsec_reg <= 32'hFFFFFFFF;
+        latency_max_sec_reg <= 0;
+        latency_max_nsec_reg <= 0;
+
+        update_latency <= 0;
+        update_latency_regs <= 0;
     end
+    else begin
+        if(state == 0 && frame_complete) begin
+            update_latency <= 1;
+            if (!freeze_stats_sync) begin
+                update_latency_regs <= 1;
+            end
 
-    if (update_latency_regs) begin
+            //$display("Timestamp TX %018d.%09d", timestamp_tx_sec, timestamp_tx_nsec);
+            //$display("Timestamp RX %018d.%09d", timestamp_sec, timestamp_nsec);
 
-        latency_sec_reg <= latency_sec;
-        latency_nsec_reg <= latency_nsec;
-
-        if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
-            latency_max_sec_reg <= latency_sec;
-            latency_max_nsec_reg <= latency_nsec;
+            //latency
+            //$display("timestamp_nsec=%x, timestamp_tx_nsec=%x", timestamp_nsec, timestamp_tx_nsec);
+            if(timestamp_nsec<timestamp_tx_nsec) begin
+                latency_sec <= timestamp_sec - timestamp_tx_sec - 1;
+                latency_nsec <= 32'd1000000000 - timestamp_tx_nsec + timestamp_nsec;
+            end
+            else begin
+                latency_sec <= timestamp_sec - timestamp_tx_sec;
+                latency_nsec <= timestamp_nsec - timestamp_tx_nsec;
+            end
         end
         else begin
-            latency_max_sec_reg <= latency_max_sec;
-            latency_max_nsec_reg <= latency_max_nsec;
-        end
-        if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
-            latency_min_sec_reg <= latency_sec;
-            latency_min_nsec_reg <= latency_nsec;
-        end
-        else begin
-            latency_min_sec_reg <= latency_min_sec;
-            latency_min_nsec_reg <= latency_min_nsec;
+            if (update_latency) begin
+                //if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
+                if({latency_sec[47:0],latency_nsec[29:0]}>{latency_max_sec[47:0],latency_max_nsec[29:0]}) begin
+                    latency_max_sec <= latency_sec;
+                    latency_max_nsec <= latency_nsec;
+                end
+                //if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
+                if({latency_sec[47:0],latency_nsec[29:0]}<{latency_min_sec[47:0],latency_min_nsec[29:0]}) begin
+                    latency_min_sec <= latency_sec;
+                    latency_min_nsec <= latency_nsec;
+                end
+
+                //$display("Latency %018d.%09d", latency_sec, latency_nsec);
+                update_latency <= 0;
+            end
+
+            if (update_latency_regs) begin
+
+                latency_sec_reg <= latency_sec;
+                latency_nsec_reg <= latency_nsec+1;
+
+                //if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
+                if({latency_sec[47:0],latency_nsec[29:0]}>{latency_max_sec[47:0],latency_max_nsec[29:0]}) begin
+                    latency_max_sec_reg <= latency_sec;
+                    latency_max_nsec_reg <= latency_nsec;
+                end
+                else begin
+                    latency_max_sec_reg <= latency_max_sec;
+                    latency_max_nsec_reg <= latency_max_nsec;
+                end
+                //if((latency_sec < latency_min_sec) || ((latency_sec == latency_min_sec) && (latency_nsec < latency_min_nsec))) begin
+                if({latency_sec[47:0],latency_nsec[29:0]}<{latency_min_sec[47:0],latency_min_nsec[29:0]}) begin
+                    latency_min_sec_reg <= latency_sec;
+                    latency_min_nsec_reg <= latency_nsec;
+                end
+                else begin
+                    latency_min_sec_reg <= latency_min_sec;
+                    latency_min_nsec_reg <= latency_min_nsec;
+                end
+                update_latency_regs <= 0;
+            end
         end
     end
 end
@@ -486,14 +502,14 @@ end
 
 always @(posedge clk) begin
     if (~resetn) begin
-        id_reg <= #1    `REG_ID_DEFAULT;
-        version_reg <= #1    `REG_VERSION_DEFAULT;
-        ip2cpu_flip_reg <= #1    `REG_FLIP_DEFAULT;
+        id_reg <= `REG_ID_DEFAULT;
+        version_reg <= `REG_VERSION_DEFAULT;
+        ip2cpu_flip_reg <= `REG_FLIP_DEFAULT;
     end
     else begin
-        id_reg <= #1    `REG_ID_DEFAULT;
-        version_reg <= #1    `REG_VERSION_DEFAULT;
-        ip2cpu_flip_reg <= #1    ~cpu2ip_flip_reg;
+        id_reg <= `REG_ID_DEFAULT;
+        version_reg <= `REG_VERSION_DEFAULT;
+        ip2cpu_flip_reg <= ~cpu2ip_flip_reg;
     end
 end
 

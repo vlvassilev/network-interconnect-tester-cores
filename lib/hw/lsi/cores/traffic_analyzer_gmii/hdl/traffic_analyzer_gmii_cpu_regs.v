@@ -264,14 +264,14 @@ assign reg_wren = axi_wready && S_AXI_WVALID && axi_awready && S_AXI_AWVALID;
 
 
 //R/W register, not cleared
-always @(posedge clk) begin
+always @(posedge S_AXI_ACLK) begin
     if (!resetn) begin
 
         cpu2ip_flip_reg <= #1 `REG_FLIP_DEFAULT;
         control_reg <= #1 1;
     end
     else begin
-        if (reg_wren) //write event
+        if (reg_wren && S_AXI_WSTRB==4'hF) //write event
         case (axi_awaddr)
             //Flip Register
             `REG_FLIP_ADDR : begin
