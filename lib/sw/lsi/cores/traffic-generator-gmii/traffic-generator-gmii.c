@@ -44,6 +44,7 @@ void print_frame(uint64_t frame_index, uint32_t frame_size, uint8_t* frame_data,
 #define REG_CONTROL_ADDR 0x10
 #define REG_INTERFRAME_GAP_ADDR 0x14
 #define REG_INTERBURST_GAP_ADDR 0x18
+#define REG_FRAMES_PER_BURST_ADDR 0x1C
 #define REG_TOTAL_FRAMES_ADDR  0x20
 #define REG_FRAME_SIZE_ADDR 0x44
 #define REG_FRAME_BUF_ADDR 0x50
@@ -79,6 +80,7 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
 
     ioreg_write(ioreg_id, REG_INTERFRAME_GAP_ADDR, interframe_gap-8);
     ioreg_write(ioreg_id, REG_INTERBURST_GAP_ADDR, interburst_gap-8);
+    ioreg_write(ioreg_id, REG_FRAMES_PER_BURST_ADDR, frames_per_burst);
 
     if(testframe!=NULL) {
         dynamic_len = 8+10+4; // sequence num(8), timestamp(10), crc(4)

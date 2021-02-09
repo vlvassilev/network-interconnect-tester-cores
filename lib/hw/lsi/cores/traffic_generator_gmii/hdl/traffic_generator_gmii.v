@@ -66,8 +66,6 @@ module traffic_generator_gmii
    reg      [3-1:0]     state;
    reg      [3-1:0]     next_state;
    reg                  run;
-   reg      [31:0]      interframe_gap;
-   reg      [10:0]      frame_size;
    reg      [31:0]    gap_counter;
    reg      [31:0]    gap_counter_last;
    reg      [31:0]    data_counter;
@@ -81,6 +79,7 @@ module traffic_generator_gmii
    reg      [4:0]    crc_counter;
    reg      [7:0]     data_t0;
    reg      [63:0]    sequence_number;
+   reg      [31:0]    burst_index;
 
    integer     data;
 
@@ -181,6 +180,7 @@ always @(posedge clk) begin
 
           state <= 2'b00;
 	  gap_counter <= 0;
+          burst_index <= 0;
 
           pkts_reg <= 0;
           frame_buf_out_address <= 0;
@@ -204,7 +204,17 @@ always @(posedge clk) begin
                data_counter_last<=frame_size_reg-1;
 
                gap_counter<=0;
-               gap_counter_last<=interframe_gap_reg-3;
+               if(frames_per_burst_reg == 0) begin
+                   gap_counter_last<=interframe_gap_reg-3;
+               end
+               else if((burst_index+1) == frames_per_burst_reg) begin
+                   burst_index <= 0;
+                   gap_counter_last<=interburst_gap_reg-3;
+               end
+               else begin
+                   burst_index <= burst_index + 1;
+                   gap_counter_last<=interframe_gap_reg-3;
+               end
 
                seqnum_counter <= 0;
                timestamp_counter <= 0;
@@ -219,6 +229,7 @@ always @(posedge clk) begin
            else begin
                state <= 0;
                frames <= 0;
+               burst_index <= 0;
            end
           end
           1 : begin
