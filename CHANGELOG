@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.16) stable; urgency=medium
+
+  * Updated traffic-generator-gmii testframe-type option according to draft-vassilev-bmwg-network-interconnect-tester-05
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 22 Feb 2021 16:08:21 +0100
+
 network-interconnect-tester-cores (0.15) stable; urgency=medium
 
   * Implemented burst mode

@@ -24,7 +24,7 @@ static struct option const long_options[] =
     {"frames-per-burst", required_argument, NULL, 'n'},
     {"bursts-per-stream", required_argument, NULL, 'p'},
     {"total-frames", required_argument, NULL, 't'},
-    {"testframe", required_argument, NULL, 'T'},
+    {"testframe-type", required_argument, NULL, 'T'},
     {"realtime-epoch", required_argument, NULL, 'e'},
     {"interface-speed", required_argument, NULL, 'S'},
     {"stdout-mode", required_argument, NULL, 'm'},
@@ -51,7 +51,7 @@ void print_frame(uint64_t frame_index, uint32_t frame_size, uint8_t* frame_data,
 #define REG_FRAME_BUF_ADDRESS_ADDR 0x54
 
 
-static int traffic_generator_common(unsigned int disable, char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+static int traffic_generator_common(unsigned int disable, char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe_type)
 {
     unsigned int i;
     int ioreg_id;
@@ -82,7 +82,7 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     ioreg_write(ioreg_id, REG_INTERBURST_GAP_ADDR, interburst_gap-8);
     ioreg_write(ioreg_id, REG_FRAMES_PER_BURST_ADDR, frames_per_burst);
 
-    if(testframe!=NULL) {
+    if(testframe_type!=NULL && 0!=strcmp(testframe_type,"static")) {
         dynamic_len = 8+10+4; // sequence num(8), timestamp(10), crc(4)
     } else {
         dynamic_len = 0;
@@ -122,7 +122,7 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR, (uint32_t)(total_frames>>32));
     ioreg_write(ioreg_id, REG_TOTAL_FRAMES_ADDR+4, (uint32_t)(total_frames&0xFFFFFFFF));
 
-    if(testframe!=NULL) {
+    if(testframe_type!=NULL && 0!=strcmp(testframe_type,"static")) {
         value = 0x3;
     } else {
         value = 0x1;
@@ -134,16 +134,16 @@ static int traffic_generator_common(unsigned int disable, char* interface_name, 
     return 0;
 }
 
-static int traffic_generator_disable(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+static int traffic_generator_disable(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe_type)
 {
     printf("Stopping traffic-generator-gmii for %s\n", interface_name);
-    return traffic_generator_common(1, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+    return traffic_generator_common(1, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe_type);
 }
 
-static int traffic_generator_init(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe)
+static int traffic_generator_init(char* interface_name, char* realtime_epoch, uint32_t frame_size, char* frame_data_hexstr, uint32_t interframe_gap, uint32_t interburst_gap, uint32_t frames_per_burst, uint32_t bursts_per_stream, uint64_t total_frames, char* testframe_type)
 {
     printf("Starting traffic-generator-gmii for %s\n", interface_name);
-    return traffic_generator_common(0, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+    return traffic_generator_common(0, interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe_type);
 }
 
 int main(int argc, char** argv)
@@ -160,7 +160,7 @@ int main(int argc, char** argv)
     uint32_t frames_per_burst=0;
     uint32_t bursts_per_stream=0;
     uint64_t total_frames=0;
-    char* testframe=NULL;
+    char* testframe_type=NULL;
     char* realtime_epoch=NULL;
     uint64_t interface_speed=1000000000; /* 1G */
     char* src_mac_address=NULL;
@@ -205,7 +205,7 @@ int main(int argc, char** argv)
                 total_frames = atoll(optarg);
                 break;
             case 'T':
-                testframe = optarg;
+                testframe_type = optarg;
                 break;
             case 'e':
                 realtime_epoch = optarg;
@@ -241,11 +241,11 @@ int main(int argc, char** argv)
 
     if(disable) {
         printf("disable\n");
-        traffic_generator_disable(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+        traffic_generator_disable(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe_type);
         return 0;
     }
 
-    traffic_generator_init(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe);
+    traffic_generator_init(interface_name, realtime_epoch, frame_size, frame_data_hexstr, interframe_gap, interburst_gap, frames_per_burst, bursts_per_stream, total_frames, testframe_type);
 
     return 0;
 }
