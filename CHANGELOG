@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.17) stable; urgency=medium
+
+  * systems/spark: Added xilinx:axi_intc core to pl_ps_irq1 so that >8 interrupts can be handled.
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 26 Feb 2021 22:21:12 +0100
+
 network-interconnect-tester-cores (0.16) stable; urgency=medium
 
   * Updated traffic-generator-gmii testframe-type option according to draft-vassilev-bmwg-network-interconnect-tester-05

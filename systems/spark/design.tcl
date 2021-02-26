@@ -659,31 +659,39 @@ connect_bd_net [get_bd_pins axi_ethernet_1/interrupt] [get_bd_pins xlconcat_0/In
 connect_bd_net [get_bd_pins axi_ethernet_1_dma/mm2s_introut] [get_bd_pins xlconcat_0/In6]
 connect_bd_net [get_bd_pins axi_ethernet_1_dma/s2mm_introut] [get_bd_pins xlconcat_0/In7]
 
-create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_1
-set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_1]
-#connect_bd_net [get_bd_pins xlconcat_1/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
 
-connect_bd_net [get_bd_pins axi_ethernet_2/mac_irq] [get_bd_pins xlconcat_1/In0]
-connect_bd_net [get_bd_pins axi_ethernet_2/interrupt] [get_bd_pins xlconcat_1/In1]
-connect_bd_net [get_bd_pins axi_ethernet_2_dma/mm2s_introut] [get_bd_pins xlconcat_1/In2]
-connect_bd_net [get_bd_pins axi_ethernet_2_dma/s2mm_introut] [get_bd_pins xlconcat_1/In3]
-connect_bd_net [get_bd_pins axi_ethernet_3/mac_irq] [get_bd_pins xlconcat_1/In4]
-connect_bd_net [get_bd_pins axi_ethernet_3/interrupt] [get_bd_pins xlconcat_1/In5]
-connect_bd_net [get_bd_pins axi_ethernet_3_dma/mm2s_introut] [get_bd_pins xlconcat_1/In6]
-connect_bd_net [get_bd_pins axi_ethernet_3_dma/s2mm_introut] [get_bd_pins xlconcat_1/In7]
+# We need more then 16 interrupts (pl_ps_irq0 with max 8 is already used so on (pl_ps_irq1 we use axi intc IP core to cascade more then 8.
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 axi_intc_0
 
-create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_2
-set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_2]
-connect_bd_net [get_bd_pins xlconcat_2/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
+connect_bd_net [get_bd_pins axi_intc_0/irq] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
 
-connect_bd_net [get_bd_pins axi_ethernet_4/mac_irq] [get_bd_pins xlconcat_2/In0]
-connect_bd_net [get_bd_pins axi_ethernet_4/interrupt] [get_bd_pins xlconcat_2/In1]
-connect_bd_net [get_bd_pins axi_ethernet_4_dma/mm2s_introut] [get_bd_pins xlconcat_2/In2]
-connect_bd_net [get_bd_pins axi_ethernet_4_dma/s2mm_introut] [get_bd_pins xlconcat_2/In3]
-connect_bd_net [get_bd_pins axi_ethernet_5/mac_irq] [get_bd_pins xlconcat_2/In4]
-connect_bd_net [get_bd_pins axi_ethernet_5/interrupt] [get_bd_pins xlconcat_2/In5]
-connect_bd_net [get_bd_pins axi_ethernet_5_dma/mm2s_introut] [get_bd_pins xlconcat_2/In6]
-connect_bd_net [get_bd_pins axi_ethernet_5_dma/s2mm_introut] [get_bd_pins xlconcat_2/In7]
+
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_1_0
+set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_1_0]
+connect_bd_net [get_bd_pins xlconcat_1_0/dout] [get_bd_pins axi_intc_0/intr]
+
+
+#connect_bd_net [get_bd_pins axi_ethernet_2/mac_irq] [get_bd_pins xlconcat_1_0/In0]
+#connect_bd_net [get_bd_pins axi_ethernet_2/interrupt] [get_bd_pins xlconcat_1_0/In1]
+#connect_bd_net [get_bd_pins axi_ethernet_2_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In2]
+#connect_bd_net [get_bd_pins axi_ethernet_2_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In3]
+#connect_bd_net [get_bd_pins axi_ethernet_3/mac_irq] [get_bd_pins xlconcat_1_0/In4]
+#connect_bd_net [get_bd_pins axi_ethernet_3/interrupt] [get_bd_pins xlconcat_1_0/In5]
+#connect_bd_net [get_bd_pins axi_ethernet_3_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In6]
+#connect_bd_net [get_bd_pins axi_ethernet_3_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In7]
+
+#create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_2
+#set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_2]
+#connect_bd_net [get_bd_pins xlconcat_2/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
+
+connect_bd_net [get_bd_pins axi_ethernet_4/mac_irq] [get_bd_pins xlconcat_1_0/In0]
+connect_bd_net [get_bd_pins axi_ethernet_4/interrupt] [get_bd_pins xlconcat_1_0/In1]
+connect_bd_net [get_bd_pins axi_ethernet_4_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In2]
+connect_bd_net [get_bd_pins axi_ethernet_4_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In3]
+connect_bd_net [get_bd_pins axi_ethernet_5/mac_irq] [get_bd_pins xlconcat_1_0/In4]
+connect_bd_net [get_bd_pins axi_ethernet_5/interrupt] [get_bd_pins xlconcat_1_0/In5]
+connect_bd_net [get_bd_pins axi_ethernet_5_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In6]
+connect_bd_net [get_bd_pins axi_ethernet_5_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In7]
 
 # Automation for the S_AXI interfaces of the AXI Ethernet ports
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_ethernet_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_ethernet_0/s_axi]
@@ -734,6 +742,7 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 # apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/axi_ethernet_3_dma/M_AXI_MM2S} Slave {/zynq_ultra_ps_e_0/S_AXI_HP0_FPD} intc_ip {/axi_smc} master_apm {0}}  [get_bd_intf_pins axi_ethernet_3_dma/M_AXI_MM2S]
 # apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/axi_ethernet_3_dma/M_AXI_S2MM} Slave {/zynq_ultra_ps_e_0/S_AXI_HP0_FPD} intc_ip {/axi_smc} master_apm {0}}  [get_bd_intf_pins axi_ethernet_3_dma/M_AXI_S2MM]
 
+
 #create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0
 #set_property -dict [list CONFIG.NUM_SI {3}] [get_bd_cells smartconnect_0]
 #set_property -dict [list CONFIG.NUM_SI {16}] [get_bd_cells axi_smc]
@@ -772,6 +781,8 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_generator_gmii_0_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_analyzer_gmii_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_analyzer_gmii_0/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_analyzer_gmii_0_Reg0}]
+
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_intc_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_intc_0/s_axi]
 
 # Create ports for Bluetooth UART0
 create_bd_port -dir I BT_ctsn
