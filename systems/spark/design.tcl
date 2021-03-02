@@ -538,6 +538,10 @@ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 re
 #set_property CONFIG.FREQ_HZ [get_property CONFIG.FREQ_HZ [get_bd_intf_pins eth_pcs_pma_shared/refclk625_in]] [get_bd_intf_ports ref_clk_625mhz]
 #connect_bd_intf_net [get_bd_intf_pins eth_pcs_pma_shared/refclk625_in] [get_bd_intf_ports ref_clk_625mhz]
 
+# pps (1 sec) signal from GPS e.g. aes-acc-u96-me-mez + MIKROE-2670
+create_bd_port -dir I ls_mezz_int0
+create_bd_port -dir I ls_mezz_int1
+
 # PHY RESET for ports 0,1 and 2
 ##create_bd_port -dir O reset_port_0_n
 ##connect_bd_net [get_bd_ports reset_port_0_n] [get_bd_pins axi_ethernet_0/phy_rst_n]
@@ -781,6 +785,9 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_generator_gmii_0_Reg0}]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/traffic_analyzer_gmii_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins traffic_analyzer_gmii_0/S_AXI]
 set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_traffic_analyzer_gmii_0_Reg0}]
+
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/rtclock_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins rtclock_0/S_AXI]
+set_property range 16K [get_bd_addr_segs {zynq_ultra_ps_e_0/Data/SEG_rtclock_0_Reg0}]
 
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_intc_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_intc_0/s_axi]
 
@@ -1109,6 +1116,8 @@ connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/sec] [get_bd_pins rtclock_0/
 connect_bd_net [get_bd_pins traffic_analyzer_gmii_0/nsec] [get_bd_pins rtclock_0/nsec]
 connect_bd_net [get_bd_pins traffic_generator_gmii_0/sec] [get_bd_pins rtclock_0/sec]
 connect_bd_net [get_bd_pins traffic_generator_gmii_0/nsec] [get_bd_pins rtclock_0/nsec]
+
+connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins rtclock_0/pps]
 
 
 #delete_bd_objs [get_bd_intf_nets axi_ethernet_2_dma_M_AXIS_MM2S]

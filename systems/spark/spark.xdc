@@ -214,8 +214,8 @@ set_property INTERNAL_VREF 0.60 [get_iobanks 65]
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_0_n}];
 ##set_property PACKAGE_PIN A7   [get_ports {reset_port_2_n}];  # "A7.HD_GPIO_7" GPIO-I, PIN 31
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_2_n}];
-##set_property PACKAGE_PIN G6   [get_ports {mdio_mdio_io}];  # "G6.HD_GPIO_8" GPIO-K, PIN 33
-##set_property IOSTANDARD LVCMOS18 [get_ports {mdio_mdio_io}];
+set_property PACKAGE_PIN G6   [get_ports {ls_mezz_int0}];  # "G6.HD_GPIO_8" GPIO-K, PIN 33
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int0}];
 #set_property PACKAGE_PIN E6   [get_ports {HD_GPIO_9}];  # "E6.HD_GPIO_9" PCM_FS, PIN 16
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_9}];
 #set_property PACKAGE_PIN E5   [get_ports {HD_GPIO_10}];  # "E5.HD_GPIO_10" PCM_CLK, PIN 18
@@ -228,8 +228,8 @@ set_property INTERNAL_VREF 0.60 [get_iobanks 65]
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_1_n}];
 ##set_property PACKAGE_PIN B6   [get_ports {reset_port_3_n}];  # "B6.HD_GPIO_14" GPIO-J, PIN 32
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_3_n}];
-##set_property PACKAGE_PIN C5   [get_ports {mdio_mdc}];  # "C5.HD_GPIO_15" GPIO-L, PIN 34
-##set_property IOSTANDARD LVCMOS18 [get_ports {mdio_mdc}];
+set_property PACKAGE_PIN C5   [get_ports {ls_mezz_int1}];  # "C5.HD_GPIO_15" GPIO-L, PIN 34
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int1}];
 
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets *_i/eth_pcs_pma_3_rx/inst/clock_reset_i/iclkbuf/O]
 

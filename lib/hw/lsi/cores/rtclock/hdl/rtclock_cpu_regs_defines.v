@@ -1,0 +1,30 @@
+`define  REG_ID_BITS				31:0
+`define  REG_ID_WIDTH				32
+`define  REG_ID_DEFAULT				32'h12300001
+`define  REG_ID_ADDR				32'h0
+
+`define  REG_VERSION_BITS				31:0
+`define  REG_VERSION_WIDTH				32
+`define  REG_VERSION_DEFAULT				32'h1
+`define  REG_VERSION_ADDR				32'h4
+
+`define  REG_FLIP_BITS				31:0
+`define  REG_FLIP_WIDTH				32
+`define  REG_FLIP_DEFAULT			32'h0
+`define  REG_FLIP_ADDR				32'hC
+
+`define  REG_CONTROL_BITS			31:0
+`define  REG_CONTROL_WIDTH			32
+`define  REG_CONTROL_DEFAULT			32'h0
+`define  REG_CONTROL_ADDR			32'h10
+
+`define  REG_SEC_CONFIG_BITS			63:0
+`define  REG_SEC_CONFIG_WIDTH			64
+`define  REG_SEC_CONFIG_DEFAULT			64'h0
+`define  REG_SEC_CONFIG_ADDR			32'h20
+
+`define  REG_SEC_STATE_BITS			63:0
+`define  REG_SEC_STATE_WIDTH			64
+`define  REG_SEC_STATE_DEFAULT			64'h0
+`define  REG_SEC_STATE_ADDR			32'h28
+

@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.18) stable; urgency=medium
+
+  * cores/rtclock: Added rtclock support for 1s pps synchronization
+  * systems/spark: Connected ls_mezz_int0 to rtclock_0/pps
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 01 Mar 2021 14:24:21 +0100
+
 network-interconnect-tester-cores (0.17) stable; urgency=medium
 
   * systems/spark: Added xilinx:axi_intc core to pl_ps_irq1 so that >8 interrupts can be handled.
