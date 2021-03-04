@@ -14,6 +14,7 @@ module rtclock
     input clk,
     input resetn,
     input pps,
+    input pps2,
 
     output reg [47:0] sec,
     output reg [29:0] nsec,
@@ -58,6 +59,11 @@ reg [29:0] nsec_next;
 reg sec_inc;
 
 integer pps_enabled;
+
+// pps or pps2 mux
+integer pps_select; // 0-pps, 1-pps2
+integer pps_used;
+
 reg [47:0] sec_next_pps;
 reg [29:0] nsec_next_pps;
 reg sec_inc_pps;
@@ -111,6 +117,13 @@ reg pps_prev;
  
     always @(posedge clk) begin
         pps_enabled = control_reg[0];
+        pps_select = control_reg[1];
+        if(pps_select) begin
+            pps_used = pps2;
+        end
+        else begin
+            pps_used = pps;
+        end
 
         if (~resetn) begin
             sec <= 0;
@@ -141,13 +154,13 @@ reg pps_prev;
 
             // 2/2 - with pps sync
             sec_inc_pps = (nsec_next_pps >= (nsec_modulo-C_CLK_TO_NS_RATIO))? 1'b1: 1'b0;
-            pps_prev <= pps;
+            pps_prev <= pps_used;
             pps_enabled_prev <= pps_enabled;
             if(pps_enabled_prev == 0 && pps_enabled == 1) begin
                 sec_next_pps <= sec_config_reg;
                 nsec_next_pps <= 0;
             end
-            else if(pps_prev == 0 && pps == 1) begin
+            else if(pps_prev == 0 && pps_used == 1) begin
                 sec_next_pps <= sec_next_pps + 1;
                 nsec_next_pps <= C_CLK_TO_NS_RATIO;
                 sec_inc_pps <= 0;

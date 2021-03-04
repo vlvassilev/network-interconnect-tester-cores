@@ -200,16 +200,16 @@ set_property INTERNAL_VREF 0.60 [get_iobanks 65]
 # Bank 23 (1.8V)
 #set_property PACKAGE_PIN D7   [get_ports {HD_GPIO_0}];  # "D7.HD_GPIO_0" UART0_CTS, PIN 3
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_0}];
-#set_property PACKAGE_PIN F8   [get_ports {HD_GPIO_1}];  # "F8.HD_GPIO_1" UART0_TXD, PIN 5
-#set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_1}];
-#set_property PACKAGE_PIN F7   [get_ports {HD_GPIO_2}];  # "F7.HD_GPIO_2" UART0_RXD, PIN 7
-#set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_2}];
+set_property PACKAGE_PIN F8   [get_ports {ls_mezz_uart0_tx}];  # "F8.HD_GPIO_1" UART0_TXD, PIN 5
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_uart0_tx}];
+set_property PACKAGE_PIN F7   [get_ports {ls_mezz_uart0_rx}];  # "F7.HD_GPIO_2" UART0_RXD, PIN 7
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_uart0_rx}];
 #set_property PACKAGE_PIN G7   [get_ports {HD_GPIO_3}];  # "G7.HD_GPIO_3" UART0_RTS, PIN 9
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_3}];
-#set_property PACKAGE_PIN F6   [get_ports {HD_GPIO_4}];  # "F6.HD_GPIO_4" UART1_TXD, PIN 11
-#set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_4}];
-#set_property PACKAGE_PIN G5   [get_ports {HD_GPIO_5}];  # "G5.HD_GPIO_5" UART1_RXD, PIN 13
-#set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_5}];
+set_property PACKAGE_PIN F6   [get_ports {ls_mezz_uart1_tx}];  # "F6.HD_GPIO_4" UART1_TXD, PIN 11
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_uart1_tx}];
+set_property PACKAGE_PIN G5   [get_ports {ls_mezz_uart1_rx}];  # "G5.HD_GPIO_5" UART1_RXD, PIN 13
+set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_uart1_rx}];
 ##set_property PACKAGE_PIN A6   [get_ports {reset_port_0_n}];  # "A6.HD_GPIO_6" GPIO-G, PIN 29
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_0_n}];
 ##set_property PACKAGE_PIN A7   [get_ports {reset_port_2_n}];  # "A7.HD_GPIO_7" GPIO-I, PIN 31

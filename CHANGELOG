@@ -1,3 +1,11 @@
+network-interconnect-tester-cores (0.19) stable; urgency=medium
+
+  * cores/rtclock: Added alternative pps2 input
+  * systems/spark: Added 2x uart_1665 cores e.g. NMEA input
+  * systems/spark: Moved eth4 interrupts from the axi_intc directly to GIC pl_ps_irq1 1-4
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Tue, 02 Mar 2021 14:08:44 +0100
+
 network-interconnect-tester-cores (0.18) stable; urgency=medium
 
   * cores/rtclock: Added rtclock support for 1s pps synchronization

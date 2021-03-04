@@ -649,6 +649,8 @@ connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/pl_clk0] [get_bd_pins axi_ethernet
 connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/pl_clk0] [get_bd_pins axi_ethernet_5_dma/s_axi_lite_aclk]
 
 # Concats for the interrupts
+
+#irq0
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_0
 set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_0]
 connect_bd_net [get_bd_pins xlconcat_0/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq0]
@@ -664,38 +666,45 @@ connect_bd_net [get_bd_pins axi_ethernet_1_dma/mm2s_introut] [get_bd_pins xlconc
 connect_bd_net [get_bd_pins axi_ethernet_1_dma/s2mm_introut] [get_bd_pins xlconcat_0/In7]
 
 
+#irq1
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_1
+set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_1]
+connect_bd_net [get_bd_pins xlconcat_1/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
+
 # We need more then 16 interrupts (pl_ps_irq0 with max 8 is already used so on (pl_ps_irq1 we use axi intc IP core to cascade more then 8.
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 axi_intc_0
 
-connect_bd_net [get_bd_pins axi_intc_0/irq] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
+connect_bd_net [get_bd_pins axi_intc_0/irq] [get_bd_pins xlconcat_1/In0]
 
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_1_0
-set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_1_0]
+set_property -dict [list CONFIG.NUM_PORTS {12}] [get_bd_cells xlconcat_1_0]
 connect_bd_net [get_bd_pins xlconcat_1_0/dout] [get_bd_pins axi_intc_0/intr]
 
 
-#connect_bd_net [get_bd_pins axi_ethernet_2/mac_irq] [get_bd_pins xlconcat_1_0/In0]
-#connect_bd_net [get_bd_pins axi_ethernet_2/interrupt] [get_bd_pins xlconcat_1_0/In1]
-#connect_bd_net [get_bd_pins axi_ethernet_2_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In2]
-#connect_bd_net [get_bd_pins axi_ethernet_2_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In3]
-#connect_bd_net [get_bd_pins axi_ethernet_3/mac_irq] [get_bd_pins xlconcat_1_0/In4]
-#connect_bd_net [get_bd_pins axi_ethernet_3/interrupt] [get_bd_pins xlconcat_1_0/In5]
-#connect_bd_net [get_bd_pins axi_ethernet_3_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In6]
-#connect_bd_net [get_bd_pins axi_ethernet_3_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In7]
+connect_bd_net [get_bd_pins axi_ethernet_2/mac_irq] [get_bd_pins xlconcat_1_0/In0]
+connect_bd_net [get_bd_pins axi_ethernet_2/interrupt] [get_bd_pins xlconcat_1_0/In1]
+connect_bd_net [get_bd_pins axi_ethernet_2_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In2]
+connect_bd_net [get_bd_pins axi_ethernet_2_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In3]
+connect_bd_net [get_bd_pins axi_ethernet_3/mac_irq] [get_bd_pins xlconcat_1_0/In4]
+connect_bd_net [get_bd_pins axi_ethernet_3/interrupt] [get_bd_pins xlconcat_1_0/In5]
+connect_bd_net [get_bd_pins axi_ethernet_3_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In6]
+connect_bd_net [get_bd_pins axi_ethernet_3_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In7]
 
 #create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat xlconcat_2
 #set_property -dict [list CONFIG.NUM_PORTS {8}] [get_bd_cells xlconcat_2]
 #connect_bd_net [get_bd_pins xlconcat_2/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
 
-connect_bd_net [get_bd_pins axi_ethernet_4/mac_irq] [get_bd_pins xlconcat_1_0/In0]
-connect_bd_net [get_bd_pins axi_ethernet_4/interrupt] [get_bd_pins xlconcat_1_0/In1]
-connect_bd_net [get_bd_pins axi_ethernet_4_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In2]
-connect_bd_net [get_bd_pins axi_ethernet_4_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In3]
-connect_bd_net [get_bd_pins axi_ethernet_5/mac_irq] [get_bd_pins xlconcat_1_0/In4]
-connect_bd_net [get_bd_pins axi_ethernet_5/interrupt] [get_bd_pins xlconcat_1_0/In5]
-connect_bd_net [get_bd_pins axi_ethernet_5_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In6]
-connect_bd_net [get_bd_pins axi_ethernet_5_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In7]
+# Connect eth4 directly to GIC
+connect_bd_net [get_bd_pins axi_ethernet_4/mac_irq] [get_bd_pins xlconcat_1/In1]
+connect_bd_net [get_bd_pins axi_ethernet_4/interrupt] [get_bd_pins xlconcat_1/In2]
+connect_bd_net [get_bd_pins axi_ethernet_4_dma/mm2s_introut] [get_bd_pins xlconcat_1/In3]
+connect_bd_net [get_bd_pins axi_ethernet_4_dma/s2mm_introut] [get_bd_pins xlconcat_1/In4]
+
+connect_bd_net [get_bd_pins axi_ethernet_5/mac_irq] [get_bd_pins xlconcat_1_0/In8]
+connect_bd_net [get_bd_pins axi_ethernet_5/interrupt] [get_bd_pins xlconcat_1_0/In9]
+connect_bd_net [get_bd_pins axi_ethernet_5_dma/mm2s_introut] [get_bd_pins xlconcat_1_0/In10]
+connect_bd_net [get_bd_pins axi_ethernet_5_dma/s2mm_introut] [get_bd_pins xlconcat_1_0/In11]
 
 # Automation for the S_AXI interfaces of the AXI Ethernet ports
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_ethernet_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_ethernet_0/s_axi]
@@ -1118,6 +1127,7 @@ connect_bd_net [get_bd_pins traffic_generator_gmii_0/sec] [get_bd_pins rtclock_0
 connect_bd_net [get_bd_pins traffic_generator_gmii_0/nsec] [get_bd_pins rtclock_0/nsec]
 
 connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins rtclock_0/pps]
+connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins rtclock_0/pps2]
 
 
 #delete_bd_objs [get_bd_intf_nets axi_ethernet_2_dma_M_AXIS_MM2S]
@@ -1156,6 +1166,32 @@ set_property -dict [list CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.MMCM_CLK
 connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins zynq_ultra_ps_e_0/pl_clk0]
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins eth_pcs_pma_shared/refclk625_in]
+
+# UARTs 0,1
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_0
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_1
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_2
+create_bd_port -dir I ls_mezz_uart0_rx
+create_bd_port -dir O ls_mezz_uart0_tx
+create_bd_port -dir I ls_mezz_uart1_rx
+create_bd_port -dir O ls_mezz_uart1_tx
+#create_bd_port -dir I ls_mezz_uart2_rx
+#create_bd_port -dir O ls_mezz_uart2_tx
+
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_uart16550_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_uart16550_0/s_axi]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_uart16550_1/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_uart16550_1/s_axi]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_uart16550_2/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_uart16550_2/s_axi]
+
+connect_bd_net [get_bd_ports ls_mezz_uart0_rx] [get_bd_pins axi_uart16550_0/sin]
+connect_bd_net [get_bd_ports ls_mezz_uart0_tx] [get_bd_pins axi_uart16550_0/sout]
+connect_bd_net [get_bd_ports ls_mezz_uart1_rx] [get_bd_pins axi_uart16550_1/sin]
+connect_bd_net [get_bd_ports ls_mezz_uart1_tx] [get_bd_pins axi_uart16550_1/sout]
+# loopback
+connect_bd_net [get_bd_pins axi_uart16550_2/sin] [get_bd_pins axi_uart16550_2/sout]
+
+connect_bd_net [get_bd_pins axi_uart16550_0/ip2intc_irpt] [get_bd_pins xlconcat_1/In5]
+connect_bd_net [get_bd_pins axi_uart16550_1/ip2intc_irpt] [get_bd_pins xlconcat_1/In6]
+connect_bd_net [get_bd_pins axi_uart16550_2/ip2intc_irpt] [get_bd_pins xlconcat_1/In7]
 
 # Restore current instance
 current_bd_instance $oldCurInst
