@@ -1,3 +1,12 @@
+network-interconnect-tester-cores (0.20) stable; urgency=medium
+
+  * systems/spark: Removed the optional 8-bit AXI stream based traffic_generator -> fifo -> tri_mode_ethernet_mac
+    implementation since it requires license for the tri_mode_ethernet_mac core and
+    evaluation license is no longer available for that core.
+  * systems/spark/petalinux: Fixed build issues for ultra96v1 boards
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 16 Apr 2021 21:27:43 +0200
+
 network-interconnect-tester-cores (0.19) stable; urgency=medium
 
   * cores/rtclock: Added alternative pps2 input

@@ -21,4 +21,3 @@ CONFIG_packagegroup-petalinux-ultra96-webapp=y
 CONFIG_python-pyserial=y
 CONFIG_python3-pip=y
 CONFIG_ultra96-ap-setup=y
-CONFIG_wilc3000-fw=y
