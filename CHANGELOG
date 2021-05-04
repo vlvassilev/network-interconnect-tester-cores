@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.21) stable; urgency=medium
+
+  * systems/spark/petalinux: Corrected fix for the ultra96v1 build in 0.20 causing many packages (git, ethtool etc.) to be removed from rootfs
+  * systems/spark: Added validation check returning error code in case impl_1 task fails
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Tue, 04 May 2021 13:18:13 +0200
+
 network-interconnect-tester-cores (0.20) stable; urgency=medium
 
   * systems/spark: Removed the optional 8-bit AXI stream based traffic_generator -> fifo -> tri_mode_ethernet_mac

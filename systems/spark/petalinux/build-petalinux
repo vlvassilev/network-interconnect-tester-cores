@@ -81,7 +81,7 @@ fi
       cat $f >> ./project-spec/configs/config
     done
     # Append mods to rootfs_config file
-    rootfs_config_mod_list=(`find ./project-spec/configs/ -name "rootfs_config_*.append"`)
+    rootfs_config_mod_list=(`find ./project-spec/configs/ -name "rootfs_config*.append"`)
     for f in ${rootfs_config_mod_list[*]}
     do
       cat $f >> ./project-spec/configs/rootfs_config
