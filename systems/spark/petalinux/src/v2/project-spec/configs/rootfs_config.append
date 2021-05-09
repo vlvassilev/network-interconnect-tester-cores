@@ -1,1 +1,2 @@
+CONFIG_wilc=y
 CONFIG_wilc3000-fw=y

@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.22) stable; urgency=medium
+
+  systems/spark/petalinux:
+  * Added all rootfs packages except the binary sds-lib from ultra96v2_oob_2019_2 so that rootfs is identical to the original distribution
+  * Removed the default static inet configuration for eth5
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sun, 09 May 2021 17:51:55 +0200
+
 network-interconnect-tester-cores (0.21) stable; urgency=medium
 
   * systems/spark/petalinux: Corrected fix for the ultra96v1 build in 0.20 causing many packages (git, ethtool etc.) to be removed from rootfs

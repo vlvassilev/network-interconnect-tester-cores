@@ -16,18 +16,18 @@ iface atml0 inet dhcp
 
 # Wired ports
 auto eth4
-auto eth5
 
-iface eth0 inet dhcp
-iface eth1 inet dhcp
-iface eth2 inet dhcp
-iface eth3 inet dhcp
+iface eth0 inet manual
+iface eth1 inet manual
+iface eth2 inet manual
+iface eth3 inet manual
 iface eth4 inet dhcp
-iface eth5 inet static
-        address 192.168.0.202
-        netmask 255.255.255.0
-        network 192.168.0.0
-        gateway 192.168.0.1
+#iface eth4 inet static
+#        address 192.168.0.202
+#        netmask 255.255.255.0
+#        network 192.168.0.0
+#        gateway 192.168.0.1
+iface eth5 inet manual
 
 # Ethernet/RNDIS gadget (g_ether)
 # ... or on host side, usbnet and random hwaddr
