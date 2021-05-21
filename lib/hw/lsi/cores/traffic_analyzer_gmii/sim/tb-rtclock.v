@@ -262,6 +262,10 @@ initial begin
     axi_read(TA_BASEADDR+`REG_TIMESTAMP_NSEC_ADDR, data);
     $display("timestamp.nsec=%d", data);
 
+    axi_read(TA_BASEADDR+`REG_TESTFRAME_PKTS_ADDR, data64[63:32]);
+    axi_read(TA_BASEADDR+`REG_TESTFRAME_PKTS_ADDR+4, data64[31:0]);
+    $display("testframe-pkts=%d", data64);
+
     axi_read(TA_BASEADDR+`REG_LATENCY_MIN_NSEC_ADDR, data);
     $display("latency_min_nsec=%d", data);
 

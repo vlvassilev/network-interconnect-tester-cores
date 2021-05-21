@@ -1,3 +1,11 @@
+network-interconnect-tester-cores (0.23) stable; urgency=medium
+
+  * cores/traffic-analyzer-gmii: Fixed bug causing non-testframes to interfere with testframe stats
+  * lib/sw: Fixed bug in traffic-generator wrapper script not restoring the gmii-mux source to MAC/DMA after the generator is disabled
+  * systems/spark/petalinux: Fixed different MAC used for eth0 issue caused by u-boot overwriting the value in the device tree
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 21 May 2021 09:46:37 +0200
+
 network-interconnect-tester-cores (0.22) stable; urgency=medium
 
   systems/spark/petalinux:

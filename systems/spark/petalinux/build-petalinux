@@ -114,6 +114,9 @@ fi
   fi
   cd ..
 
+  # Rebuild u-boot with ./platform-auto.h . Specifies MAC address for eth0 that overrides the one specified
+  # in src/ports-0123-axieth/project-spec/meta-user/recipes-bsp/device-tree/files/port-config.dtsi . Keep them equal.
+  ./scripts/build-u-boot.sh
 
 echo "PetaLinux build script completed"
 

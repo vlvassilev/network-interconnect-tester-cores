@@ -304,6 +304,7 @@ always @(posedge clk) begin
                         bad_crc_pkts_delta = 0;
                         bad_preamble_octets_delta = frame_size;
                         bad_preamble_pkts_delta = 1;
+                        testframe_pkts_delta = 0;
                         sequence_errors_delta = 0;
                     end
                     else if(crc_ok) begin
@@ -315,7 +316,7 @@ always @(posedge clk) begin
                         bad_preamble_pkts_delta = 0;
 
                         if(testframe_match) begin
-                            testframe_pkts_delta <= 1;
+                            testframe_pkts_delta = 1;
                             if(sequence_num != expected_sequence_num) begin
                                 sequence_errors_delta = 1;
                             end
@@ -433,7 +434,7 @@ always @(posedge clk) begin
         update_latency_regs <= 0;
     end
     else begin
-        if(state == 0 && frame_complete) begin
+        if(state == 0 && frame_complete && crc_ok && testframe_match) begin
             update_latency <= 1;
             if (!freeze_stats_sync) begin
                 update_latency_regs <= 1;
@@ -473,7 +474,7 @@ always @(posedge clk) begin
             if (update_latency_regs) begin
 
                 latency_sec_reg <= latency_sec;
-                latency_nsec_reg <= latency_nsec+1;
+                latency_nsec_reg <= latency_nsec;
 
                 //if((latency_sec > latency_max_sec) || ((latency_sec == latency_max_sec) && (latency_nsec > latency_max_nsec))) begin
                 if({latency_sec[47:0],latency_nsec[29:0]}>{latency_max_sec[47:0],latency_max_nsec[29:0]}) begin
