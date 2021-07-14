@@ -1,7 +1,11 @@
 #!/bin/bash
 
 ifindex="`echo $@ | perl -ne '$_ =~ /--interface-name=eth(\d)/; print "$1\n";'`"
-args="`echo $@ | sed 's/--interface-name=eth./--interface-name=eth0/'`"
+#args="`echo $@ | sed 's/--interface-name=eth./--interface-name=eth0/'`"
+args="`echo $@ | sed 's/--interface-name=eth2/--interface-name=eth0/'`"
+args="`echo $@ | sed 's/--interface-name=eth4/--interface-name=eth0/'`"
+args="`echo $@ | sed 's/--interface-name=eth3/--interface-name=eth1/'`"
+args="`echo $@ | sed 's/--interface-name=eth5/--interface-name=eth1/'`"
 
 if [[ $args =~ "--disable" ]] ; then
    # restore tx mux to the linux driver controlled interface (mux input=0)
@@ -14,4 +18,3 @@ fi
 
 # start the generator
 traffic-generator-gmii $args
-

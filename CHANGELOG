@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.24) stable; urgency=medium
+
+  * systems/spark: Added second instances of traffic-generator and traffic-analyzer. Instance 0 for eth0,eth2,eth4, 1 for eth1,eth3,eth5
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Wed, 14 Jul 2021 23:52:33 +0200
+
 network-interconnect-tester-cores (0.23) stable; urgency=medium
 
   * cores/traffic-analyzer-gmii: Fixed bug causing non-testframes to interfere with testframe stats
