@@ -1126,8 +1126,13 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 
 connect_bd_net [get_bd_ports ls_mezz_uart0_rx] [get_bd_pins axi_uart16550_0/sin]
 connect_bd_net [get_bd_ports ls_mezz_uart0_tx] [get_bd_pins axi_uart16550_0/sout]
+connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins axi_uart16550_0/dcdn]
+
 connect_bd_net [get_bd_ports ls_mezz_uart1_rx] [get_bd_pins axi_uart16550_1/sin]
 connect_bd_net [get_bd_ports ls_mezz_uart1_tx] [get_bd_pins axi_uart16550_1/sout]
+connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins axi_uart16550_1/dcdn]
+
+
 # loopback
 connect_bd_net [get_bd_pins axi_uart16550_2/sin] [get_bd_pins axi_uart16550_2/sout]
 

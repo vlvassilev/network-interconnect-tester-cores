@@ -1,0 +1,37 @@
+#!/bin/bash -e
+
+address="`get-core-offset rtclock 0`"
+#0xa0280000
+
+function hex2dec {
+    echo "obase=10; ibase=16; $1" | bc
+}
+
+CONTROL_REG_OFFSET=16
+SEC_CONFIG_REG_OFFSET=32
+
+CONTROL_REG_ADDR="0x`printf '%x\n' $((${address}+${CONTROL_REG_OFFSET}))`"
+SEC_CONFIG_REG_ADDR="0x`printf '%x\n' $((${address}+${SEC_CONFIG_REG_OFFSET}))`"
+
+devmem32 $CONTROL_REG_ADDR 0
+
+while [ 1 ] ; do
+
+  date_sec_dot_nsec="`date +%s.%N`"
+  #1627137531.704074213
+  date_sec="`echo $date_sec_dot_nsec | cut -d '.' -f 1`"
+  date_nsec="`echo $date_sec_dot_nsec | cut -d '.' -f 2`"
+
+  devmem32 $SEC_CONFIG_REG_ADDR "0x`printf '%x\n' $((${date_sec}))`"
+
+  date_sec_dot_nsec="`date +%s.%N`"
+  date_sec_after="`echo $date_sec_dot_nsec | cut -d '.' -f 1`"
+
+  if [[ ${date_sec_after} == ${date_sec} ]] ; then
+    break
+  fi
+
+done
+
+
+devmem32 $CONTROL_REG_ADDR 0x3 # pps2

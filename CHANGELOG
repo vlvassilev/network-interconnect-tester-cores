@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.25) stable; urgency=medium
+
+  * systems/spark: Connected the GPS PPS signals to uart16550/dcdn
+  * lib/sw/rtclock: Added rtclock-pps-sync script that writes current second to register and enables PPS sync 
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 24 Jul 2021 23:50:05 +0200
+
 network-interconnect-tester-cores (0.24) stable; urgency=medium
 
   * systems/spark: Added second instances of traffic-generator and traffic-analyzer. Instance 0 for eth0,eth2,eth4, 1 for eth1,eth3,eth5

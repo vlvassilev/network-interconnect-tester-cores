@@ -1,3 +1,4 @@
+#!/bin/bash -xe
 # Before running this script, you must source the PetaLinux and Vivado settings:
 # source <petalinux-install-dir>/settings.sh
 # source <vivado-install-dir>/settings64.sh
