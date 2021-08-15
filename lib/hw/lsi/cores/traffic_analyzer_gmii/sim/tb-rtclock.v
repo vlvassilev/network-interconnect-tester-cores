@@ -17,6 +17,7 @@ localparam RC_BASEADDR =    32'h30000000;
 reg clk;
 reg rst;
 reg pps;
+reg pps2;
 
 wire [47:0] sec;
 wire [29:0] nsec;
@@ -54,11 +55,12 @@ reg [63:0] sec_config;
 integer i;
 integer len;
 
+//{16'{1'b0},
 
 rtclock #(.C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
            .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
            .C_BASEADDR(RC_BASEADDR),
-           .C_CLK_TO_NS_RATIO(CLK_PERIOD_NS) ) rtclock0 (.clk(clk), .resetn(~rst), .sec(sec), .nsec(nsec), .pps(pps),
+           .C_CLK_TO_NS_RATIO(CLK_PERIOD_NS) ) rtclock0 (.clk(clk), .resetn(~rst), .sec(sec), .nsec(nsec), .pps(pps), .pps2(pps2),
                            // AXI Lite ports
                            .S_AXI_ACLK(S_AXI_ACLK),
                            .S_AXI_ARESETN(S_AXI_ARESETN),
@@ -174,6 +176,7 @@ initial begin
     clk = 1;
     rst = 0;
     pps = 0;
+    pps2 = 0;
     sec_config=123;
 
     S_AXI_ARESETN=1;
@@ -198,6 +201,7 @@ initial begin
 
     #(10*CLK_PERIOD_NS)
     pps = 1;
+    pps2 = 1;
 
     /* in dynamic mode 8 bytes sequence number and 10 octets 1588 timestamp are added to the end of the static frame data 4 bytes CRC */
     axi_write(TG_BASEADDR+`REG_FRAME_SIZE_ADDR, len-8-10-4);

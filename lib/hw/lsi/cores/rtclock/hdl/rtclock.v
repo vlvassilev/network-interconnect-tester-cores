@@ -53,6 +53,7 @@ reg      [`REG_FLIP_BITS]    ip2cpu_flip_reg;
 wire     [`REG_FLIP_BITS]    cpu2ip_flip_reg;
 wire     [`REG_CONTROL_BITS] control_reg;
 wire     [`REG_SEC_CONFIG_BITS] sec_config_reg;
+wire     [`REG_CORRECTED_DELTA_PPS_BITS] corrected_delta_pps;
 
 reg [47:0] sec_next;
 reg [29:0] nsec_next;
@@ -66,9 +67,14 @@ integer pps_used;
 
 reg [47:0] sec_next_pps;
 reg [29:0] nsec_next_pps;
+reg [29:0] nsec_next_total_pps;
+reg [31:0] last_period_pps;
+
 reg sec_inc_pps;
+reg sec_inc_pps_done;
 reg pps_enabled_prev;
 reg pps_prev;
+reg [31:0] corrected_delta_sum_pps;
 
 
 //Registers section
@@ -111,11 +117,13 @@ reg pps_prev;
    .cpu2ip_flip_reg          (cpu2ip_flip_reg),
    .control_reg          (control_reg),
    .sec_config_reg          (sec_config_reg),
-   .sec_state_reg          (sec)
-
+   .sec_state_reg          (sec),
+   .last_period_pps_reg      (last_period_pps),
+   .corrected_delta_pps_reg (corrected_delta_pps)
 );
  
     always @(posedge clk) begin
+        $display("tic : time=%t, sec=%d, nsec=%d, sec_next_pps=%d", $time, sec, nsec, sec_next_pps);
         pps_enabled = control_reg[0];
         pps_select = control_reg[1];
         if(pps_select) begin
@@ -130,7 +138,13 @@ reg pps_prev;
             nsec <= 0;
             sec_next <= 0;
             nsec_next <= C_CLK_TO_NS_RATIO;
+            sec_next_pps <= 0;
+            nsec_next_pps <= C_CLK_TO_NS_RATIO;
             sec_inc <= 0;
+            last_period_pps <= 0;
+            corrected_delta_sum_pps <= 0;
+            sec_inc_pps <= 0;
+            sec_inc_pps_done <= 0;
         end
         else begin
             if(pps_enabled) begin
@@ -153,20 +167,37 @@ reg pps_prev;
             end
 
             // 2/2 - with pps sync
-            sec_inc_pps = (nsec_next_pps >= (nsec_modulo-C_CLK_TO_NS_RATIO))? 1'b1: 1'b0;
+            sec_inc_pps <= (nsec_next_pps >= (nsec_modulo-C_CLK_TO_NS_RATIO))? 1'b1: 1'b0;
             pps_prev <= pps_used;
             pps_enabled_prev <= pps_enabled;
             if(pps_enabled_prev == 0 && pps_enabled == 1) begin
-                sec_next_pps <= sec_config_reg;
+                sec_next_pps <= sec_config_reg[47:0];
                 nsec_next_pps <= 0;
+                nsec_next_total_pps <= 0;
+                corrected_delta_sum_pps <= 0;
             end
             else if(pps_prev == 0 && pps_used == 1) begin
-                sec_next_pps <= sec_next_pps + 1;
                 nsec_next_pps <= C_CLK_TO_NS_RATIO;
-                sec_inc_pps <= 0;
+                nsec_next_total_pps <= C_CLK_TO_NS_RATIO;
+                if(~sec_inc_pps_done) begin
+                    sec_next_pps <= sec_next_pps + 1;
+                end
+                last_period_pps <= nsec_next_total_pps;
+                sec_inc_pps_done <= 0;
             end
-            else if(~sec_inc_pps) begin
-                nsec_next_pps <= nsec_next_pps + C_CLK_TO_NS_RATIO;
+            else begin
+                nsec_next_total_pps <= nsec_next_total_pps + C_CLK_TO_NS_RATIO;
+                if(~sec_inc_pps_done) begin
+                    if(~sec_inc_pps) begin
+                        nsec_next_pps <= nsec_next_pps + corrected_delta_sum_pps[31:28];
+                        corrected_delta_sum_pps <= {4'b0,corrected_delta_sum_pps[27:0]} + corrected_delta_pps[31:0];
+                    end
+                    else begin
+                        sec_next_pps <= sec_next_pps + 1;
+                        nsec_next_pps <= 0; // accepted jitter in cases it should overflow
+                        sec_inc_pps_done <= 1;
+                    end
+                end
             end
         end
     end

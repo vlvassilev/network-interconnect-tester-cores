@@ -1,4 +1,4 @@
-AC_INIT([network-interconnect-tester-cores-sw], [0.25], [vladimir@lightside-instruments.com])
+AC_INIT([network-interconnect-tester-cores-sw], [0.26], [vladimir@lightside-instruments.com])
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign])

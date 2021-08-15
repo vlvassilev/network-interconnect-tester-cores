@@ -41,7 +41,9 @@ parameter C_BASE_ADDRESS        = 32'h00000000
     output reg [`REG_FLIP_BITS]    cpu2ip_flip_reg,
     output reg [`REG_CONTROL_BITS]    control_reg,
     output reg [`REG_SEC_CONFIG_BITS]    sec_config_reg,
-    input      [`REG_SEC_STATE_BITS]    sec_state_reg
+    input      [`REG_SEC_STATE_BITS]    sec_state_reg,
+    input      [`REG_LAST_PERIOD_PPS_BITS]  last_period_pps_reg,
+    output reg [`REG_CORRECTED_DELTA_PPS_BITS] corrected_delta_pps_reg
 );
 
     // AXI4LITE signals
@@ -251,6 +253,7 @@ parameter C_BASE_ADDRESS        = 32'h00000000
             cpu2ip_flip_reg <= #1 `REG_FLIP_DEFAULT;
             control_reg <= #1 `REG_CONTROL_DEFAULT;
             sec_config_reg <= #1 `REG_SEC_CONFIG_DEFAULT;
+            corrected_delta_pps_reg <= #1 `REG_SEC_CONFIG_DEFAULT;
         end
         else begin
            if (reg_wren && S_AXI_WSTRB==4'hF) begin //write event
@@ -272,6 +275,10 @@ parameter C_BASE_ADDRESS        = 32'h00000000
                 end
                 `REG_SEC_CONFIG_ADDR+4 : begin
                     sec_config_reg[31:0] <=  S_AXI_WDATA[31:0];
+                end
+            //Corrected Delta PPS Register
+                `REG_CORRECTED_DELTA_PPS_ADDR : begin
+                    corrected_delta_pps_reg[31:0] <=  S_AXI_WDATA[31:0];
                 end
             endcase
            end
@@ -317,6 +324,10 @@ parameter C_BASE_ADDRESS        = 32'h00000000
             end
             `REG_SEC_STATE_ADDR+4 : begin
                 reg_data_out [31:0] =  sec_state_reg[31:0];
+            end
+            //Last Period PPS Register
+            `REG_LAST_PERIOD_PPS_ADDR : begin
+                reg_data_out [31:0] =  last_period_pps_reg[31:0];
             end
             //Default return value
             default: begin

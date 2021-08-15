@@ -198,7 +198,7 @@ set_property INTERNAL_VREF 0.60 [get_iobanks 65]
 # ports and then change the port names in the below constraints and uncomment them.
 # ---------------------------------------------------------------------------- 
 # Bank 23 (1.8V)
-#set_property PACKAGE_PIN D7   [get_ports {HD_GPIO_0}];  # "D7.HD_GPIO_0" UART0_CTS, PIN 3
+#set_property PACKAGE_PIN D7   [get_ports {HD_GPIO_0}];  # "D7.HDGC_GPIO_0" UART0_CTS, PIN 3
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_0}];
 set_property PACKAGE_PIN F8   [get_ports {ls_mezz_uart0_tx}];  # "F8.HD_GPIO_1" UART0_TXD, PIN 5
 set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_uart0_tx}];
@@ -220,15 +220,15 @@ set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int0}];
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_9}];
 #set_property PACKAGE_PIN E5   [get_ports {HD_GPIO_10}];  # "E5.HD_GPIO_10" PCM_CLK, PIN 18
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_10}];
-#set_property PACKAGE_PIN D6   [get_ports {HD_GPIO_11}];  # "D6.HD_GPIO_11" PCM_DO, PIN 20
+#set_property PACKAGE_PIN D6   [get_ports {HD_GPIO_11}];  # "D6.HDGC_GPIO_11" PCM_DO, PIN 20
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_11}];
-#set_property PACKAGE_PIN D5   [get_ports {HD_GPIO_12}];  # "D5.HD_GPIO_12" PCM_DI, PIN 22
+#set_property PACKAGE_PIN D5   [get_ports {HD_GPIO_12}];  # "D5.HDGC_GPIO_12" PCM_DI, PIN 22
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_12}];
-##set_property PACKAGE_PIN C7   [get_ports {reset_port_1_n}];  # "C7.HD_GPIO_13" GPIO-H, PIN 30
+##set_property PACKAGE_PIN C7   [get_ports {reset_port_1_n}];  # "C7.HDGC_GPIO_13" GPIO-H, PIN 30
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_1_n}];
 ##set_property PACKAGE_PIN B6   [get_ports {reset_port_3_n}];  # "B6.HD_GPIO_14" GPIO-J, PIN 32
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_3_n}];
-set_property PACKAGE_PIN C5   [get_ports {ls_mezz_int1}];  # "C5.HD_GPIO_15" GPIO-L, PIN 34
+set_property PACKAGE_PIN C5   [get_ports {ls_mezz_int1}];  # "C5.HDGC_GPIO_15" GPIO-L, PIN 34
 set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int1}];
 
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets *_i/eth_pcs_pma_3_rx/inst/clock_reset_i/iclkbuf/O]

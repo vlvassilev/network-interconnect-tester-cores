@@ -1,0 +1,39 @@
+#!/bin/bash -e
+
+address="`get-core-offset rtclock 0`"
+#0xa0280000
+
+function hex2dec {
+    upper=`echo $1 | tr [a-f] [A-F]`
+    input=${upper:2}
+    echo "obase=10; ibase=16; $input" | bc
+}
+
+function dec2hex {
+    echo -n 0x
+    echo "obase=16; ibase=10; $1" | bc
+}
+
+CONTROL_REG_OFFSET=16
+SEC_CONFIG_REG_OFFSET=32
+LAST_PERIOD_PPS_REG_REG_OFFSET=48
+CORRECTED_DELTA_PPS_REG_OFFSET=52
+
+CONTROL_REG_ADDR="0x`printf '%x\n' $((${address}+${CONTROL_REG_OFFSET}))`"
+SEC_CONFIG_REG_ADDR="0x`printf '%x\n' $((${address}+${SEC_CONFIG_REG_OFFSET}))`"
+LAST_PERIOD_PPS_REG_ADDR="0x`printf '%x\n' $((${address}+${LAST_PERIOD_PPS_REG_REG_OFFSET}))`"
+CORRECTED_DELTA_PPS_REG_ADDR="0x`printf '%x\n' $((${address}+${CORRECTED_DELTA_PPS_REG_OFFSET}))`"
+
+
+res=`devmem32 $LAST_PERIOD_PPS_REG_ADDR`
+echo $res
+
+res_dec=`hex2dec $res`
+
+# calculate correct value
+delta_pps=`hex2dec 0x80000000`
+corrected_delta_pps_reg_value=$((${delta_pps} + (1000000000-${res_dec})*2147483648/1000000000))
+
+#devmem32 $CORRECTED_DELTA_PPS_REG_ADDR 0x80000000
+devmem32 $CORRECTED_DELTA_PPS_REG_ADDR `dec2hex $corrected_delta_pps_reg_value`
+

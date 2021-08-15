@@ -12,6 +12,7 @@ SEC_CONFIG_REG_OFFSET=32
 
 CONTROL_REG_ADDR="0x`printf '%x\n' $((${address}+${CONTROL_REG_OFFSET}))`"
 SEC_CONFIG_REG_ADDR="0x`printf '%x\n' $((${address}+${SEC_CONFIG_REG_OFFSET}))`"
+SEC_CONFIG_REG_LO_ADDR="0x`printf '%x\n' $((${address}+${SEC_CONFIG_REG_OFFSET}+4))`"
 
 devmem32 $CONTROL_REG_ADDR 0
 
@@ -22,7 +23,8 @@ while [ 1 ] ; do
   date_sec="`echo $date_sec_dot_nsec | cut -d '.' -f 1`"
   date_nsec="`echo $date_sec_dot_nsec | cut -d '.' -f 2`"
 
-  devmem32 $SEC_CONFIG_REG_ADDR "0x`printf '%x\n' $((${date_sec}))`"
+  devmem32 $SEC_CONFIG_REG_ADDR "0x0"
+  devmem32 $SEC_CONFIG_REG_LO_ADDR "0x`printf '%x\n' $((${date_sec}))`"
 
   date_sec_dot_nsec="`date +%s.%N`"
   date_sec_after="`echo $date_sec_dot_nsec | cut -d '.' -f 1`"

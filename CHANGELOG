@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.26) stable; urgency=medium
+  * lib/hw/rtclock: Added 1s PPS correction logic for frequency drift of local clock
+  * lib/sw/rtclock: Added rtclock-pps-correction to update the delta increment realtime clock register
+  * systems/spark: Fixed bug inverted uart16550/dcdn signals so that rising instead of falling pps edge is used as trigger
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sun, 15 Aug 2021 09:17:41 +0200
+
 network-interconnect-tester-cores (0.25) stable; urgency=medium
 
   * systems/spark: Connected the GPS PPS signals to uart16550/dcdn

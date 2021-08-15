@@ -430,6 +430,13 @@ connect_bd_net [get_bd_pins eth_pcs_pma_shared/clk125_out] [get_bd_pins rtclock_
 # Resets
 create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic reset_invert
 set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {not} CONFIG.LOGO_FILE {data/sym_notgate.png}] [get_bd_cells reset_invert]
+
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic dcd0_invert
+set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {not} CONFIG.LOGO_FILE {data/sym_notgate.png}] [get_bd_cells dcd0_invert]
+
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic dcd1_invert
+set_property -dict [list CONFIG.C_SIZE {1} CONFIG.C_OPERATION {not} CONFIG.LOGO_FILE {data/sym_notgate.png}] [get_bd_cells dcd1_invert]
+
 connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/pl_resetn1] [get_bd_pins reset_invert/Op1]
 connect_bd_net [get_bd_pins reset_invert/Res] [get_bd_pins eth_pcs_pma_shared/reset]
 connect_bd_net [get_bd_pins eth_pcs_pma_shared/rst_125_out] [get_bd_pins eth_pcs_pma_0_1/reset]
@@ -1126,11 +1133,18 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ul
 
 connect_bd_net [get_bd_ports ls_mezz_uart0_rx] [get_bd_pins axi_uart16550_0/sin]
 connect_bd_net [get_bd_ports ls_mezz_uart0_tx] [get_bd_pins axi_uart16550_0/sout]
-connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins axi_uart16550_0/dcdn]
+
+# connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins axi_uart16550_0/dcdn]
+connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins dcd0_invert/Op1]
+connect_bd_net [get_bd_pins dcd0_invert/Res] [get_bd_pins axi_uart16550_0/dcdn]
+
 
 connect_bd_net [get_bd_ports ls_mezz_uart1_rx] [get_bd_pins axi_uart16550_1/sin]
 connect_bd_net [get_bd_ports ls_mezz_uart1_tx] [get_bd_pins axi_uart16550_1/sout]
-connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins axi_uart16550_1/dcdn]
+
+#connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins axi_uart16550_1/dcdn]
+connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins dcd1_invert/Op1]
+connect_bd_net [get_bd_pins dcd1_invert/Res] [get_bd_pins axi_uart16550_1/dcdn]
 
 
 # loopback
