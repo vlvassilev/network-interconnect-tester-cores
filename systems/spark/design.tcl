@@ -544,9 +544,12 @@ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 re
 #set_property CONFIG.FREQ_HZ [get_property CONFIG.FREQ_HZ [get_bd_intf_pins eth_pcs_pma_shared/refclk625_in]] [get_bd_intf_ports ref_clk_625mhz]
 #connect_bd_intf_net [get_bd_intf_pins eth_pcs_pma_shared/refclk625_in] [get_bd_intf_ports ref_clk_625mhz]
 
-# pps (1 sec) signal from GPS e.g. aes-acc-u96-me-mez + MIKROE-2670
+# pps (1 sec) signal from GPS e.g. gpsclock4ultra96 or aes-acc-u96-me-mez + MIKROE-2670
 create_bd_port -dir I ls_mezz_int0
 create_bd_port -dir I ls_mezz_int1
+
+# ref clk (10 MHz) signal from GPS e.g. gpsclock4ultra96
+create_bd_port -dir I -type clk -freq_hz 10000000 ref_clk_10mhz
 
 # PHY RESET for ports 0,1 and 2
 ##create_bd_port -dir O reset_port_0_n
@@ -1109,10 +1112,21 @@ connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins 
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_analyzer_gmii_0/resetn]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_0/resetn]
 
+
 #Add 100->625 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0
-set_property -dict [list CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.MMCM_CLKFBOUT_MULT_F {12.500} CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} CONFIG.CLKOUT1_JITTER {80.439} CONFIG.CLKOUT1_PHASE_ERROR {84.520} CONFIG.USE_RESET {false}] [get_bd_cells clk_wiz_0]
-connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins zynq_ultra_ps_e_0/pl_clk0]
+set_property -dict [list CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.MMCM_CLKFBOUT_MULT_F {125} CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} CONFIG.CLKOUT1_JITTER {80.439} CONFIG.CLKOUT1_PHASE_ERROR {84.520} CONFIG.USE_RESET {false}] [get_bd_cells clk_wiz_0]
+
+#connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins ref_clk_10mhz]
+# Use BUFGCE for clock HS pins- start
+create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf:2.1 util_ds_buf_0
+set_property -dict [list CONFIG.C_BUF_TYPE {BUFGCE}] [get_bd_cells util_ds_buf_0]
+connect_bd_net [get_bd_pins util_ds_buf_0/BUFGCE_O] [get_bd_pins clk_wiz_0/clk_in1]
+connect_bd_net [get_bd_ports ref_clk_10mhz] [get_bd_pins util_ds_buf_0/BUFGCE_I]
+create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0
+set_property -dict [list CONFIG.CONST_VAL {1}] [get_bd_cells xlconstant_0]
+connect_bd_net [get_bd_pins xlconstant_0/dout] [get_bd_pins util_ds_buf_0/BUFGCE_CE]
+# Use BUFGCE for clock HS pins- end
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins eth_pcs_pma_shared/refclk625_in]
 

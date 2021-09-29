@@ -222,8 +222,8 @@ set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int0}];
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_10}];
 #set_property PACKAGE_PIN D6   [get_ports {HD_GPIO_11}];  # "D6.HDGC_GPIO_11" PCM_DO, PIN 20
 #set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_11}];
-#set_property PACKAGE_PIN D5   [get_ports {HD_GPIO_12}];  # "D5.HDGC_GPIO_12" PCM_DI, PIN 22
-#set_property IOSTANDARD LVCMOS18 [get_ports {HD_GPIO_12}];
+set_property PACKAGE_PIN D5   [get_ports {ref_clk_10mhz}];  # "D5.HDGC_GPIO_12" PCM_DI, PIN 22
+set_property IOSTANDARD LVCMOS18 [get_ports {ref_clk_10mhz}];
 ##set_property PACKAGE_PIN C7   [get_ports {reset_port_1_n}];  # "C7.HDGC_GPIO_13" GPIO-H, PIN 30
 ##set_property IOSTANDARD LVCMOS18 [get_ports {reset_port_1_n}];
 ##set_property PACKAGE_PIN B6   [get_ports {reset_port_3_n}];  # "B6.HD_GPIO_14" GPIO-J, PIN 32
@@ -265,3 +265,8 @@ set_property IOSTANDARD LVCMOS18 [get_ports BT*]
 set_property PACKAGE_PIN B7 [get_ports BT_ctsn]
 #BT_HCI_CTS on FPGA / emio_uart0_rtsn
 set_property PACKAGE_PIN B5 [get_ports BT_rtsn]
+
+#create_clock -period 100 [get_ports ref_clk_10mhz]
+create_clock -period 100 [get_ports util_ds_buf_0/util_ds_buf_0/BUFGCE_O]
+set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets spark_i/util_ds_buf_0/U0/BUFGCE_O[0]]
+#set property CLOCK_DEDICATED_ROUTE FALSE [get_nets spark_i/clk_wiz_0/clk_in1]
