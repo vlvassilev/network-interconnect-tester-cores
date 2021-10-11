@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.28) stable; urgency=medium
+
+  * Added gnss-clock module for management of GNSS disciplined oscillators
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sun, 10 Oct 2021 23:47:31 +0200
+
 network-interconnect-tester-cores (0.27) stable; urgency=medium
 
   * Used 10 MHz external input clock instead of the internal 100 MHz for primary input to clk_wiz and 625 MHz synthesis  

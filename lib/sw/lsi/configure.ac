@@ -1,4 +1,4 @@
-AC_INIT([network-interconnect-tester-cores-sw], [0.27], [vladimir@lightside-instruments.com])
+AC_INIT([network-interconnect-tester-cores-sw], [0.28], [vladimir@lightside-instruments.com])
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign])
@@ -12,6 +12,14 @@ AC_PROG_LIBTOOL
 CFLAGS="$CFLAGS -g -fPIC -DDEBUG=1 -DLINUX=1 -DGCC=1 -DRELEASE=0"
 AC_SUBST(CFLAGS)
 
+netconfmoduledir="$libdir/yuma"
+AC_SUBST(netconfmoduledir)
+
+lsi_yangdir=${datarootdir}/yuma/modules/lsi
+AC_SUBST(lsi_yangdir)
+
+AM_PATH_XML2
+
 AC_CONFIG_FILES([
         Makefile \
         common/Makefile
@@ -20,6 +28,7 @@ AC_CONFIG_FILES([
         cores/traffic-generator-gmii/Makefile
         cores/loopback/Makefile
         cores/rtclock/Makefile
+        cores/gnss-clock/Makefile
 ])
 
 AC_OUTPUT

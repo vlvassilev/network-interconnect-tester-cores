@@ -1,0 +1,34 @@
+module lsi-gnss-clock {
+  yang-version 1.1;
+  namespace "http://lightide-instruments.com/ns/gnss-clock";
+  prefix gnssclk;
+
+  organization
+    "Lightside Instruments AS";
+  description
+    "Global navigation satellite system clock source management module.";
+
+  revision 2021-10-11 {
+    description
+      "Initial.";
+  }
+
+  container gnss-clock {
+    leaf antenna-cable-delay {
+      type int16;
+      default "0";
+    }
+    leaf rf-group-delay {
+      type int16;
+      default "0";
+    }
+    leaf user-config-delay {
+      type int32;
+      default "0";
+    }
+    leaf frequency {
+      type uint32;
+      default "10000000";
+    }
+  }
+}

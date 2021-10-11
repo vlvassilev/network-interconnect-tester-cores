@@ -1,0 +1,130 @@
+#!/bin/env python3
+
+# Usage: gnss-clock-config /dev/ttyS1
+
+import sys
+import serial
+import binascii
+import time
+import getopt
+global fs
+
+def ubx_connect(filename):
+	global fs
+	fs = serial.Serial(filename, timeout=1)
+
+def ubx_csum(cmd_bytes):
+	a = 0
+	b = 0
+	for i in range(0,len(cmd_bytes)):
+		a = (a + int(cmd_bytes[i]))%256
+		b = (b+a)%256
+	return a.to_bytes(1, 'big') + b.to_bytes(1, 'big')
+
+def ubx_send(cmd_hexstr):
+	global fs
+	cmd = binascii.a2b_hex(cmd_hexstr.replace(' ',''))
+	csum = ubx_csum(cmd)
+	sys.stderr.write(b'\xb5\x62'.hex() + cmd.hex() + csum.hex() + "\n")
+	fs.write(b'\xb5\x62' + cmd + csum +b'\n')
+	fs.flush()
+
+def ubx_cmd(cmd_hexstr):
+	fs.read()
+	ubx_send(cmd_hexstr)
+	ubx_ack_ack=b'\xb5\x62\x05\x01'
+	ubx_ack_nack=b'\xb5\x62\x05\x00'
+	while 1:
+		buf = fs.read(10240)
+		sys.stderr.write(str(buf.find(ubx_ack_ack)) + '\n')
+		if(0<=buf.find(ubx_ack_ack)):
+			return True
+		if(0<=buf.find(ubx_ack_nack)):
+			return False
+		else:
+			ubx_send(cmd_hexstr)
+
+
+device = '/dev/ttyS1'
+frequency = 10000000
+antenna_cable_delay = 50
+rf_group_delay = 0
+user_config_delay = 0
+
+options, remainder = getopt.getopt(sys.argv[1:], '',
+[ 'device=',
+  'frequency=',
+  'antenna-cable-delay=',
+  'rf-group-delay=',
+  'user-config-delay='])
+
+for opt, arg in options:
+    if opt == '--device':
+        device = arg
+    elif opt == '--frequency':
+        frequency = int(arg)
+    elif opt == '--antenna-cable-delay':
+        antenna_cable_delay = int(arg)
+    elif opt == '--rf-group-delay':
+        rf_group_delay = int(arg)
+    elif opt == '--user-config-delay':
+        user_config_delay = int(arg)
+
+print("Opening " + device + "...")
+res = ubx_connect(device)
+if(res):
+	sys.stderr.write("Failed to connect.\n")
+else:
+	sys.stderr.write("Connected.\n")
+
+sys.stderr.write("UBX-CFG-CFG-REVERTDEFAULT ...\n")
+res = ubx_cmd("06 09 0D 00 FF FF 00 00 00 00 00 00 FF FF 00 00 17")
+if(res):
+	sys.stderr.write("ACK\n")
+else:
+	sys.stderr.write("NACK\n")
+	exit(-1)
+
+time.sleep(5)
+
+sys.stderr.write("UBX_CFG_TP5_SET 0 ...\n")
+#                          Id VerReservC     G     FP          FPL         PLR         PLRL        UD          F
+res = ubx_cmd("06 31 20 00 00 00 00 00 00 32 00 00 01 00 00 00 01 00 00 00 20 A1 07 00 A0 86 01 00 01 00 00 00 7F 01 00 00")
+if(res):
+	sys.stderr.write("ACK\n")
+else:
+	sys.stderr.write("NACK\n")
+	exit(-1)
+
+
+time.sleep(5)
+
+sys.stderr.write("UBX_CFG_TP5_SET 1 ...\n")
+frequency_hex = frequency.to_bytes(4,"little").hex()
+antenna_cable_delay_hex = antenna_cable_delay.to_bytes(2,"little").hex()
+rf_group_delay_hex = rf_group_delay.to_bytes(2,"little").hex()
+user_config_delay_hex = user_config_delay.to_bytes(4,"little").hex()
+
+#                          Id VerReservC     G     FP          FPL         PLR         PLRL        UD          F
+# res=ubx_cmd("06 31 20 00 01 00 00 00 00 32 00 00 80 96 98 00 80 96 98 00 00 00 00 80 00 00 00 80 01 00 00 00 6F 10 00 00")
+cmd_str =     "06 31 20 00 01 00 00 00 %s    %s    %s          %s          00 00 00 80 00 00 00 80 %s          6F 10 00 00" % (antenna_cable_delay_hex, rf_group_delay_hex, frequency_hex, frequency_hex, user_config_delay_hex)
+res = ubx_cmd(cmd_str)
+
+if(res):
+	sys.stderr.write("ACK\n")
+else:
+	sys.stderr.write("NACK\n")
+	exit(-1)
+
+
+time.sleep(5)
+
+sys.stderr.write("UBX-CFG-CFG-SAVE ...\n")
+res = ubx_cmd("06 09 0D 00 00 00 00 00 FF FF 00 00 00 00 00 00 17") # 31 BF
+if(res):
+	sys.stderr.write("ACK\n")
+else:
+	sys.stderr.write("NACK\n")
+	exit(-1)
+
+exit(0)
