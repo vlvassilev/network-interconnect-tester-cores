@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+#Usage:
+# power-distribution-unit <0=disable|1=enable> [0:5=index]
+#Example:
+# power-distribution-unit 1 0 # turns on output 0
+# power-distribution-unit 0 0 # turns off output 0
+# power-distribution-unit 1 5 # turns on output 5
+# power-distribution-unit 0 5 # turns off output 5
+# ..
+# power-distribution-unit 1 # turns on all outputs
+# power-distribution-unit 0 # turns off all outputs
+
+if [ "$#" == "1" ] || [ "$2" == "5" ] ; then
+  echo $((338+44)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+44))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+44))/value
+fi
+
+if [ "$#" == "1" ] || [ "$2" == "4" ] ; then
+  echo $((338+45)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+45))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+45))/value
+fi
+
+if [ "$#" == "1" ] || [ "$2" == "3" ] ; then
+  echo $((338+39)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+39))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+39))/value
+fi
+
+if [ "$#" == "1" ] || [ "$2" == "2" ] ; then
+  echo $((338+40)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+40))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+40))/value
+fi
+
+if [ "$#" == "1" ] || [ "$2" == "1" ] ; then
+  echo $((338+36)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+36))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+36))/value
+fi
+
+if [ "$#" == "1" ] || [ "$2" == "0" ] ; then
+  echo $((338+37)) > /sys/class/gpio/export || true
+  echo out > /sys/class/gpio/gpio$((338+37))/direction || true
+  echo "$1" > /sys/class/gpio/gpio$((338+37))/value
+fi

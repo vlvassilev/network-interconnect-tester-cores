@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.29) stable; urgency=medium
+
+  * Added power-distribution-unit module for testing power interruption recovery times RFC2544 sec. 26.6
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 18 Oct 2021 13:12:47 +0200
+
 network-interconnect-tester-cores (0.28) stable; urgency=medium
 
   * Added gnss-clock module for management of GNSS disciplined oscillators

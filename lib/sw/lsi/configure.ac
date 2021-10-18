@@ -1,4 +1,4 @@
-AC_INIT([network-interconnect-tester-cores-sw], [0.28], [vladimir@lightside-instruments.com])
+AC_INIT([network-interconnect-tester-cores-sw], [0.29], [vladimir@lightside-instruments.com])
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign])
@@ -29,6 +29,7 @@ AC_CONFIG_FILES([
         cores/loopback/Makefile
         cores/rtclock/Makefile
         cores/gnss-clock/Makefile
+        cores/power-distribution-unit/Makefile
 ])
 
 AC_OUTPUT

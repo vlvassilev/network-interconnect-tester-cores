@@ -1,0 +1,27 @@
+module lsi-power-distribution-unit {
+  yang-version 1.1;
+  namespace "http://lightide-instruments.com/ns/power-distribution-unit";
+  prefix pdu;
+
+  organization
+    "Lightside Instruments AS";
+  description
+    "Power distribution unit management module.";
+
+  revision 2021-10-16 {
+    description
+      "Initial.";
+  }
+
+  container power-distribution-unit {
+    list output {
+      key "index";
+      description
+        "When list entry is created power is distributed
+         to the load connected to the corresponding output index.";
+      leaf index {
+        type uint32;
+      }
+    }
+  }
+}
