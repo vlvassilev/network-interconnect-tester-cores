@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.30) stable; urgency=medium
+
+  * systems/spark: Added the internal 100 MHz clock as secondary clock used when the external primary is not in locked state
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sun, 16 Jan 2022 00:11:54 +0100
+
 network-interconnect-tester-cores (0.29) stable; urgency=medium
 
   * Added power-distribution-unit module for testing power interruption recovery times RFC2544 sec. 26.6
