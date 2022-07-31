@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.31) buster; urgency=medium
+
+  * Increased CLKIN1_JITTER_PS for the clk_wiz_1 from 1000 to 12000 since U-blox LEA-M8T specifies 11 ns maximum jitter.
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sun, 31 Jul 2022 11:16:21 +0200
+
 network-interconnect-tester-cores (0.30) stable; urgency=medium
 
   * systems/spark: Added the internal 100 MHz clock as secondary clock used when the external primary is not in locked state

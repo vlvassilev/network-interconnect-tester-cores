@@ -1120,7 +1120,7 @@ set_property -dict [list CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.MMCM_CLK
 
 #Add 10->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_1
-set_property -dict [list CONFIG.PRIM_IN_FREQ {10.000} CONFIG.USE_RESET {false} CONFIG.CLKIN1_JITTER_PS {1000.0} CONFIG.MMCM_CLKFBOUT_MULT_F {120.000} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.CLKOUT1_JITTER {279.205} CONFIG.CLKOUT1_PHASE_ERROR {353.086}] [get_bd_cells clk_wiz_1]
+set_property -dict [list CONFIG.PRIM_IN_FREQ {10.000} CONFIG.USE_RESET {false} CONFIG.CLKIN1_JITTER_PS {12000.0} CONFIG.MMCM_CLKFBOUT_MULT_F {120.000} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.CLKOUT1_JITTER {279.205} CONFIG.CLKOUT1_PHASE_ERROR {353.086}] [get_bd_cells clk_wiz_1]
 
 
 #connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins ref_clk_10mhz]
