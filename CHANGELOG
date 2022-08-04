@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.32) buster; urgency=medium
+
+  * Added axi_gpio instance for reading clk_wiz1.locked and writing clk_wiz0.clk_sel
+  * Added rtclock-clk-sel-external script to set clk_wiz0.clk_sel and select the external clock as sync source  
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 04 Aug 2022 02:47:27 +0200
+
 network-interconnect-tester-cores (0.31) buster; urgency=medium
 
   * Increased CLKIN1_JITTER_PS for the clk_wiz_1 from 1000 to 12000 since U-blox LEA-M8T specifies 11 ns maximum jitter.
