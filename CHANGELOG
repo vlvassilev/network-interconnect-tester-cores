@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.33) UNRELEASED; urgency=medium
+
+  * Added monitoring for the clk_wiz0.lock signal in addition to clk_wiz1.lock
+  * Added explicit CONFIG.PRIM_IN_FREQ IP customization parameter for clk_wiz0
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 08 Aug 2022 00:38:46 +0200
+
 network-interconnect-tester-cores (0.32) buster; urgency=medium
 
   * Added axi_gpio instance for reading clk_wiz1.locked and writing clk_wiz0.clk_sel
