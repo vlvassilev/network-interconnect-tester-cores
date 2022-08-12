@@ -1,4 +1,11 @@
-network-interconnect-tester-cores (0.33) UNRELEASED; urgency=medium
+network-interconnect-tester-cores (0.34) stable; urgency=medium
+
+  * Updated the parameter customization for clk_wiz0 and clk_wiz1 with correct output jitter returned using GUI
+  * Removed no longer existing phy_gpio_tri_io port assigments from the constraints file
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 12 Aug 2022 02:01:17 +0200
+
+network-interconnect-tester-cores (0.33) stable; urgency=medium
 
   * Added monitoring for the clk_wiz0.lock signal in addition to clk_wiz1.lock
   * Added explicit CONFIG.PRIM_IN_FREQ IP customization parameter for clk_wiz0

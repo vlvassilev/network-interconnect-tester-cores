@@ -102,10 +102,10 @@ set_property PACKAGE_PIN P1   [get_ports {sfp_port_0_txn}];  # "P1.CSI0_C_N" Clo
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_0_txn}];
 set_property PACKAGE_PIN N2   [get_ports {sfp_port_0_txp}];  # "N2.CSI0_C_P" Clock capable QBC
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_0_txp}];
-set_property PACKAGE_PIN N4   [get_ports {phy_gpio_tri_io[4]}];  # "N4.CSI0_D0_N"
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[4]}];
-set_property PACKAGE_PIN N5   [get_ports {phy_gpio_tri_io[5]}];  # "N5.CSI0_D0_P"
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[5]}];
+#set_property PACKAGE_PIN N4   [get_ports {phy_gpio_tri_io[4]}];  # "N4.CSI0_D0_N"
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[4]}];
+#set_property PACKAGE_PIN N5   [get_ports {phy_gpio_tri_io[5]}];  # "N5.CSI0_D0_P"
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[5]}];
 set_property PACKAGE_PIN M1   [get_ports {sfp_port_1_txn}];  # "M1.CSI0_D1_N"
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_1_txn}];
 set_property PACKAGE_PIN M2   [get_ports {sfp_port_1_txp}];  # "M2.CSI0_D1_P"
@@ -120,20 +120,20 @@ set_property PACKAGE_PIN L1   [get_ports {sfp_port_0_rxn}];  # "L1.CSI0_D3_N" Gl
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_0_rxn}];
 set_property PACKAGE_PIN L2   [get_ports {sfp_port_0_rxp}];  # "L2.CSI0_D3_P" Global clock capable
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_0_rxp}];
-set_property PACKAGE_PIN L3   [get_ports {phy_gpio_tri_io[2]}];  # L3 Not connected
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[2]}];
-set_property PACKAGE_PIN L4   [get_ports {phy_gpio_tri_io[3]}];  # L4 Not connected
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[3]}];
+#set_property PACKAGE_PIN L3   [get_ports {phy_gpio_tri_io[2]}];  # L3 Not connected
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[2]}];
+#set_property PACKAGE_PIN L4   [get_ports {phy_gpio_tri_io[3]}];  # L4 Not connected
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[3]}];
 
 # BANK65_BYTE2 Lower nibble
 set_property PACKAGE_PIN J2   [get_ports {sfp_port_2_rx_txn}];  # J2 Not connected
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_2_rx_txn}];
 set_property PACKAGE_PIN J3   [get_ports {sfp_port_2_rx_txp}];  # J3 Not connected
 set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_2_rx_txp}];
-set_property PACKAGE_PIN K3   [get_ports {phy_gpio_tri_io[0]}];  # K3 Not connected
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[0]}];
-set_property PACKAGE_PIN K4   [get_ports {phy_gpio_tri_io[1]}];  # K4 Not connected
-set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[1]}];
+#set_property PACKAGE_PIN K3   [get_ports {phy_gpio_tri_io[0]}];  # K3 Not connected
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[0]}];
+#set_property PACKAGE_PIN K4   [get_ports {phy_gpio_tri_io[1]}];  # K4 Not connected
+#set_property IOSTANDARD SSTL12 [get_ports {phy_gpio_tri_io[1]}];
 #set_property PACKAGE_PIN J1   [get_ports {sfp_port_2_rxn}];  # J1 Not connected
 #set_property IOSTANDARD DIFF_SSTL12 [get_ports {sfp_port_2_rxn}];
 #set_property PACKAGE_PIN K1   [get_ports {sfp_port_2_rxp}];  # K1 Not connected
@@ -267,6 +267,6 @@ set_property PACKAGE_PIN B7 [get_ports BT_ctsn]
 set_property PACKAGE_PIN B5 [get_ports BT_rtsn]
 
 #create_clock -period 100 [get_ports ref_clk_10mhz]
-create_clock -period 100 [get_ports util_ds_buf_0/util_ds_buf_0/BUFGCE_O]
+create_clock -period 100 [get_ports util_ds_buf_0/BUFGCE_O]
 set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets spark_i/util_ds_buf_0/U0/BUFGCE_O[0]]
 #set property CLOCK_DEDICATED_ROUTE FALSE [get_nets spark_i/clk_wiz_0/clk_in1]
