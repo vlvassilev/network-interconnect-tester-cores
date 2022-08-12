@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.35) stable; urgency=medium
+
+  * Updated the xdc constraints file fixing some critical warning
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Fri, 12 Aug 2022 02:08:55 +0200
+
 network-interconnect-tester-cores (0.34) stable; urgency=medium
 
   * Updated the parameter customization for clk_wiz0 and clk_wiz1 with correct output jitter returned using GUI

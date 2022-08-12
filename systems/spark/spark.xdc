@@ -231,7 +231,7 @@ set_property IOSTANDARD LVCMOS18 [get_ports {ref_clk_10mhz}];
 set_property PACKAGE_PIN C5   [get_ports {ls_mezz_int1}];  # "C5.HDGC_GPIO_15" GPIO-L, PIN 34
 set_property IOSTANDARD LVCMOS18 [get_ports {ls_mezz_int1}];
 
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets *_i/eth_pcs_pma_3_rx/inst/clock_reset_i/iclkbuf/O]
+#set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets *_i/eth_pcs_pma_3_rx/inst/clock_reset_i/iclkbuf/O]
 
 #set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets *_i/util_ds_buf_1/U0/BUFG_O[0]]
 
@@ -252,12 +252,16 @@ set_property ODT RTT_48 [get_ports sfp_port_0_rxp]
 set_property ODT RTT_48 [get_ports sfp_port_0_rxn]
 set_property ODT RTT_48 [get_ports sfp_port_1_rxp]
 set_property ODT RTT_48 [get_ports sfp_port_1_rxn]
-set_property ODT RTT_48 [get_ports sfp_port_2_rxp]
-set_property ODT RTT_48 [get_ports sfp_port_2_rxn]
+set_property ODT RTT_48 [get_ports sfp_port_2_rx_rxp]
+set_property ODT RTT_48 [get_ports sfp_port_2_rx_rxn]
 set_property ODT RTT_48 [get_ports sfp_port_3_rx_rxp]
 set_property ODT RTT_48 [get_ports sfp_port_3_rx_rxn]
-set_property ODT RTT_48 [get_ports ref_clk_625mhz_clk_p]
-set_property ODT RTT_48 [get_ports ref_clk_625mhz_clk_n]
+set_property ODT RTT_48 [get_ports sfp_port_4_rxp]
+set_property ODT RTT_48 [get_ports sfp_port_4_rxn]
+set_property ODT RTT_48 [get_ports sfp_port_5_rx_rxp]
+set_property ODT RTT_48 [get_ports sfp_port_5_rx_rxn]
+#set_property ODT RTT_48 [get_ports ref_clk_625mhz_clk_p]
+#set_property ODT RTT_48 [get_ports ref_clk_625mhz_clk_n]
 
 # Bluetooth UART0 pins
 set_property IOSTANDARD LVCMOS18 [get_ports BT*]
@@ -266,7 +270,7 @@ set_property PACKAGE_PIN B7 [get_ports BT_ctsn]
 #BT_HCI_CTS on FPGA / emio_uart0_rtsn
 set_property PACKAGE_PIN B5 [get_ports BT_rtsn]
 
-#create_clock -period 100 [get_ports ref_clk_10mhz]
-create_clock -period 100 [get_ports util_ds_buf_0/BUFGCE_O]
+create_clock -period 100 [get_ports ref_clk_10mhz]
+#create_clock -period 100 [get_ports util_ds_buf_0/BUFGCE_O]
 set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets spark_i/util_ds_buf_0/U0/BUFGCE_O[0]]
 #set property CLOCK_DEDICATED_ROUTE FALSE [get_nets spark_i/clk_wiz_0/clk_in1]
