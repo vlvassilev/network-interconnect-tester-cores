@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.37) stable; urgency=medium
+
+  * Enabled clock monitor for clk_wiz_1
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 15 Aug 2022 11:28:15 +0200
+
 network-interconnect-tester-cores (0.36) stable; urgency=medium
 
   * Added clk_wiz_2 100 MHz -> 100 MHz clock management tile with the intention to reduce jitter below 1000 ps

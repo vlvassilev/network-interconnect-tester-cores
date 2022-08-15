@@ -1101,11 +1101,10 @@ connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins 
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_analyzer_gmii_0/resetn]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_0/resetn]
 
-
 #Add 10->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_1
 set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_1]
-set_property -dict [list CONFIG.JITTER_SEL {Min_O_Jitter} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.USE_RESET {false} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.MMCM_BANDWIDTH {HIGH} CONFIG.MMCM_CLKFBOUT_MULT_F {127.500} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.MMCM_REF_JITTER1 {0.110} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.750} CONFIG.CLKOUT1_JITTER {2066.353} CONFIG.CLKOUT1_PHASE_ERROR {322.598}] [get_bd_cells clk_wiz_1]
+set_property -dict [list CONFIG.ENABLE_CLOCK_MONITOR {true} CONFIG.JITTER_SEL {Min_O_Jitter} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.USE_INCLK_STOPPED {false} CONFIG.ENABLE_USER_CLOCK0 {true} CONFIG.ENABLE_USER_CLOCK1 {false} CONFIG.Enable_PLL0 {true} CONFIG.PRIMITIVE {MMCM} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.MMCM_BANDWIDTH {HIGH} CONFIG.MMCM_CLKFBOUT_MULT_F {127.500} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.MMCM_REF_JITTER1 {0.110} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.750} CONFIG.CLKOUT1_JITTER {2066.353} CONFIG.CLKOUT1_PHASE_ERROR {322.598} CONFIG.USER_CLK_FREQ0 {10.000}] [get_bd_cells clk_wiz_1]
 
 #Add 100->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_2
@@ -1137,6 +1136,11 @@ connect_bd_net [get_bd_pins clk_wiz_2/clk_in1] [get_bd_pins clk_wiz_1/clk_out1]
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins eth_pcs_pma_shared/refclk625_in]
 connect_bd_net [get_bd_pins reset_invert/Res] [get_bd_pins clk_wiz_0/reset]
+
+#clk_wiz_1 monitor
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/clk_wiz_1/s_axi_lite} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins clk_wiz_1/s_axi_lite]
+connect_bd_net [get_bd_pins clk_wiz_1/ref_clk] [get_bd_pins zynq_ultra_ps_e_0/pl_clk0]
+
 
 # UARTs 0,1
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_0
@@ -1176,12 +1180,12 @@ connect_bd_net [get_bd_pins axi_uart16550_0/ip2intc_irpt] [get_bd_pins xlconcat_
 connect_bd_net [get_bd_pins axi_uart16550_1/ip2intc_irpt] [get_bd_pins xlconcat_1/In6]
 connect_bd_net [get_bd_pins axi_uart16550_2/ip2intc_irpt] [get_bd_pins xlconcat_1/In7]
 
-# axi_gpio out: 0-loopback, 1-clk_wiz_0.clk_sel; in: 0-loopback, 1-clk_wiz_1.locked, 2-clk_wiz_0.locked 3-clk_wiz_2.locked
+# axi_gpio out: 0-loopback, 1-clk_wiz_0.clk_sel; in: 0-loopback, 1-clk_wiz_1.locked, 2-clk_wiz_0.locked 3-clk_wiz_2.locked, 4:6-clk_wiz_1.clk_stop, 7:9-clk_wiz_1.clk_glitch, 10:12-clk_wiz_1.clk_oor
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0
-set_property -dict [list CONFIG.C_GPIO_WIDTH {4}] [get_bd_cells axi_gpio_0]
+set_property -dict [list CONFIG.C_GPIO_WIDTH {13}] [get_bd_cells axi_gpio_0]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_gpio_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_gpio_0/s_axi]
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat axi_gpio_0_concat
-set_property -dict [list CONFIG.NUM_PORTS {4}] [get_bd_cells axi_gpio_0_concat]
+set_property -dict [list CONFIG.NUM_PORTS {7}] [get_bd_cells axi_gpio_0_concat]
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice axi_gpio_0_slice_0_0
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice axi_gpio_0_slice_1_1
 set_property -dict [list CONFIG.DIN_TO {0} CONFIG.DIN_FROM {0} CONFIG.DIN_WIDTH {2} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_0_0]
@@ -1194,6 +1198,9 @@ connect_bd_net [get_bd_pins axi_gpio_0_slice_0_0/dout] [get_bd_pins axi_gpio_0_c
 connect_bd_net [get_bd_pins clk_wiz_1/locked] [get_bd_pins axi_gpio_0_concat/In1]
 connect_bd_net [get_bd_pins clk_wiz_0/locked] [get_bd_pins axi_gpio_0_concat/In2]
 connect_bd_net [get_bd_pins clk_wiz_2/locked] [get_bd_pins axi_gpio_0_concat/In3]
+connect_bd_net [get_bd_pins clk_wiz_1/clk_stop] [get_bd_pins axi_gpio_0_concat/In4]
+connect_bd_net [get_bd_pins clk_wiz_1/clk_glitch] [get_bd_pins axi_gpio_0_concat/In5]
+connect_bd_net [get_bd_pins clk_wiz_1/clk_oor] [get_bd_pins axi_gpio_0_concat/In6]
 connect_bd_net [get_bd_pins axi_gpio_0_concat/dout] [get_bd_pins axi_gpio_0/gpio_io_i]
 connect_bd_net [get_bd_pins axi_gpio_0_slice_1_1/dout] [get_bd_pins clk_wiz_0/clk_in_sel]
 
