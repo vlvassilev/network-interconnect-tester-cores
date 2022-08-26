@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.38) stable; urgency=medium
+
+  * Changed clk_wiz_1 to clk_wiz_2 frequency from 100 MHz to 10 MHz 
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 00:19:50 +0200
+
 network-interconnect-tester-cores (0.37) stable; urgency=medium
 
   * Enabled clock monitor for clk_wiz_1

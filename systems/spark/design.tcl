@@ -1101,21 +1101,20 @@ connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins 
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_analyzer_gmii_0/resetn]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_0/resetn]
 
-#Add 10->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
+#Add 10->10 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_1
 set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_1]
-set_property -dict [list CONFIG.ENABLE_CLOCK_MONITOR {true} CONFIG.JITTER_SEL {Min_O_Jitter} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.USE_INCLK_STOPPED {false} CONFIG.ENABLE_USER_CLOCK0 {true} CONFIG.ENABLE_USER_CLOCK1 {false} CONFIG.Enable_PLL0 {true} CONFIG.PRIMITIVE {MMCM} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.MMCM_BANDWIDTH {HIGH} CONFIG.MMCM_CLKFBOUT_MULT_F {127.500} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.MMCM_REF_JITTER1 {0.110} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.750} CONFIG.CLKOUT1_JITTER {2066.353} CONFIG.CLKOUT1_PHASE_ERROR {322.598} CONFIG.USER_CLK_FREQ0 {10.000}] [get_bd_cells clk_wiz_1]
+set_property -dict [list CONFIG.ENABLE_CLOCK_MONITOR {true} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {20000.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {10.000} CONFIG.CLKOUT1_DRIVES {Buffer} CONFIG.PRIMITIVE {MMCM} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {20000.000} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.FEEDBACK_SOURCE {FDBK_ONCHIP} CONFIG.MMCM_CLKFBOUT_MULT_F {92.375} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.MMCM_REF_JITTER1 {0.200} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.MMCM_CLKOUT0_DIVIDE_F {92.375} CONFIG.CLKOUT1_JITTER {7883.736} CONFIG.CLKOUT1_PHASE_ERROR {523.418}] [get_bd_cells clk_wiz_1]
 
-#Add 100->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
+#Add 10->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_2
 set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_2]
-set_property -dict [list CONFIG.PRIMITIVE {MMCM} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {2067} CONFIG.USE_RESET {false} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {2067} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.CLKOUT1_DRIVES {Buffer} CONFIG.CLKOUT2_DRIVES {Buffer} CONFIG.CLKOUT3_DRIVES {Buffer} CONFIG.CLKOUT4_DRIVES {Buffer} CONFIG.CLKOUT5_DRIVES {Buffer} CONFIG.CLKOUT6_DRIVES {Buffer} CONFIG.CLKOUT7_DRIVES {Buffer} CONFIG.FEEDBACK_SOURCE {FDBK_AUTO} CONFIG.USE_LOCKED {true} CONFIG.MMCM_BANDWIDTH {OPTIMIZED} CONFIG.MMCM_CLKFBOUT_MULT_F {12.000} CONFIG.MMCM_COMPENSATION {AUTO} CONFIG.MMCM_REF_JITTER1 {0.207} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.000} CONFIG.CLKOUT1_JITTER {408.933} CONFIG.CLKOUT1_PHASE_ERROR {87.180} CONFIG.AUTO_PRIMITIVE {BUFGCE_DIV}] [get_bd_cells clk_wiz_2]
+set_property -dict [list CONFIG.PRIM_IN_FREQ {10.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {7884} CONFIG.CLKIN2_UI_JITTER {100.000} CONFIG.CLKIN1_JITTER_PS {7884} CONFIG.CLKIN2_JITTER_PS {100.000} CONFIG.MMCM_CLKFBOUT_MULT_F {120.000} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {10.0} CONFIG.MMCM_REF_JITTER1 {0.079} CONFIG.MMCM_REF_JITTER2 {0.010} CONFIG.CLKOUT1_JITTER {279.205} CONFIG.CLKOUT1_PHASE_ERROR {353.086}] [get_bd_cells clk_wiz_2]
 
 #Add 100->625 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0
-set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER CONFIG.SECONDARY_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_0]
-set_property -dict [list CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.SECONDARY_IN_FREQ {100.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {409} CONFIG.CLKIN2_UI_JITTER {409} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.SECONDARY_SOURCE {Single_ended_clock_capable_pin} CONFIG.CLKIN1_JITTER_PS {409} CONFIG.CLKIN2_JITTER_PS {409} CONFIG.MMCM_CLKFBOUT_MULT_F {12.500} CONFIG.MMCM_CLKIN2_PERIOD {10.000} CONFIG.MMCM_REF_JITTER1 {0.041} CONFIG.MMCM_REF_JITTER2 {0.041} CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} CONFIG.CLKOUT1_JITTER {109.687} CONFIG.CLKOUT1_PHASE_ERROR {84.520}] [get_bd_cells clk_wiz_0]
-
+set_property -dict [list CONFIG.SECONDARY_IN_FREQ.VALUE_SRC USER CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_0]
+set_property -dict [list CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.SECONDARY_IN_FREQ {100.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {280} CONFIG.CLKIN2_UI_JITTER {280} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625} CONFIG.SECONDARY_SOURCE {Single_ended_clock_capable_pin} CONFIG.CLKIN1_JITTER_PS {280} CONFIG.CLKIN2_JITTER_PS {280} CONFIG.MMCM_CLKFBOUT_MULT_F {12.500} CONFIG.MMCM_CLKIN2_PERIOD {10.000} CONFIG.MMCM_REF_JITTER1 {0.028} CONFIG.MMCM_REF_JITTER2 {0.028} CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} CONFIG.CLKOUT1_JITTER {94.280} CONFIG.CLKOUT1_PHASE_ERROR {84.520}] [get_bd_cells clk_wiz_0]
 
 #connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins ref_clk_10mhz]
 # Use BUFGCE for clock HS pins- start
@@ -1136,6 +1135,7 @@ connect_bd_net [get_bd_pins clk_wiz_2/clk_in1] [get_bd_pins clk_wiz_1/clk_out1]
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins eth_pcs_pma_shared/refclk625_in]
 connect_bd_net [get_bd_pins reset_invert/Res] [get_bd_pins clk_wiz_0/reset]
+connect_bd_net [get_bd_pins reset_invert/Res] [get_bd_pins clk_wiz_2/reset]
 
 #clk_wiz_1 monitor
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/clk_wiz_1/s_axi_lite} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins clk_wiz_1/s_axi_lite]
