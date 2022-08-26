@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.39) stable; urgency=medium
+
+  * Enabled CONFIG.JITTER_SEL {Max_I_Jitter} for clk_wiz_1 and clk_wiz_2
+  * Reduced configured worst case jitter configuration from 20 ns to 11 ns for clk_wiz_1
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 00:32:21 +0200
+
 network-interconnect-tester-cores (0.38) stable; urgency=medium
 
   * Changed clk_wiz_1 to clk_wiz_2 frequency from 100 MHz to 10 MHz 
