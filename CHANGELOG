@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.40) stable; urgency=medium
+
+  * Enabled dynamic reconfiguration USE_DYN_RECONFIG for clk_wiz_1
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 00:45:50 +0200
+
 network-interconnect-tester-cores (0.39) stable; urgency=medium
 
   * Enabled CONFIG.JITTER_SEL {Max_I_Jitter} for clk_wiz_1 and clk_wiz_2
