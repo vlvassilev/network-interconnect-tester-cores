@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.41) stable; urgency=medium
+
+  * Disabled the clock monitor for clk_wiz_1
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 02:03:40 +0200
+
 network-interconnect-tester-cores (0.40) stable; urgency=medium
 
   * Enabled dynamic reconfiguration USE_DYN_RECONFIG for clk_wiz_1
