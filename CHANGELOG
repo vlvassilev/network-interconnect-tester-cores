@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.44) stable; urgency=medium
+
+  * Removed BUFGCE instances on the input clock signals for clk_wiz_1
+  * Removed timing constraints on the input ref_clk_10mhz_or_12mhz
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 12:43:12 +0200
+
 network-interconnect-tester-cores (0.43) stable; urgency=medium
 
   * Added secondary 12MHz input clock to clk_wiz_1 in addition to the primary 10MHz option

@@ -549,7 +549,8 @@ create_bd_port -dir I ls_mezz_int0
 create_bd_port -dir I ls_mezz_int1
 
 # ref clk (10 MHz) signal from GPS e.g. gpsclock4ultra96
-create_bd_port -dir I -type clk -freq_hz 10000000 ref_clk_10mhz
+#create_bd_port -dir I -type clk -freq_hz 10000000 ref_clk_10mhz
+create_bd_port -dir I ref_clk_10mhz_or_12mhz
 
 # PHY RESET for ports 0,1 and 2
 ##create_bd_port -dir O reset_port_0_n
@@ -1104,7 +1105,7 @@ connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins 
 #Add 10->10 MHz primary or 12->10MHz secondary clock input management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_1
 set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER CONFIG.SECONDARY_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_1]
-set_property -dict [list CONFIG.USE_DYN_RECONFIG {true} CONFIG.JITTER_SEL {Max_I_Jitter} CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.SECONDARY_IN_FREQ {12.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.CLKIN2_UI_JITTER {11000.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {10.000} CONFIG.SECONDARY_SOURCE {Single_ended_clock_capable_pin} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {11000.000} CONFIG.MMCM_BANDWIDTH {LOW} CONFIG.MMCM_CLKFBOUT_MULT_F {92.375} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {83.333} CONFIG.MMCM_REF_JITTER1 {0.110} CONFIG.MMCM_REF_JITTER2 {0.132} CONFIG.MMCM_CLKOUT0_DIVIDE_F {92.375} CONFIG.CLKOUT1_JITTER {5402.027} CONFIG.CLKOUT1_PHASE_ERROR {857.257}] [get_bd_cells clk_wiz_1]
+set_property -dict [list CONFIG.USE_DYN_RECONFIG {true} CONFIG.JITTER_SEL {Max_I_Jitter} CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.PRIM_SOURCE {No_buffer} CONFIG.PRIM_IN_FREQ {10.000} CONFIG.SECONDARY_SOURCE {No_buffer} CONFIG.SECONDARY_IN_FREQ {12.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.CLKIN2_UI_JITTER {11000.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {10.000} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {11000.000} CONFIG.MMCM_BANDWIDTH {LOW} CONFIG.MMCM_CLKFBOUT_MULT_F {92.375} CONFIG.MMCM_CLKIN1_PERIOD {100.000} CONFIG.MMCM_CLKIN2_PERIOD {83.333} CONFIG.MMCM_REF_JITTER1 {0.110} CONFIG.MMCM_REF_JITTER2 {0.132} CONFIG.MMCM_CLKOUT0_DIVIDE_F {92.375} CONFIG.CLKOUT1_JITTER {5402.027} CONFIG.CLKOUT1_PHASE_ERROR {857.257}] [get_bd_cells clk_wiz_1]
 
 #Add 10->100 MHz clock management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_2
@@ -1117,16 +1118,9 @@ set_property -dict [list CONFIG.SECONDARY_IN_FREQ.VALUE_SRC USER CONFIG.PRIM_IN_
 set_property -dict [list CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.SECONDARY_IN_FREQ {100.000} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {214.000} CONFIG.CLKIN2_UI_JITTER {214.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {625.000} CONFIG.SECONDARY_SOURCE {Single_ended_clock_capable_pin} CONFIG.CLKIN1_JITTER_PS {214.000} CONFIG.CLKIN2_JITTER_PS {214.000} CONFIG.MMCM_CLKFBOUT_MULT_F {12.500} CONFIG.MMCM_CLKIN2_PERIOD {10.000} CONFIG.MMCM_REF_JITTER1 {0.021} CONFIG.MMCM_REF_JITTER2 {0.021} CONFIG.MMCM_CLKOUT0_DIVIDE_F {2.000} CONFIG.CLKOUT1_JITTER {87.955} CONFIG.CLKOUT1_PHASE_ERROR {84.520}] [get_bd_cells clk_wiz_0]
 
 #connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins ref_clk_10mhz]
-# Use BUFGCE for clock HS pins- start
-create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf:2.1 util_ds_buf_0
-set_property -dict [list CONFIG.C_BUF_TYPE {BUFGCE}] [get_bd_cells util_ds_buf_0]
-connect_bd_net [get_bd_pins util_ds_buf_0/BUFGCE_O] [get_bd_pins clk_wiz_1/clk_in1]
-connect_bd_net [get_bd_pins util_ds_buf_0/BUFGCE_O] [get_bd_pins clk_wiz_1/clk_in2]
-connect_bd_net [get_bd_ports ref_clk_10mhz] [get_bd_pins util_ds_buf_0/BUFGCE_I]
-create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0
-set_property -dict [list CONFIG.CONST_VAL {1}] [get_bd_cells xlconstant_0]
-connect_bd_net [get_bd_pins xlconstant_0/dout] [get_bd_pins util_ds_buf_0/BUFGCE_CE]
-# Use BUFGCE for clock HS pins- end
+
+connect_bd_net [get_bd_ports ref_clk_10mhz_or_12mhz] [get_bd_pins clk_wiz_1/clk_in1]
+connect_bd_net [get_bd_ports ref_clk_10mhz_or_12mhz] [get_bd_pins clk_wiz_1/clk_in2]
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_in2] [get_bd_pins zynq_ultra_ps_e_0/pl_clk0]
 connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_2/clk_out1]
