@@ -1082,7 +1082,6 @@ connect_bd_net [get_bd_pins traffic_generator_gmii_1/nsec] [get_bd_pins rtclock_
 connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins rtclock_0/pps]
 connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins rtclock_0/pps2]
 
-
 #delete_bd_objs [get_bd_intf_nets axi_ethernet_2_dma_M_AXIS_MM2S]
 
 #connect_bd_intf_net [get_bd_intf_pins axi_ethernet_2_dma/M_AXIS_MM2S] [get_bd_intf_pins rate_limiter_2/s_axis]
@@ -1202,6 +1201,15 @@ connect_bd_net [get_bd_pins clk_wiz_2/locked] [get_bd_pins axi_gpio_0_concat/In3
 connect_bd_net [get_bd_pins axi_gpio_0_concat/dout] [get_bd_pins axi_gpio_0/gpio_io_i]
 connect_bd_net [get_bd_pins axi_gpio_0_slice_1_1/dout] [get_bd_pins clk_wiz_0/clk_in_sel]
 connect_bd_net [get_bd_pins axi_gpio_0_slice_2_2/dout] [get_bd_pins clk_wiz_1/clk_in_sel]
+
+# Debug clk_wiz_1 with rtclock_1
+create_bd_cell -type ip -vlnv lightside-instruments.com:ip:rtclock:1.0 rtclock_1
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/rtclock_1/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins rtclock_1/S_AXI]
+connect_bd_net [get_bd_pins clk_wiz_1/clk_out1] [get_bd_pins rtclock_1/clk]
+connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins rtclock_1/pps]
+connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins rtclock_1/pps2]
+connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_1/resetn]
+
 
 # Restore current instance
 current_bd_instance $oldCurInst

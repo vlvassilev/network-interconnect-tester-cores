@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.45) stable; urgency=medium
+
+  * Added rtclock_1 new instance for debugging the output clock of clk_wiz_1
+
+ -- Vladimir Vassilev <vladimir@lightsisde-instruments.com>  Sat, 27 Aug 2022 12:55:18 +0200
+
 network-interconnect-tester-cores (0.44) stable; urgency=medium
 
   * Removed BUFGCE instances on the input clock signals for clk_wiz_1
