@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.46) stable; urgency=medium
+
+  * Swapped clock inputs for clk_wiz_1 now 12MHz is primary and 10MHz secondary 
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 13:10:55 +0200
+
 network-interconnect-tester-cores (0.45) stable; urgency=medium
 
   * Added rtclock_1 new instance for debugging the output clock of clk_wiz_1
