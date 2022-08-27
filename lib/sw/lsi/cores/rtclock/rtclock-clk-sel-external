@@ -1,5 +1,5 @@
 #!/bin/bash
-address="0xa02e0000"
+address="0xa0240000"
 GPIO_DATA_REG_OFFSET=0 ; GPIO_DATA_REG_ADDRESS="0x`printf '%x\n' $((${address}+${GPIO_DATA_REG_OFFSET}))`"
 devmem32 $GPIO_DATA_REG_ADDRESS 2
 devmem32 $GPIO_DATA_REG_ADDRESS

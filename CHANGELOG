@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.42) stable; urgency=medium
+
+  * Removed MAC and DMA instances for the eth2 and eth3 interfaces
+
+ -- Vladimir vassilev <vladimir@lightside-instruments.com>  Sat, 27 Aug 2022 02:19:39 +0200
+
 network-interconnect-tester-cores (0.41) stable; urgency=medium
 
   * Disabled the clock monitor for clk_wiz_1
