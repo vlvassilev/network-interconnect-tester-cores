@@ -182,7 +182,7 @@ clk_rst_i_plle3_tx : plle3_adv
         is_clkin_inverted   => '0',         -- std_ulogic
         is_pwrdwn_inverted  => '0',         -- std_ulogic
         is_rst_inverted     => '0',         -- std_ulogic
-        ref_jitter          => 0.010,       -- real
+        ref_jitter          => 0.060,       -- real
         startup_wait        => "false"      -- string
     )
     port map (
@@ -240,7 +240,7 @@ clk_rst_i_plle3_rx : plle3_adv
         is_clkin_inverted   => '0',         -- std_ulogic
         is_pwrdwn_inverted  => '0',         -- std_ulogic
         is_rst_inverted     => '0',         -- std_ulogic
-        ref_jitter          => 0.010,       -- real
+        ref_jitter          => 0.060,       -- real
         startup_wait        => "false"      -- string
     )
     port map (

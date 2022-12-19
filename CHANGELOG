@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.47) stable; urgency=medium
+
+  * Changed ref_jitter for the clk_rst_i_plle3_tx and clk_rst_i_plle3_rx pcs/pma clock instantiation from 0.010 to 0.060
+  * Added the eth_pcs_pma_shared rx_locked and tx_locked signals to the axi_gpio register 
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Mon, 19 Dec 2022 22:37:51 +0100
+
 network-interconnect-tester-cores (0.46) stable; urgency=medium
 
   * Swapped clock inputs for clk_wiz_1 now 12MHz is primary and 10MHz secondary 

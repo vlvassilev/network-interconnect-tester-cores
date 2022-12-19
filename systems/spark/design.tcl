@@ -1174,19 +1174,20 @@ connect_bd_net [get_bd_pins axi_uart16550_0/ip2intc_irpt] [get_bd_pins xlconcat_
 connect_bd_net [get_bd_pins axi_uart16550_1/ip2intc_irpt] [get_bd_pins xlconcat_1/In6]
 connect_bd_net [get_bd_pins axi_uart16550_2/ip2intc_irpt] [get_bd_pins xlconcat_1/In7]
 
-# axi_gpio out: 0-loopback, 1-clk_wiz_0.clk_in_sel, 2-clk_wiz_1.clk_in_sel; in: 0-loopback, 1-clk_wiz_1.locked, 2-clk_wiz_0.locked 3-clk_wiz_2.locked
+# axi_gpio out: 0-loopback, 1-clk_wiz_0.clk_in_sel, 2-clk_wiz_1.clk_in_sel; in: 0-loopback, 1-clk_wiz_1.locked, 2-clk_wiz_0.locked, 3-clk_wiz_2.locked
+# 4-eth_pcs_pma_shared/rx_locked, 5-eth_pcs_pma_shared/tx_locked
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0
-set_property -dict [list CONFIG.C_GPIO_WIDTH {4}] [get_bd_cells axi_gpio_0]
+set_property -dict [list CONFIG.C_GPIO_WIDTH {6}] [get_bd_cells axi_gpio_0]
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_slave {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Clk_xbar {/zynq_ultra_ps_e_0/pl_clk0 (99 MHz)} Master {/zynq_ultra_ps_e_0/M_AXI_HPM0_FPD} Slave {/axi_gpio_0/s_axi} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_gpio_0/s_axi]
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat axi_gpio_0_concat
-set_property -dict [list CONFIG.NUM_PORTS {4}] [get_bd_cells axi_gpio_0_concat]
+set_property -dict [list CONFIG.NUM_PORTS {6}] [get_bd_cells axi_gpio_0_concat]
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice axi_gpio_0_slice_0_0
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice axi_gpio_0_slice_1_1
 create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice axi_gpio_0_slice_2_2
-set_property -dict [list CONFIG.DIN_TO {0} CONFIG.DIN_FROM {0} CONFIG.DIN_WIDTH {4} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_0_0]
-set_property -dict [list CONFIG.DIN_TO {1} CONFIG.DIN_FROM {1} CONFIG.DIN_WIDTH {4} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_1_1]
-set_property -dict [list CONFIG.DIN_TO {2} CONFIG.DIN_FROM {2} CONFIG.DIN_WIDTH {4} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_2_2]
+set_property -dict [list CONFIG.DIN_TO {0} CONFIG.DIN_FROM {0} CONFIG.DIN_WIDTH {6} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_0_0]
+set_property -dict [list CONFIG.DIN_TO {1} CONFIG.DIN_FROM {1} CONFIG.DIN_WIDTH {6} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_1_1]
+set_property -dict [list CONFIG.DIN_TO {2} CONFIG.DIN_FROM {2} CONFIG.DIN_WIDTH {6} CONFIG.DOUT_WIDTH {1}] [get_bd_cells axi_gpio_0_slice_2_2]
 
 connect_bd_net [get_bd_pins axi_gpio_0_slice_0_0/din] [get_bd_pins axi_gpio_0/gpio_io_o]
 connect_bd_net [get_bd_pins axi_gpio_0_slice_1_1/din] [get_bd_pins axi_gpio_0/gpio_io_o]
@@ -1195,6 +1196,8 @@ connect_bd_net [get_bd_pins axi_gpio_0_slice_0_0/dout] [get_bd_pins axi_gpio_0_c
 connect_bd_net [get_bd_pins clk_wiz_1/locked] [get_bd_pins axi_gpio_0_concat/In1]
 connect_bd_net [get_bd_pins clk_wiz_0/locked] [get_bd_pins axi_gpio_0_concat/In2]
 connect_bd_net [get_bd_pins clk_wiz_2/locked] [get_bd_pins axi_gpio_0_concat/In3]
+connect_bd_net [get_bd_pins eth_pcs_pma_shared/rx_locked] [get_bd_pins axi_gpio_0_concat/In4]
+connect_bd_net [get_bd_pins eth_pcs_pma_shared/tx_locked] [get_bd_pins axi_gpio_0_concat/In5]
 #connect_bd_net [get_bd_pins clk_wiz_1/clk_stop] [get_bd_pins axi_gpio_0_concat/In4]
 #connect_bd_net [get_bd_pins clk_wiz_1/clk_glitch] [get_bd_pins axi_gpio_0_concat/In5]
 #connect_bd_net [get_bd_pins clk_wiz_1/clk_oor] [get_bd_pins axi_gpio_0_concat/In6]
