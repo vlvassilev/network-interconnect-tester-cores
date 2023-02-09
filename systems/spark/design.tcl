@@ -550,7 +550,8 @@ create_bd_port -dir I ls_mezz_int1
 
 # ref clk (10 MHz) signal from GPS e.g. gpsclock4ultra96
 #create_bd_port -dir I -type clk -freq_hz 10000000 ref_clk_10mhz
-create_bd_port -dir I ref_clk_10mhz_or_12mhz
+create_bd_port -dir I ref_clk_10mhz
+create_bd_port -dir I ref_clk_12mhz
 
 # PHY RESET for ports 0,1 and 2
 ##create_bd_port -dir O reset_port_0_n
@@ -1101,7 +1102,7 @@ connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins 
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins traffic_analyzer_gmii_0/resetn]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_0/resetn]
 
-#Add 10->10 MHz primary or 12->10MHz secondary clock input management tile (CMT) using the mixed-mode clock manager (MMCM)
+#Add 12->10 MHz primary or 10->10MHz secondary clock input management tile (CMT) using the mixed-mode clock manager (MMCM)
 create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_1
 set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER CONFIG.SECONDARY_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_1]
 set_property -dict [list CONFIG.USE_DYN_RECONFIG {true} CONFIG.JITTER_SEL {Max_I_Jitter} CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.PRIM_SOURCE {No_buffer} CONFIG.PRIM_IN_FREQ {12.000} CONFIG.SECONDARY_SOURCE {No_buffer} CONFIG.JITTER_OPTIONS {PS} CONFIG.CLKIN1_UI_JITTER {11000.000} CONFIG.CLKIN2_UI_JITTER {11000.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {10.000} CONFIG.SECONDARY_IN_FREQ {10.000} CONFIG.CLKIN1_JITTER_PS {11000.000} CONFIG.CLKIN2_JITTER_PS {11000.000} CONFIG.MMCM_BANDWIDTH {LOW} CONFIG.MMCM_CLKFBOUT_MULT_F {85.625} CONFIG.MMCM_CLKIN1_PERIOD {83.333} CONFIG.MMCM_CLKIN2_PERIOD {100.000} CONFIG.MMCM_REF_JITTER1 {0.132} CONFIG.MMCM_REF_JITTER2 {0.110} CONFIG.MMCM_CLKOUT0_DIVIDE_F {102.750} CONFIG.CLKOUT1_JITTER {5240.097} CONFIG.CLKOUT1_PHASE_ERROR {741.940}] [get_bd_cells clk_wiz_1]
@@ -1118,8 +1119,8 @@ set_property -dict [list CONFIG.USE_INCLK_SWITCHOVER {true} CONFIG.SECONDARY_IN_
 
 #connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins ref_clk_10mhz]
 
-connect_bd_net [get_bd_ports ref_clk_10mhz_or_12mhz] [get_bd_pins clk_wiz_1/clk_in1]
-connect_bd_net [get_bd_ports ref_clk_10mhz_or_12mhz] [get_bd_pins clk_wiz_1/clk_in2]
+connect_bd_net [get_bd_ports ref_clk_12mhz] [get_bd_pins clk_wiz_1/clk_in1]
+connect_bd_net [get_bd_ports ref_clk_10mhz] [get_bd_pins clk_wiz_1/clk_in2]
 
 connect_bd_net [get_bd_pins clk_wiz_0/clk_in2] [get_bd_pins zynq_ultra_ps_e_0/pl_clk0]
 connect_bd_net [get_bd_pins clk_wiz_0/clk_in1] [get_bd_pins clk_wiz_2/clk_out1]
@@ -1213,6 +1214,8 @@ connect_bd_net [get_bd_ports ls_mezz_int0] [get_bd_pins rtclock_1/pps]
 connect_bd_net [get_bd_ports ls_mezz_int1] [get_bd_pins rtclock_1/pps2]
 connect_bd_net [get_bd_pins proc_sys_reset_0/interconnect_aresetn] [get_bd_pins rtclock_1/resetn]
 
+#Enable second CS (MIO40) for spi0 e.g. /dev/spidev0.1
+set_property -dict [list CONFIG.PSU__SPI0__GRP_SS1__ENABLE {1}] [get_bd_cells zynq_ultra_ps_e_0]
 
 # Restore current instance
 current_bd_instance $oldCurInst

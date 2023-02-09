@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.48) stable; urgency=medium
+
+  * Dedicated pins added for the alternative frequencies ref_clk_10mhz_or_12mhz (D5) replaced with ref_clk_10mhz (D5.HDGC) and ref_clk_12mhz (D7.HDGC)
+  * Enable second CS (MIO40) for spi0 e.g. /dev/spidev0.1
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 09 Feb 2023 11:54:43 +0100
+
 network-interconnect-tester-cores (0.47) stable; urgency=medium
 
   * Changed ref_jitter for the clk_rst_i_plle3_tx and clk_rst_i_plle3_rx pcs/pma clock instantiation from 0.010 to 0.060

@@ -37,12 +37,17 @@
 
 &spi0 {
         is-decoded-cs = <0>;
-        num-cs = <1>;
+        num-cs = <2>;
         status = "okay";
         spidev@0x00 {
                 compatible = "rohm,dh2228fv";
                 spi-max-frequency = <1000000>;
                 reg = <0>;
+        };
+        spidev@0x01 {
+                compatible = "rohm,dh2228fv";
+                spi-max-frequency = <1000000>;
+                reg = <1>;
         };
 };
 
