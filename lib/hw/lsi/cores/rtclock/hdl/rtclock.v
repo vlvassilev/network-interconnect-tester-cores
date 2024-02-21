@@ -123,7 +123,7 @@ reg [31:0] corrected_delta_sum_pps;
 );
  
     always @(posedge clk) begin
-        $display("tic : time=%t, sec=%d, nsec=%d, sec_next_pps=%d", $time, sec, nsec, sec_next_pps);
+        $display("tic : time=%t, sec=%d, nsec=%d, sec_next_pps=%d, pps=%d, pps2=%d", $time, sec, nsec, sec_next_pps, pps, pps2);
         pps_enabled = control_reg[0];
         pps_select = control_reg[1];
         if(pps_select) begin
@@ -147,6 +147,9 @@ reg [31:0] corrected_delta_sum_pps;
             sec_inc_pps_done <= 0;
         end
         else begin
+            //flip register implementation
+            ip2cpu_flip_reg <= ~cpu2ip_flip_reg;
+
             if(pps_enabled) begin
                 sec <= sec_next_pps;
                 nsec <= nsec_next_pps;

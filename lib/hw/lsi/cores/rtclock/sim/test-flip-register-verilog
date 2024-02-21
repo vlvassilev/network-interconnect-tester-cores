@@ -1,0 +1,3 @@
+#!/bin/bash -e
+iverilog flip_register.v -o flip_register ../hdl/rtclock.v -I../hdl -I../../common/hdl
+./flip_register

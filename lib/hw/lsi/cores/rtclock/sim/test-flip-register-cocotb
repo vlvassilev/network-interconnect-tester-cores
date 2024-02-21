@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+make -f Makefile.cocotb MODULE=flip_register WAVES=1

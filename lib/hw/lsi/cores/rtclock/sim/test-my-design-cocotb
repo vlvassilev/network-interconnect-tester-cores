@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+make -f Makefile.cocotb MODULE=test_my_design WAVES=1

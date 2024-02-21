@@ -1,3 +1,11 @@
+network-interconnect-tester-cores (0.49) stable; urgency=medium
+
+  * Corrected corrected_delta_pps default register value in the rtclock IP core
+  * Added identical cocotb Python benchmark template in adition to Verilog. flip_register.v and flip_register.py
+  * Removed AXI WSTR signals dependency from rtclock since cocotb seems to not drive the signals
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Wed, 21 Feb 2024 18:09:54 +0100
+
 network-interconnect-tester-cores (0.48) stable; urgency=medium
 
   * Dedicated pins added for the alternative frequencies ref_clk_10mhz_or_12mhz (D5) replaced with ref_clk_10mhz (D5.HDGC) and ref_clk_12mhz (D7.HDGC)
