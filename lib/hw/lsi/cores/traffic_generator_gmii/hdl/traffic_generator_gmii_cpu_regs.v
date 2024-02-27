@@ -266,14 +266,11 @@ parameter C_FRAME_BUF_ADDRESS_WIDTH   = 9
             frame_size_reg <= #1 `REG_FRAME_SIZE_DEFAULT;
         end
         else begin
-           if (reg_wren && S_AXI_WSTRB==4'hF) begin //write event
+           if (reg_wren) begin //write event
             case (axi_awaddr)
             //Flip Register
                 `REG_FLIP_ADDR : begin
-                    for ( byte_index = 0; byte_index <= (`REG_FLIP_WIDTH/8-1); byte_index = byte_index +1)
-                        if (S_AXI_WSTRB[byte_index] == 1) begin
-                            cpu2ip_flip_reg[byte_index*8 +: 8] <=  S_AXI_WDATA[byte_index*8 +: 8]; //dynamic register;
-                        end
+                    cpu2ip_flip_reg[31 : 0] <=  S_AXI_WDATA[31 : 0];
                 end
             //Control Register
                 `REG_CONTROL_ADDR : begin

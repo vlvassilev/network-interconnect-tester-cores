@@ -1,0 +1,16 @@
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
+
+VERILOG_INCLUDE_DIRS += $(PWD)/../../rtclock/hdl/ $(PWD)/ $(PWD)/../hdl $(PWD)/../../traffic_generator_gmii/hdl/  $(PWD)/../../common/hdl
+VERILOG_SOURCES += $(PWD)/tester_loop.v $(PWD)/../../rtclock/hdl/rtclock.v $(PWD)/../../traffic_generator_gmii/hdl/traffic_generator_gmii.v $(PWD)/../hdl/traffic_analyzer_gmii.v $(PWD)/../hdl/bram_io.v $(PWD)/../hdl/testframe_parser.v
+# use VHDL_SOURCES for VHDL files
+
+# TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
+TOPLEVEL = tester_loop
+
+# MODULE is the basename of the Python test file
+#MODULE = tb_axi_lite_flip_register
+#test_my_design
+
+# include cocotb's make rules to take care of the simulator setup
+include $(shell cocotb-config --makefiles)/Makefile.sim

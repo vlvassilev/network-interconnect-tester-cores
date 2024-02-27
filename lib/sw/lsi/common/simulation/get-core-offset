@@ -1,0 +1,18 @@
+#!/bin/sh -e
+#Usage: get-core-offset gmii_mux 0
+CORE_NAME=$1
+CORE_INDEX=$2
+
+# ! only one instance of the cores supported in simulation mode
+
+if [ "$CORE_NAME" = "traffic_generator_gmii" ]; then
+    echo 0x10000000
+elif [ "$CORE_NAME" = "traffic_analyzer_gmii" ]; then
+    echo 0x20000000
+elif  [ "$CORE_NAME" = "rtclock" ]; then
+    echo 0x00000000
+else
+    echo "Invalid core name: $CORE_NAME" 1>&2
+    exit -1
+fi
+

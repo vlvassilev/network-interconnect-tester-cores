@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.50) stable; urgency=medium
+
+  * Added systems/simulation cocotb based RTL simulation of the design with socket based register io interface for pre-silicon validation of applications.
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Tue, 27 Feb 2024 22:01:04 +0100
+
 network-interconnect-tester-cores (0.49) stable; urgency=medium
 
   * Corrected corrected_delta_pps default register value in the rtclock IP core

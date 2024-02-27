@@ -1,0 +1,2 @@
+TESTS= \
+test-tester-loop
