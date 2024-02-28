@@ -1,3 +1,9 @@
+network-interconnect-tester-cores (0.51) stable; urgency=medium
+
+  * Updated and improved documentation. Now using Markdown for top level README
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Wed, 28 Feb 2024 16:06:34 +0100
+
 network-interconnect-tester-cores (0.50) stable; urgency=medium
 
   * Added systems/simulation cocotb based RTL simulation of the design with socket based register io interface for pre-silicon validation of applications.
