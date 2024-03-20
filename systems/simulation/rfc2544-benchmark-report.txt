@@ -1,0 +1,40 @@
+#===Throughput===
+#1 14.880952 pps, 20 octets interframe gap, 100.00% ... 29 / 29
+#Result: 14.880952 pps
+#===Latency===
+#Measurement style - bit forwarding
+#1 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#2 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#3 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#4 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#5 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#6 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#7 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#8 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#9 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#10 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#11 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#12 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#13 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#14 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#15 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#16 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#17 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#18 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#19 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#20 8 ns (min=8 ns, max=8 ns) ... 29 / 29
+#Result: 8.000000 nanoseconds
+#===Frame loss rate===
+#1 100% rate, 0% loss, (100.000000% rate actual), 14.880952 pps (14.880952 pps actual), 20 octets interframe gap ... 29 / 29
+#2 90% rate, 0% loss, (89.361702% rate actual), 13.392857 pps (13.297872 pps actual), 30 octets interframe gap ... 26 / 26
+#===Back to back frames===
+#1 2 back-to-back frames ... 2 / 2
+#2 4 back-to-back frames ... 4 / 4
+#3 8 back-to-back frames ... 8 / 8
+#4 14 back-to-back frames ... 14 / 14
+#The back to back search is limited to bursts below 1 second.
+#Result: >= 14
+#===System recovery===
+#TODO
+#===Reset===
+#TODO

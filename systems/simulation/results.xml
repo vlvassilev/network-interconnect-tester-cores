@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1710946352" />
+    <testcase name="flip_register" classname="tester_loop" file="/home/vladimir/lsi/code/network-interconnect-tester-cores-git2/systems/simulation/tester_loop.py" lineno="1" time="230.28141570091248" sim_time_ns="1565330.001" ratio_time="6797.465597627892" />
+  </testsuite>
+</testsuites>

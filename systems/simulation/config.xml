@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <networks xmlns="urn:ietf:params:xml:ns:yang:ietf-network">
+    <network>
+      <network-id>simulation</network-id>
+      <node>
+        <node-id>tester0</node-id>
+        <termination-point xmlns="urn:ietf:params:xml:ns:yang:ietf-network-topology">
+          <tp-id>eth0</tp-id>
+        </termination-point>
+        <termination-point xmlns="urn:ietf:params:xml:ns:yang:ietf-network-topology">
+          <tp-id>eth1</tp-id>
+        </termination-point>
+        <netconf-connect-params xmlns="urn:tntapi:netconf-node">
+          <user>y123</user>
+          <server>localhost</server>
+          <password>secretpass</password>
+          <ncport>830</ncport>
+        </netconf-connect-params>
+    <netconf-node:config xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:netconf-node="urn:tntapi:netconf-node" xmlns:nt="urn:ietf:params:xml:ns:yang:ietf-network-topology"><interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+      <interface>
+        <name>eth0</name>
+        <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+      </interface>
+      <interface>
+        <name>eth1</name>
+        <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+      </interface>
+    </interfaces>
+    <nacm xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-acm">
+    </nacm>
+  </netconf-node:config></node>
+    </network></networks>
+</config>
