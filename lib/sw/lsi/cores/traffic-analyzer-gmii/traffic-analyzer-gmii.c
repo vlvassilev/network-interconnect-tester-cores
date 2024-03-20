@@ -165,7 +165,7 @@ int main(int argc, char** argv)
         "<bad-crc-octets>%llu</bad-crc-octets><bad-crc-pkts>%llu</bad-crc-pkts>"
         "<bad-preamble-octets>%llu</bad-preamble-octets><bad-preamble-pkts>%llu</bad-preamble-pkts>"
         "<octets-total>%llu</octets-total>"
-        "<testframe-stats><testframe-pkts>%llu</testframe-pkts><sequence-errors>%llu</sequence-errors>"
+        "<testframe-stats><pkts>%llu</pkts><sequence-errors>%llu</sequence-errors>"
         "<latency><samples>%llu</samples><min-sec>%llu</min-sec><min>%u</min><max-sec>%llu</max-sec><max>%u</max><last-sec>%llu</last-sec><last>%u</last></latency></testframe-stats>",
                 pkts,
                 octets,

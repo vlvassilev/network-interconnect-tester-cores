@@ -1,4 +1,4 @@
-AC_INIT([network-interconnect-tester-cores-sw], [0.51], [vladimir@lightside-instruments.com])
+AC_INIT([network-interconnect-tester-cores-sw], [0.52], [vladimir@lightside-instruments.com])
 
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign])
@@ -15,7 +15,7 @@ AC_ARG_ENABLE([simulation],
   yes) simulation=true ;;
   no)  simulation=false ;;
   *) AC_MSG_ERROR([bad value ${enableval} for --enable-simulation]) ;;
-esac],[simulation=true])
+esac],[simulation=false])
 AM_CONDITIONAL([SIMULATION], [test x$simulation = xtrue])
 
 CFLAGS="$CFLAGS -g -fPIC -DDEBUG=1 -DLINUX=1 -DGCC=1 -DRELEASE=0"

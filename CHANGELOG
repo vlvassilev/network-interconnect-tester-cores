@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.52) stable; urgency=medium
+
+  * Partial implementation of changes introduced in draft-ietf-bmwg-network-tester-cfg-04. Testframe bitwise filter needs more work
+  * Reverted autoconf simulation lib/sw option to disabled by default
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Wed, 20 Mar 2024 15:05:45 +0100
+
 network-interconnect-tester-cores (0.51) stable; urgency=medium
 
   * Updated and improved documentation. Now using Markdown for top level README

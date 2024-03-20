@@ -6,6 +6,8 @@ module testframe_parser (
            input [8 - 1:0] d,
            input en,
            input er,
+           input [40*8-1:0] testframe_filter_data, //40 octet bitmask match filter
+           input [40*8-1:0] testframe_filter_mask,
            output reg testframe_match,
            output reg [63:0] sequence_num,
            output reg [47:0] timestamp_sec,
@@ -17,9 +19,10 @@ reg      [1:0]   state;
 
 localparam [0:(8*8)-1] preamble = {8'h55,8'h55,8'h55,8'h55,8'h55,8'h55,8'h55,8'hd5};
 
+
 reg [4:0] preamble_index;
 reg [12:0]  data_index;
-
+reg [7:0] testframe_mismatch;
 
 reg [7:0] testframe_history[0:21];
 
@@ -36,6 +39,7 @@ begin
         sequence_num <= 0;
         timestamp_sec <= 0;
         timestamp_nsec <= 0;
+        testframe_mismatch <= 0;
     end
 
     else begin
@@ -48,6 +52,7 @@ begin
 
                 preamble_index <= 1;
                 data_index <= 0;
+                testframe_mismatch <= 0;
 
                 if(en == 1) begin
                     if(d == 8'h55) begin
@@ -114,6 +119,15 @@ begin
                     if(data_index==37 && d==7 && testframe_history[0]==0) begin
                         testframe_match <= 1;
                     end
+
+                    for(i=0;i<40;i=i+1) begin
+                        if(i==data_index) begin
+                            testframe_mismatch <= testframe_mismatch | ((testframe_filter_data[8*0+7:8*0] ^ d) & testframe_filter_mask[8*0+7:8*0]);
+                        end
+                    end
+//                    if(data_index==40 && testframe_mismatch==0) begin
+//                        testframe_match <= 1;
+//                    end
                 end
             end
             2'b11 : begin

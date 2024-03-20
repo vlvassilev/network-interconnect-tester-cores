@@ -40,6 +40,8 @@ module traffic_analyzer_gmii_cpu_regs #
            input      [`REG_FLIP_BITS]    ip2cpu_flip_reg,
            output reg [`REG_FLIP_BITS]    cpu2ip_flip_reg,
            output reg [`REG_CONTROL_BITS]    control_reg,
+           output reg [10*4*8-1:0] testframe_filter_data_regs, //40 octet bitmask match filter
+           output reg [10*4*8-1:0] testframe_filter_mask_regs,
            input      [`REG_PKTS_BITS]       pkts_reg,
            input      [`REG_OCTETS_BITS]     octets_reg,
            input      [`REG_BAD_CRC_PKTS_BITS]       bad_crc_pkts_reg,
@@ -64,6 +66,8 @@ module traffic_analyzer_gmii_cpu_regs #
            input      [`REG_LATENCY_NSEC_BITS]	latency_nsec_reg
 
        );
+
+integer i;
 
 // AXI4LITE signals
 reg [C_S_AXI_ADDR_WIDTH-1 : 0]      axi_awaddr;
@@ -284,8 +288,17 @@ always @(posedge S_AXI_ACLK) begin
             `REG_CONTROL_ADDR : begin
                 control_reg[`REG_CONTROL_WIDTH-1:0] <=  S_AXI_WDATA[`REG_CONTROL_WIDTH-1:0];
             end
-
         endcase
+
+        //Testframe Filter Registers
+        for(i=0;i<10;i=i+1) begin
+            if(axi_awaddr == `REG_CONTROL_ADDR+4+i*4) begin
+                testframe_filter_data_regs[(0*8*4+ 0+7):(0*8*4+0)] <=  S_AXI_WDATA[0*8+7:0*8];
+                //testframe_filter_data_regs[i*8*4+ 8+7:i*8*4+8 ] <= S_AXI_WDATA[1*8+7:1*8];
+                //testframe_filter_data_regs[i*8*4+16+7:i*8*4+16] <= S_AXI_WDATA[2*8+7:2*8];
+                //testframe_filter_data_regs[i*8*4+24+7:i*8*4+24] <= S_AXI_WDATA[3*8+7:3*8];
+            end
+        end
     end
 end
 

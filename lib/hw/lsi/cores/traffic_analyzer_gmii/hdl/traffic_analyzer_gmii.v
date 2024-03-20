@@ -117,6 +117,10 @@ reg     [31:0]  frame_buf_in_data;
 reg             frame_buf_in_wr;
 reg     [31:0]  expected_sequence_num;
 
+wire [40*8-1:0] testframe_filter_data; //40 octet bitmask match filter
+wire [40*8-1:0] testframe_filter_mask;
+
+
 wire crc_ok;
 
 integer i;
@@ -128,6 +132,7 @@ integer bad_preamble_octets_delta;
 integer bad_preamble_pkts_delta;
 integer testframe_pkts_delta;
 integer sequence_errors_delta;
+
 
 //Registers section
 traffic_analyzer_gmii_cpu_regs
@@ -170,6 +175,8 @@ traffic_analyzer_gmii_cpu_regs
         .ip2cpu_flip_reg          (ip2cpu_flip_reg),
         .cpu2ip_flip_reg          (cpu2ip_flip_reg),
         .control_reg          (control_reg),
+        .testframe_filter_data_regs (testframe_filter_data),
+        .testframe_filter_mask_regs (testframe_filter_mask),
 
         // statistics
         .pkts_reg (pkts_reg),
@@ -231,6 +238,9 @@ testframe_parser testframe_parser_0 (
             .d(gmii_d),
             .en(gmii_en),
             .er(gmii_er),
+
+            .testframe_filter_data(testframe_filter_data),
+            .testframe_filter_mask(testframe_filter_mask),
             .testframe_match(testframe_match),
             .sequence_num(sequence_num),
             .timestamp_sec(timestamp_tx_sec),
