@@ -153,8 +153,7 @@ rtclock #(
 traffic_generator_gmii #(
            .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
            .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
-           .C_BASEADDR(TG_BASEADDR),
-           .C_CLK_TO_NS_RATIO(CLK_PERIOD_NS)
+           .C_BASEADDR(TG_BASEADDR)
                        ) traffic_generator_gmii0
                        (
                            .clk(clk),
@@ -195,8 +194,7 @@ traffic_generator_gmii #(
 traffic_analyzer_gmii #(
            .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
            .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
-           .C_BASEADDR(TA_BASEADDR),
-           .C_CLK_TO_NS_RATIO(CLK_PERIOD_NS)
+           .C_BASEADDR(TA_BASEADDR)
                       ) traffic_analyzer_gmii0
                       (
                           .clk(clk_),

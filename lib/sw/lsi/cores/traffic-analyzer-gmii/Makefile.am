@@ -5,6 +5,7 @@ bin_PROGRAMS = traffic-analyzer-gmii
 traffic_analyzer_gmii_SOURCES = \
 $(top_srcdir)/common/devmem-map.c \
 $(top_srcdir)/common/hexstr.c \
+$(top_srcdir)/common/yang-date-and-time.c \
 traffic-analyzer-gmii.c
 
 traffic_analyzer_gmii_CPPFLAGS = -I $(top_srcdir)/common/

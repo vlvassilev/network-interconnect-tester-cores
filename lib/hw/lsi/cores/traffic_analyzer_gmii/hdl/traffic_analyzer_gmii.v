@@ -73,6 +73,11 @@ reg     [`REG_LATENCY_MIN_SEC_BITS] latency_min_sec_reg;
 reg     [`REG_LATENCY_MIN_NSEC_BITS] latency_min_nsec_reg;
 reg     [`REG_LATENCY_SEC_BITS] latency_sec_reg;
 reg     [`REG_LATENCY_NSEC_BITS] latency_nsec_reg;
+reg     [`REG_LAST_SEQUENCE_ERROR_RECEIVED_BITS]	last_sequence_error_received_reg;
+reg     [`REG_LAST_SEQUENCE_ERROR_EXPECTED_BITS]	last_sequence_error_expected_reg;
+reg     [`REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_BITS]	last_sequence_error_timestamp_sec_reg;
+reg     [`REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_BITS]	last_sequence_error_timestamp_nsec_reg;
+
 
 
 reg     [2-1:0]                    state;
@@ -101,6 +106,10 @@ reg     [`REG_LATENCY_MIN_SEC_BITS] latency_min_sec;
 reg     [`REG_LATENCY_MIN_NSEC_BITS] latency_min_nsec;
 reg     [`REG_LATENCY_MAX_SEC_BITS] latency_max_sec;
 reg     [`REG_LATENCY_MAX_NSEC_BITS] latency_max_nsec;
+reg     [`REG_LAST_SEQUENCE_ERROR_RECEIVED_BITS]	last_sequence_error_received;
+reg     [`REG_LAST_SEQUENCE_ERROR_EXPECTED_BITS]	last_sequence_error_expected;
+reg     [`REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_BITS]	last_sequence_error_timestamp_sec;
+reg     [`REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_BITS]	last_sequence_error_timestamp_nsec;
 
 reg     [47:0] latency_sec;
 reg     [31:0] latency_nsec;
@@ -203,7 +212,11 @@ traffic_analyzer_gmii_cpu_regs
         .latency_min_sec_reg(latency_min_sec_reg),
         .latency_min_nsec_reg(latency_min_nsec_reg),
         .latency_sec_reg(latency_sec_reg),
-        .latency_nsec_reg(latency_nsec_reg)
+        .latency_nsec_reg(latency_nsec_reg),
+        .last_sequence_error_received_reg(last_sequence_error_received_reg),
+        .last_sequence_error_expected_reg(last_sequence_error_expected_reg),
+        .last_sequence_error_timestamp_sec_reg(last_sequence_error_timestamp_sec_reg),
+        .last_sequence_error_timestamp_nsec_reg(last_sequence_error_timestamp_nsec_reg)
     );
 
 bram_io #(
@@ -329,6 +342,10 @@ always @(posedge clk) begin
                             testframe_pkts_delta = 1;
                             if(sequence_num != expected_sequence_num) begin
                                 sequence_errors_delta = 1;
+                                last_sequence_error_expected = expected_sequence_num;
+                                last_sequence_error_received = sequence_num;
+                                last_sequence_error_timestamp_sec = timestamp_sec;
+                                last_sequence_error_timestamp_nsec = timestamp_nsec;
                             end
                             else begin
                                 sequence_errors_delta = 0;
@@ -378,6 +395,11 @@ always @(posedge clk) begin
                         frame_size_reg <= frame_size;
                         testframe_pkts_reg <= testframe_pkts + testframe_pkts_delta;
                         sequence_errors_reg <= sequence_errors + sequence_errors_delta;
+                        last_sequence_error_expected_reg = last_sequence_error_expected;
+                        last_sequence_error_received_reg = last_sequence_error_received;
+                        last_sequence_error_timestamp_sec_reg = last_sequence_error_timestamp_sec;
+                        last_sequence_error_timestamp_nsec_reg = last_sequence_error_timestamp_nsec;
+
                     end
                 end
             end

@@ -35,6 +35,10 @@
 #define REG_LATENCY_MAX_NSEC_ADDR 0xA8
 #define REG_LATENCY_SEC_ADDR 0xB0
 #define REG_LATENCY_NSEC_ADDR 0xB8
+#define REG_LAST_SEQUENCE_ERROR_EXPECTED_ADDR 0xC0
+#define REG_LAST_SEQUENCE_ERROR_RECEIVED_ADDR 0xD0
+#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_ADDR	0xE0
+#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_ADDR	0xF0
 
 static struct option const long_options[] =
 {
@@ -74,6 +78,11 @@ int main(int argc, char** argv)
     uint64_t latency_sec;
     uint32_t latency_nsec;
     uint32_t timestamp_nsec;
+    uint64_t last_sequence_error_expected;
+    uint64_t last_sequence_error_received;
+    uint64_t last_sequence_error_timestamp_sec;
+    uint32_t last_sequence_error_timestamp_nsec;
+    char last_sequence_error[]="<last-sequence-error><expected>123456789</expected><received>123456789</received><timestamp>1970-01-01T12:34:56.999999999Z</timestamp></last-sequence-error>";
 
     while ((optc = getopt_long (argc, argv, "i:v", long_options, NULL)) != -1) {
         switch (optc) {
@@ -161,11 +170,32 @@ int main(int argc, char** argv)
 
         ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
 
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_EXPECTED_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_EXPECTED_ADDR+4, &lsb);
+        last_sequence_error_expected = (uint64_t)msb<<32 | lsb;
+
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_RECEIVED_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_RECEIVED_ADDR+4, &lsb);
+        last_sequence_error_received = (uint64_t)msb<<32 | lsb;
+
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_ADDR, &last_sequence_error_timestamp_nsec);
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_ADDR+4, &lsb);
+        last_sequence_error_timestamp_sec = (uint64_t)msb<<32 | lsb;
+
+        if(sequence_errors!=0) {
+            char date_and_time_str[] = "2024-11-05T12:34:56.000000000Z+";
+            ieee_1588_to_yang_date_and_time(last_sequence_error_timestamp_sec, last_sequence_error_timestamp_nsec, date_and_time_str);
+            sprintf(last_sequence_error,"<last-sequence-error><expected>%llu</expected><received>%llu</received><timestamp>%s</timestamp></last-sequence-error>",last_sequence_error_expected, last_sequence_error_received, date_and_time_str);
+        } else {
+            sprintf(last_sequence_error,"");
+        }
+
         printf("<state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer\"><pkts>%llu</pkts><octets>%llu</octets><octets-idle>%llu</octets-idle>"
         "<bad-crc-octets>%llu</bad-crc-octets><bad-crc-pkts>%llu</bad-crc-pkts>"
         "<bad-preamble-octets>%llu</bad-preamble-octets><bad-preamble-pkts>%llu</bad-preamble-pkts>"
         "<octets-total>%llu</octets-total>"
-        "<testframe-stats><pkts>%llu</pkts><sequence-errors>%llu</sequence-errors>"
+        "<testframe-stats><pkts>%llu</pkts><sequence-errors>%llu</sequence-errors>%s"
         "<latency><samples>%llu</samples><min-sec>%llu</min-sec><min>%u</min><max-sec>%llu</max-sec><max>%u</max><last-sec>%llu</last-sec><last>%u</last></latency></testframe-stats>",
                 pkts,
                 octets,
@@ -177,6 +207,7 @@ int main(int argc, char** argv)
                 octets_total,
                 testframe_pkts,
                 sequence_errors,
+                last_sequence_error,
                 testframe_pkts,
                 latency_min_sec,
                 latency_min_nsec,
