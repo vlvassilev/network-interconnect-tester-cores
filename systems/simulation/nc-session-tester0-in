@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hello xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <capabilities>
+    <capability>urn:ietf:params:netconf:base:1.0</capability>
+    <capability>urn:ietf:params:netconf:base:1.1</capability>
+    <capability>urn:ietf:params:netconf:capability:candidate:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:confirmed-commit:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:confirmed-commit:1.1</capability>
+    <capability>urn:ietf:params:netconf:capability:rollback-on-error:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:validate:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:validate:1.1</capability>
+    <capability>urn:ietf:params:netconf:capability:url:1.0?scheme=file</capability>
+    <capability>urn:ietf:params:netconf:capability:xpath:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:notification:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:interleave:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:partial-lock:1.0</capability>
+    <capability>urn:ietf:params:netconf:capability:with-defaults:1.0?basic-mode=explicit&amp;also-supported=trim,report-all,report-all-tagged</capability>
+    <capability>urn:ietf:params:xml:ns:yang:iana-crypt-hash?module=iana-crypt-hash&amp;revision=2014-08-06&amp;features=crypt-hash-md5,crypt-hash-sha-256,crypt-hash-sha-512</capability>
+    <capability>urn:ietf:params:xml:ns:yang:iana-if-type?module=iana-if-type&amp;revision=2014-05-08</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-inet-types?module=ietf-inet-types&amp;revision=2013-07-15</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-interfaces?module=ietf-interfaces&amp;revision=2014-05-08&amp;features=arbitrary-names,pre-provisioning,if-mib</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-netconf-acm?module=ietf-netconf-acm&amp;revision=2018-02-14</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring?module=ietf-netconf-monitoring&amp;revision=2010-10-04</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-netconf-notifications?module=ietf-netconf-notifications&amp;revision=2012-02-06</capability>
+    <capability>urn:ietf:params:xml:ns:netconf:partial-lock:1.0?module=ietf-netconf-partial-lock&amp;revision=2009-10-19</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-netconf-with-defaults?module=ietf-netconf-with-defaults&amp;revision=2011-06-01</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-system?module=ietf-system&amp;revision=2014-08-06&amp;features=radius,authentication,local-users,radius-authentication,ntp,ntp-udp-port,timezone-name,dns-udp-tcp-port</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer?module=ietf-traffic-analyzer&amp;revision=2024-03-04&amp;features=testframe-filter,idle-octets-counter,capture</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-traffic-generator?module=ietf-traffic-generator&amp;revision=2024-03-04&amp;features=realtime-epoch</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-yang-library?module=ietf-yang-library&amp;revision=2016-06-21</capability>
+    <capability>urn:ietf:params:xml:ns:yang:ietf-yang-types?module=ietf-yang-types&amp;revision=2013-07-15</capability>
+    <capability>urn:ietf:params:xml:ns:netmod:notification?module=nc-notifications&amp;revision=2008-07-14</capability>
+    <capability>urn:ietf:params:xml:ns:netconf:notification:1.0?module=notifications&amp;revision=2008-07-14</capability>
+    <capability>http://netconfcentral.org/ns/yuma-app-common?module=yuma-app-common&amp;revision=2012-08-16</capability>
+    <capability>http://netconfcentral.org/ns/yuma-mysession?module=yuma-mysession&amp;revision=2010-05-10</capability>
+    <capability>http://netconfcentral.org/ns/yuma-ncx?module=yuma-ncx&amp;revision=2012-01-13</capability>
+    <capability>http://netconfcentral.org/ns/yuma-proc?module=yuma-proc&amp;revision=2012-10-10</capability>
+    <capability>http://netconfcentral.org/ns/yuma-time-filter?module=yuma-time-filter&amp;revision=2012-11-15</capability>
+    <capability>http://netconfcentral.org/ns/yuma-types?module=yuma-types&amp;revision=2012-06-01</capability>
+    <capability>http://yuma123.org/ns/yuma123-mysession-cache?module=yuma123-mysession-cache&amp;revision=2018-11-12</capability>
+    <capability>urn:ietf:params:xml:ns:netconf:base:1.0?module=ietf-netconf&amp;revision=2011-06-01&amp;features=writable-running,candidate,confirmed-commit,rollback-on-error,validate,startup,url,xpath</capability>
+    <capability>http://yuma123.org/ns/yuma123-netconf-types?module=yuma123-netconf-types&amp;revision=2017-06-23</capability>
+    <capability>http://yuma123.org/ns/yuma123-system?module=yuma123-system&amp;revision=2017-03-26</capability>
+    <capability>urn:ietf:params:netconf:capability:yang-library:1.0?revision=2016-06-21&amp;module-set-id=34f60ca20775907cd0ca6126253daedc020f804a</capability>
+  </capabilities>
+  <session-id>2</session-id>
+</hello>]]>]]>
+#1986
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="1" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  last-modified="2024-11-07T10:54:38Z"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <data>
+    <modules-state xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-library">
+      <module>
+        <name>iana-crypt-hash</name>
+        <revision>2014-08-06</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:iana-crypt-hash</namespace>
+        <conformance-type>import</conformance-type>
+        <feature>crypt-hash-md5</feature>
+        <feature>crypt-hash-sha-256</feature>
+        <feature>crypt-hash-sha-512</feature>
+      </module>
+      <module>
+        <name>iana-if-type</name>
+        <revision>2014-05-08</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:iana-if-type</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-inet-types</name>
+        <revision>2013-07-15</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-inet-types</namespace>
+        <conformance-type>import</conformance-type>
+      </module>
+      <module>
+        <name>ietf-interfaces</name>
+        <revision>2014-05-08</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
+        <conformance-type>implement</conformance-type>
+        <feature>arbitrary-names</feature>
+        <feature>pre-provisioning</feature>
+        <feature>if-mib</feature>
+      </module>
+      <module>
+        <name>ietf-netconf-acm</name>
+        <revision>2018-02-14</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-netconf-acm</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-netconf-monitoring</name>
+        <revision>2010-10-04</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <m
+#1986
+odule>
+        <name>ietf-netconf-notifications</name>
+        <revision>2012-02-06</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-netconf-notifications</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-netconf-partial-lock</name>
+        <revision>2009-10-19</revision>
+        <namespace>urn:ietf:params:xml:ns:netconf:partial-lock:1.0</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-netconf-with-defaults</name>
+        <revision>2011-06-01</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-netconf-with-defaults</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-system</name>
+        <revision>2014-08-06</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-system</namespace>
+        <conformance-type>implement</conformance-type>
+        <feature>radius</feature>
+        <feature>authentication</feature>
+        <feature>local-users</feature>
+        <feature>radius-authentication</feature>
+        <feature>ntp</feature>
+        <feature>ntp-udp-port</feature>
+        <feature>timezone-name</feature>
+        <feature>dns-udp-tcp-port</feature>
+      </module>
+      <module>
+        <name>ietf-traffic-analyzer</name>
+        <revision>2024-03-04</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer</namespace>
+        <conformance-type>implement</conformance-type>
+        <feature>testframe-filter</feature>
+        <feature>idle-octets-counter</feature>
+        <feature>capture</feature>
+      </module>
+      <module>
+        <name>ietf-traffic-generator</name>
+        <revision>2024-03-04</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-traffic-generator</namespace>
+        <conformance-type>implement</conformance-type>
+        <feature>realtime-epoch</feature>
+      </module>
+  
+#1986
+    <module>
+        <name>ietf-yang-library</name>
+        <revision>2016-06-21</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-yang-library</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-yang-types</name>
+        <revision>2013-07-15</revision>
+        <namespace>urn:ietf:params:xml:ns:yang:ietf-yang-types</namespace>
+        <conformance-type>import</conformance-type>
+      </module>
+      <module>
+        <name>nc-notifications</name>
+        <revision>2008-07-14</revision>
+        <namespace>urn:ietf:params:xml:ns:netmod:notification</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>notifications</name>
+        <revision>2008-07-14</revision>
+        <namespace>urn:ietf:params:xml:ns:netconf:notification:1.0</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>yuma-app-common</name>
+        <revision>2012-08-16</revision>
+        <namespace>http://netconfcentral.org/ns/yuma-app-common</namespace>
+        <conformance-type>import</conformance-type>
+      </module>
+      <module>
+        <name>yuma-mysession</name>
+        <revision>2010-05-10</revision>
+        <namespace>http://netconfcentral.org/ns/yuma-mysession</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>yuma-ncx</name>
+        <revision>2012-01-13</revision>
+        <namespace>http://netconfcentral.org/ns/yuma-ncx</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>yuma-proc</name>
+        <revision>2012-10-10</revision>
+        <namespace>http://netconfcentral.org/ns/yuma-proc</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>yuma-time-filter</name>
+        <revision>2012-11-15</revision>
+        <namesp
+#1735
+ace>http://netconfcentral.org/ns/yuma-time-filter</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>yuma-types</name>
+        <revision>2012-06-01</revision>
+        <namespace>http://netconfcentral.org/ns/yuma-types</namespace>
+        <conformance-type>import</conformance-type>
+      </module>
+      <module>
+        <name>yuma123-mysession-cache</name>
+        <revision>2018-11-12</revision>
+        <namespace>http://yuma123.org/ns/yuma123-mysession-cache</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module>
+        <name>ietf-netconf</name>
+        <revision>2011-06-01</revision>
+        <namespace>urn:ietf:params:xml:ns:netconf:base:1.0</namespace>
+        <conformance-type>implement</conformance-type>
+        <feature>writable-running</feature>
+        <feature>candidate</feature>
+        <feature>confirmed-commit</feature>
+        <feature>rollback-on-error</feature>
+        <feature>validate</feature>
+        <feature>startup</feature>
+        <feature>url</feature>
+        <feature>xpath</feature>
+      </module>
+      <module>
+        <name>yuma123-netconf-types</name>
+        <revision>2017-06-23</revision>
+        <namespace>http://yuma123.org/ns/yuma123-netconf-types</namespace>
+        <conformance-type>import</conformance-type>
+      </module>
+      <module>
+        <name>yuma123-system</name>
+        <revision>2017-03-26</revision>
+        <namespace>http://yuma123.org/ns/yuma123-system</namespace>
+        <conformance-type>implement</conformance-type>
+      </module>
+      <module-set-id>34f60ca20775907cd0ca6126253daedc020f804a</module-set-id>
+    </modules-state>
+  </data>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="2" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="3" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="4" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="5" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="6" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="7" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="8" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#187
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="9" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="10" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="11" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="12" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="13" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="14" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="15" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="16" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="17" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="18" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="19" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="20" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="21" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="22" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="23" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="24" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="25" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="26" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="27" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="28" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="29" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="30" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="31" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="32" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="33" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="34" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="35" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="36" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="37" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="38" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="39" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="40" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="41" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="42" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="43" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="44" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="45" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="46" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="47" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="48" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="49" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="50" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="51" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="52" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="53" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="54" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="55" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="56" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="57" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="58" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="59" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="60" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="61" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="62" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="63" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="64" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="65" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="66" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="67" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="68" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="69" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="70" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="71" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="72" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="73" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="74" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="75" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="76" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="77" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="78" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##
+
+#188
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc-reply message-id="79" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <ok/>
+</rpc-reply>
+##

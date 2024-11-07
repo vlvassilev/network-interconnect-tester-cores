@@ -1,0 +1,2062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hello xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <capabilities>
+    <capability>urn:ietf:params:netconf:base:1.0</capability>
+    <capability>urn:ietf:params:netconf:base:1.1</capability>
+  </capabilities>
+</hello>]]>]]>
+#300
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="1"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <get xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <filter type="subtree">
+      <modules-state xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-library"/>
+    </filter>
+  </get>
+</rpc>
+##
+
+#724
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="2"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#724
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="3"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#712
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="4"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1178
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="5"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>20</interframe-gap>
+            <total-frames>29</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#714
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="6"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#712
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="7"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#724
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="8"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#724
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="9"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="10"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="11"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>94</interframe-gap>
+            <total-frames>15</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="12"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="13"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="14"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="15"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="16"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="17"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>46</interframe-gap>
+            <total-frames>22</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="18"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="19"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="20"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="21"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="22"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="23"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>32</interframe-gap>
+            <total-frames>26</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="24"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="25"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="26"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="27"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="28"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="29"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>26</interframe-gap>
+            <total-frames>27</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="30"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="31"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="32"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="33"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="34"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="35"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>23</interframe-gap>
+            <total-frames>28</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="36"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="37"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="38"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="39"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="40"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="41"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>22</interframe-gap>
+            <total-frames>29</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="42"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="43"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="44"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="45"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="46"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="47"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>21</interframe-gap>
+            <total-frames>29</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="48"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="49"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="50"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="51"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="52"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="53"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>22</interframe-gap>
+            <total-frames>29</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="54"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="55"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="56"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="57"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="58"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="59"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>20</interframe-gap>
+            <total-frames>29</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="60"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="61"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="62"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="63"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="64"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="65"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>30</interframe-gap>
+            <total-frames>26</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="66"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="67"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="68"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="69"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="70"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1179
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="71"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>41</interframe-gap>
+            <total-frames>23</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="72"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="73"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="74"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth1</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#725
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="75"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface 
+          xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+          nc:operation="replace">
+          <name>eth0</name>
+          <type
+            xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="76"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#1279
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="77"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="create"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">
+            <testframe-type
+              xmlns:nttg="urn:ietf:params:xml:ns:yang:ietf-traffic-generator">nttg:dynamic</testframe-type>
+            <frame-size>64</frame-size>
+            <frame-data>70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62</frame-data>
+            <interframe-gap>20</interframe-gap>
+            <interburst-gap>2324</interburst-gap>
+            <frames-per-burst>2</frames-per-burst>
+            <total-frames>2</total-frames>
+          </traffic-generator>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#715
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="78"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth0</name>
+          <traffic-generator 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-generator"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##
+
+#713
+<?xml version="1.0" encoding="UTF-8"?>
+<rpc message-id="79"
+  xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <target>
+      <candidate/>
+    </target>
+    <default-operation>merge</default-operation>
+    <test-option>set</test-option>
+    <config>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+        <interface>
+          <name>eth1</name>
+          <traffic-analyzer 
+            xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"
+            nc:operation="delete"
+            xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"/>
+        </interface>
+      </interfaces>
+    </config>
+  </edit-config>
+</rpc>
+##

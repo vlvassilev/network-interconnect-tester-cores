@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1730973294" />
+    <testcase name="flip_register" classname="tester_loop" file="/tmp/network-interconnect-tester-cores/systems/simulation/tester_loop.py" lineno="138" time="36.59706783294678" sim_time_ns="1940.001" ratio_time="53.009738617734286">
+      <failure message="Test failed with RANDOM_SEED=1730973294" />
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,1668 @@
+Starting netconfd...
+Copyright (c) 2008-2012, Andy Bierman, All Rights Reserved.
+Copyright (c) 2013-2022, Vladimir Vassilev, All Rights Reserved.
+
+agt: Startup configuration skipped due to no-startup CLI option
+
+Running netconfd server (2.14-0)
+
+New session 1 created OK
+New session 2 created OK
+Session 2 for y123@127.0.0.1 now active (base:1.1)
+edit-transaction 96052: operation merge on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:43Z on target 'candidate'
+  data: /if:interfaces
+
+edit-transaction 96053: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+Session 1 for y123@127.0.0.1 now active (base:1.0)
+edit-transaction 96054: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:43Z on target 'running'
+  data: /if:interfaces
+
+edit-transaction 96055: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96056: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>0</pkts><octets>0</octets><octets-idle>62</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>112</octets-total><testframe-stats><pkts>0</pkts><sequence-errors>0</sequence-errors><latency><samples>0</samples><min-sec>281474976710655</min-sec><min>4294967295</min><max-sec>0</max-sec><max>0</max><last-sec>0</last-sec><last>2</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000000000Z</timestamp><sequence-number>0</sequence-number><data></data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96057: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:44Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96058: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:44Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:total-frames 29
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic &
+edit-transaction 96059: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:45Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96060: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:45Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96060: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:45Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:total-frames 29
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96061: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96062: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96062: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96063: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96064: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96065: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96065: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96066: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96067: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>15</pkts><octets>960</octets><octets-idle>6133</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>7263</octets-total><testframe-stats><pkts>15</pkts><sequence-errors>14</sequence-errors><last-sequence-error><expected>27</expected><received>28</received><timestamp>1970-01-01T00:00:00.000053800Z</timestamp></last-sequence-error><latency><samples>15</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000053800Z</timestamp><sequence-number>15</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001C0000000000000000D2107B5360D3</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96068: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96069: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:48Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 94
+    nttg:total-frames 15
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=94 --total-frames=15 --testframe-type=dynamic &
+edit-transaction 96070: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:50Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96071: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:50Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96071: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:50Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 94
+    nttg:total-frames 15
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=94 --total-frames=15 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=94 --total-frames=15 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96072: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96073: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96073: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96074: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96075: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96076: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96076: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96077: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96078: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:52Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>30</pkts><octets>1920</octets><octets-idle>12384</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>14594</octets-total><testframe-stats><pkts>30</pkts><sequence-errors>15</sequence-errors><last-sequence-error><expected>29</expected><received>0</received><timestamp>1970-01-01T00:00:00.000093632Z</timestamp></last-sequence-error><latency><samples>30</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000111328Z</timestamp><sequence-number>30</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000000E0000000000000001B2C80775CDC9</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96079: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:53Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96080: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:53Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 46
+    nttg:total-frames 22
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=46 --total-frames=22 --testframe-type=dynamic &
+edit-transaction 96081: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:55Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96082: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:55Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96082: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:55Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 46
+    nttg:total-frames 22
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=46 --total-frames=22 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=46 --total-frames=22 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96083: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96084: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96084: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96085: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96086: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96087: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96087: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96088: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96089: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>52</pkts><octets>3328</octets><octets-idle>18131</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>21925</octets-total><testframe-stats><pkts>52</pkts><sequence-errors>16</sequence-errors><last-sequence-error><expected>15</expected><received>0</received><timestamp>1970-01-01T00:00:00.000152280Z</timestamp></last-sequence-error><latency><samples>52</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000170760Z</timestamp><sequence-number>52</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001500000000000000029AF0E59E0333</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96090: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96091: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:57Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 32
+    nttg:total-frames 26
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=32 --total-frames=26 --testframe-type=dynamic &
+edit-transaction 96092: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:54:59Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96093: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:59Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96093: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:54:59Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 32
+    nttg:total-frames 26
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=32 --total-frames=26 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=32 --total-frames=26 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96094: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96095: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96095: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96096: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96097: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96098: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96098: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96099: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96100: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>78</pkts><octets>4992</octets><octets-idle>23591</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>29257</octets-total><testframe-stats><pkts>78</pkts><sequence-errors>17</sequence-errors><last-sequence-error><expected>22</expected><received>0</received><timestamp>1970-01-01T00:00:00.000210928Z</timestamp></last-sequence-error><latency><samples>78</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000230128Z</timestamp><sequence-number>78</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A00000000000000000019000000000000000382D8B656758F</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96101: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96102: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:02Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 26
+    nttg:total-frames 27
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=26 --total-frames=27 --testframe-type=dynamic &
+edit-transaction 96103: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:04Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96104: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:04Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96104: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:04Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 26
+    nttg:total-frames 27
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=26 --total-frames=27 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=26 --total-frames=27 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96105: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96106: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96106: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96107: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96108: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96109: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96109: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96110: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96111: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>105</pkts><octets>6720</octets><octets-idle>28978</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>36588</octets-total><testframe-stats><pkts>105</pkts><sequence-errors>18</sequence-errors><last-sequence-error><expected>26</expected><received>0</received><timestamp>1970-01-01T00:00:00.000269584Z</timestamp></last-sequence-error><latency><samples>105</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000288304Z</timestamp><sequence-number>105</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001A000000000000000466186AD2AEB2</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96112: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96113: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:07Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 23
+    nttg:total-frames 28
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=23 --total-frames=28 --testframe-type=dynamic &
+edit-transaction 96114: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:10Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96115: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:10Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96115: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:10Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 23
+    nttg:total-frames 28
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=23 --total-frames=28 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=23 --total-frames=28 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96116: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96117: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96117: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96118: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96119: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96120: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96120: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96121: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96122: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:12Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>133</pkts><octets>8512</octets><octets-idle>34293</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>43919</octets-total><testframe-stats><pkts>133</pkts><sequence-errors>19</sequence-errors><last-sequence-error><expected>27</expected><received>0</received><timestamp>1970-01-01T00:00:00.000328232Z</timestamp></last-sequence-error><latency><samples>133</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000347024Z</timestamp><sequence-number>133</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001B00000000000000054B782A5C7A1F</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96123: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:13Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96124: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:13Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 22
+    nttg:total-frames 29
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic &
+edit-transaction 96125: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:15Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96126: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:15Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96126: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:15Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 22
+    nttg:total-frames 29
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96127: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96128: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96128: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96129: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96130: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96131: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96131: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96132: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96133: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:17Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>162</pkts><octets>10368</octets><octets-idle>39536</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>51250</octets-total><testframe-stats><pkts>162</pkts><sequence-errors>20</sequence-errors><last-sequence-error><expected>28</expected><received>0</received><timestamp>1970-01-01T00:00:00.000386880Z</timestamp></last-sequence-error><latency><samples>162</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000406144Z</timestamp><sequence-number>162</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001C000000000000000632682B254DD7</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96134: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:18Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96135: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:18Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 21
+    nttg:total-frames 29
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=21 --total-frames=29 --testframe-type=dynamic &
+edit-transaction 96136: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:20Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96137: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:20Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96137: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:20Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 21
+    nttg:total-frames 29
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=21 --total-frames=29 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=21 --total-frames=29 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96138: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96139: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96139: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96140: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96141: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96142: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96142: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96143: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96144: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>191</pkts><octets>12224</octets><octets-idle>45080</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>58882</octets-total><testframe-stats><pkts>191</pkts><sequence-errors>21</sequence-errors><last-sequence-error><expected>29</expected><received>0</received><timestamp>1970-01-01T00:00:00.000447928Z</timestamp></last-sequence-error><latency><samples>191</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000466968Z</timestamp><sequence-number>191</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001C00000000000000072000A5D612ED</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96145: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96146: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:23Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 22
+    nttg:total-frames 29
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic &
+edit-transaction 96147: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:25Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96148: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:25Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96148: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:25Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 22
+    nttg:total-frames 29
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=22 --total-frames=29 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96149: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:27Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96150: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:27Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96150: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:27Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96151: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96152: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96153: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96153: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96154: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96155: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>220</pkts><octets>14080</octets><octets-idle>50323</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>66213</octets-total><testframe-stats><pkts>220</pkts><sequence-errors>22</sequence-errors><last-sequence-error><expected>29</expected><received>0</received><timestamp>1970-01-01T00:00:00.000506584Z</timestamp></last-sequence-error><latency><samples>220</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000525848Z</timestamp><sequence-number>220</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001C00000000000000080600BC129025</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96156: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96157: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:28Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:total-frames 29
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic &
+edit-transaction 96158: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:30Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96159: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:30Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96159: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:30Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:total-frames 29
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --total-frames=29 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96160: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:32Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96161: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:32Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96161: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:32Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96162: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96163: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96164: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96164: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96165: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96166: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>235</pkts><octets>15040</octets><octets-idle>56574</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>73544</octets-total><testframe-stats><pkts>235</pkts><sequence-errors>37</sequence-errors><last-sequence-error><expected>27</expected><received>28</received><timestamp>1970-01-01T00:00:00.000584048Z</timestamp></last-sequence-error><latency><samples>235</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000584048Z</timestamp><sequence-number>235</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000000000000001C0000000000000008E9585924C699</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96167: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96168: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:33Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 30
+    nttg:total-frames 26
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=30 --total-frames=26 --testframe-type=dynamic &
+edit-transaction 96169: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:35Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96170: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:35Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96170: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:35Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 30
+    nttg:total-frames 26
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=30 --total-frames=26 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=30 --total-frames=26 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96171: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96172: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96172: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96173: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96174: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96175: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96175: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96176: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96177: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:37Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>261</pkts><octets>16704</octets><octets-idle>62033</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>80875</octets-total><testframe-stats><pkts>261</pkts><sequence-errors>38</sequence-errors><last-sequence-error><expected>29</expected><received>0</received><timestamp>1970-01-01T00:00:00.000623880Z</timestamp></last-sequence-error><latency><samples>261</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000642680Z</timestamp><sequence-number>261</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A000000000000000000190000000000000009CE60D7E8941B</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96178: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:38Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96179: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:38Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 41
+    nttg:total-frames 23
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=41 --total-frames=23 --testframe-type=dynamic &
+edit-transaction 96180: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:40Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96181: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:40Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96181: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:40Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 41
+    nttg:total-frames 23
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=41 --total-frames=23 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=41 --total-frames=23 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96182: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96183: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96183: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+edit-transaction 96184: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96185: operation replace on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96186: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+
+edit-transaction 96186: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+
+edit-transaction 96187: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96188: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+traffic_analyzer_create:
+
+  ntta:traffic-analyzer {
+  }Received string: <state xmlns="urn:ietf:params:xml:ns:yang:ietf-traffic-analyzer"><pkts>284</pkts><octets>18176</octets><octets-idle>68009</octets-idle><bad-crc-octets>0</bad-crc-octets><bad-crc-pkts>0</bad-crc-pkts><bad-preamble-octets>0</bad-preamble-octets><bad-preamble-pkts>0</bad-preamble-pkts><octets-total>88507</octets-total><testframe-stats><pkts>284</pkts><sequence-errors>39</sequence-errors><last-sequence-error><expected>26</expected><received>0</received><timestamp>1970-01-01T00:00:00.000684928Z</timestamp></last-sequence-error><latency><samples>284</samples><min-sec>0</min-sec><min>24</min><max-sec>0</max-sec><max>24</max><last-sec>0</last-sec><last>24</last></latency></testframe-stats><capture><timestamp>1970-01-01T00:00:00.000703408Z</timestamp><sequence-number>284</sequence-number><data>55555555555555D570B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A00000000000000000016000000000000000ABB98D555046B</data></capture></state>
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96189: operation create on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96190: operation create on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:43Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+traffic_generator_create:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:interburst-gap 2324
+    nttg:frames-per-burst 2
+    nttg:total-frames 2
+  }traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --interburst-gap=2324 --frames-per-burst=2 --total-frames=2 --testframe-type=dynamic &
+edit-transaction 96191: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:45Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96192: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:45Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']/nttg:traffic-generator
+
+edit-transaction 96192: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:45Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth0']
+traffic_generator_delete:
+
+  nttg:traffic-generator {
+    nttg:testframe-type nttg:dynamic
+    nttg:frame-size 64
+    nttg:frame-data 70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62
+    nttg:interframe-gap 20
+    nttg:interburst-gap 2324
+    nttg:frames-per-burst 2
+    nttg:total-frames 2
+  }pkill -f 'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --interburst-gap=2324 --frames-per-burst=2 --total-frames=2 --testframe-type=dynamic'traffic-generator --interface-name=eth0 --frame-size=64 --frame-data=70B3D5EC201070B3D5EC201108004500002E000000000A112D4DC0A80091C0A80191C0200007001A0000000102030405060708090A0B0C0D0E0F10114602DB62 --interframe-gap=20 --interburst-gap=2324 --frames-per-burst=2 --total-frames=2 --testframe-type=dynamic --disable &Starting traffic-generator-gmii for eth0
+Core index: 0
+Read IP id: 12300001
+[002] 70B3D5EC
+[003] 201070B3
+[004] D5EC2011
+[005] 08004500
+[006] 002E0000
+[007] 00000A11
+[008] 2D4DC0A8
+[009] 0091C0A8
+[010] 0191C020
+[011] 0007001A
+[012] 00000000
+Write CONTROL: 00000003
+disable
+Stopping traffic-generator-gmii for eth0
+Core index: 0
+
+Warning: 'state' has no child node 'octets-idle'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-crc-pkts'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-octets'. Using anyxml
+Warning: 'state' has no child node 'bad-preamble-pkts'. Using anyxml
+Warning: 'state' has no child node 'octets-total'. Using anyxml
+Warning: 'testframe-stats' has no child node 'last-sequence-error'. Using anyxml
+Warning: 'latency' has no child node 'min-sec'. Using anyxml
+Warning: 'latency' has no child node 'max-sec'. Using anyxml
+Warning: 'latency' has no child node 'last-sec'. Using anyxml
+Warning: 'latency' has no child node 'last'. Using anyxml
+Warning: 'capture' has no child node 'timestamp'. Using anyxml
+Warning: 'capture' has no child node 'sequence-number'. Using anyxml
+Warning: 'capture' has no child node 'data'. Using anyxml
+edit-transaction 96193: operation delete on session 2 by y123@127.0.0.1
+  at 2024-11-07T10:55:47Z on target 'candidate'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96194: operation delete on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:47Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']/ntta:traffic-analyzer
+
+edit-transaction 96194: operation replace on session 1 by y123@127.0.0.1
+  at 2024-11-07T10:55:47Z on target 'running'
+  data: /if:interfaces/if:interface[if:name='eth1']
+traffic_analyzer_io_dictdelete:
+
+  ntta:traffic-analyzer {
+  }
+ses: session 1 shut by remote peer
+Session 1 closed
+ses: session 2 shut by remote peer
+Session 2 closed

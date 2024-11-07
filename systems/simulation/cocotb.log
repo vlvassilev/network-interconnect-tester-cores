@@ -1,0 +1,229 @@
+rm -f results.xml
+"make" -f Makefile.cocotb results.xml
+make[1]: Entering directory '/tmp/network-interconnect-tester-cores/systems/simulation'
+rm -f results.xml
+MODULE=tester_loop TESTCASE= TOPLEVEL=tester_loop TOPLEVEL_LANG=verilog \
+         /usr/bin/vvp -M /tmp/venv/lib/python3.12/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/sim.vvp -fst 
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:79   in set_program_name_in_venv        Did not detect Python virtual environment. Using system-wide Python interpreter
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:101  in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 12.0 (stable)
+     0.00ns INFO     cocotb                             Running tests with cocotb v1.9.2 from /tmp/venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Seeding Python random module with 1730973256
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb.regression                  Found test tester_loop.flip_register
+     0.00ns INFO     cocotb.regression                  running flip_register (1/1)
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master (write)
+    80.00ns INFO     cocotb.tester_loop.S_AXI           cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI           https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI             awaddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             awprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI             awready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             awvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             wdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             wready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             wstrb: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI             wvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             bready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             bresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI             bvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master (read)
+    80.00ns INFO     cocotb.tester_loop.S_AXI           cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI           https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI           AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI             araddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             arprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI             arready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             arvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             rdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             rready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI             rresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI             rvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master (write)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          awaddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          awprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          awready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          awvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          wdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          wready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          wstrb: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          wvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          bready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          bresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          bvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master (read)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          araddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          arprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          arready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          arvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          rdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          rready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          rresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG          rvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TG        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master (write)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          awaddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          awprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          awready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          awvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          wdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          wready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          wstrb: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          wvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          bready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          bresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          bvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master (read)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          araddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          arprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          arready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          arvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          rdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          rready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          rresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA          rvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_TA        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master (write)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          awaddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          awprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          awready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          awvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          wdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          wready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          wstrb: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          wvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          bready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          bresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          bvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master (read)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        cocotbext-axi version 0.1.24
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Copyright (c) 2020 Alex Forencich
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        https://github.com/alexforencich/cocotbext-axi
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master configuration:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Address width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Byte size: 8 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          Data width: 32 bits (4 bytes)
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        AXI lite master signals:
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          araddr width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          arprot: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          arready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          arvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          rdata width: 32 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          rready width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          rresp: not present
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT          rvalid width: 1 bits
+    80.00ns INFO     cocotb.tester_loop.S_AXI_FT        Reset de-asserted
+    80.00ns INFO     cocotb.tester_loop.S_AXI           Write start addr: 0x0000000c prot: 2 data: 12 34 56 78
+   110.00ns INFO     cocotb.tester_loop.S_AXI           Write complete addr: 0x0000000c prot: 2 resp: 0 length: 4
+   110.00ns INFO     cocotb.tester_loop.S_AXI           Read start addr: 0x0000000c prot: 2 length: 4
+   150.00ns INFO     cocotb.tester_loop.S_AXI           Read complete addr: 0x0000000c prot: 2 resp: 0 data: ed cb a9 87
+OK. Current value at REG_FLIP_ADDR is 0xEDCBA987 as expected
+   150.00ns INFO     cocotb.regression                  flip_register failed
+                                                        Traceback (most recent call last):
+                                                          File "/tmp/network-interconnect-tester-cores/systems/simulation/tester_loop.py", line 198, in flip_register
+                                                            server.bind("/tmp/simulation")
+                                                        OSError: [Errno 98] Address already in use
+   150.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** tester_loop.flip_register      FAIL         150.00           0.05       3007.06  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=0 FAIL=1 SKIP=0                150.00           0.08       1943.37  **
+                                                        **************************************************************************************
+                                                        
+FST info: dumpfile sim_build/tester_loop.fst opened for output.
+tic : time=                   0, sec=              x, nsec=         x, sec_next_pps=              x, pps=0, pps2=0
+tic : time=                8000, sec=              x, nsec=         x, sec_next_pps=              x, pps=0, pps2=0
+tic : time=               16000, sec=              x, nsec=         x, sec_next_pps=              x, pps=0, pps2=0
+tic : time=               24000, sec=              0, nsec=         0, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               32000, sec=              0, nsec=         0, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               40000, sec=              0, nsec=         8, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               48000, sec=              0, nsec=        16, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               56000, sec=              0, nsec=        24, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               64000, sec=              0, nsec=        32, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               72000, sec=              0, nsec=        40, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               80000, sec=              0, nsec=        48, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               88000, sec=              0, nsec=        56, sec_next_pps=              0, pps=0, pps2=0
+tic : time=               96000, sec=              0, nsec=        64, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              104000, sec=              0, nsec=        72, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              112000, sec=              0, nsec=        80, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              120000, sec=              0, nsec=        88, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              128000, sec=              0, nsec=        96, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              136000, sec=              0, nsec=       104, sec_next_pps=              0, pps=0, pps2=0
+tic : time=              144000, sec=              0, nsec=       112, sec_next_pps=              0, pps=0, pps2=0
+make[1]: Leaving directory '/tmp/network-interconnect-tester-cores/systems/simulation'
