@@ -5,14 +5,16 @@ You can use a cocotb/iverilog simulation of a single *traffic_generator_gmii* co
 ```
      eth0          NETCONF Server (YANG Model)    eth1
 
- TRAFFIC-GENERATOR (SW)               TRAFFIC-ANALYZER (SW)
-     |                                    |
- Socket API                           Socket API
-     |                   (GMII)           |
-  TRAFFIC-GENERATOR (HW) ------ TRAFFIC-ANALYZER (HW)
-                       \       /
-                        \     /
-                        RTCLOCK
+ TRAFFIC-GENERATOR (SW)                    TRAFFIC-ANALYZER (SW)
+     |                                        |
+ reg-write/reg-read (Socket API)           reg-write/reg-read (Socket API)
+     |                                        |
+     |                                        |
+     |                  (GMII)    (GMII)      |
+  TRAFFIC-GENERATOR (HW) --  DUT0  -- TRAFFIC-ANALYZER (HW)
+                       \             /
+                        \           /
+                           RTCLOCK
 ```
 
 The cocotb simulation after initialization and reset of the design instantiated in [tester_loop.v](tester_loop.v) listens on a socket accepting register *read*, *write*, and simulation *run* and *finish* commands.
@@ -56,3 +58,8 @@ read and write operations.
 
 One option is to start a new terminal with the `sim-run` script executed in a loop or for a more precise option call the command instead of delays in the test applications.
 
+Use `sim-finish` to stop the simulation when you are done.
+
+After that you can use gtkwave to explore the waveform:
+
+`gtkwave sim_build/tester_top.fst`

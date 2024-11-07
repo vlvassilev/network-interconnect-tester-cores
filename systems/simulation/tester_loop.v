@@ -77,7 +77,28 @@ module tester_loop       #(
     output                                    S_AXI_TA_WREADY,
     output     [1 :0]                         S_AXI_TA_BRESP,
     output                                    S_AXI_TA_BVALID,
-    output                                    S_AXI_TA_AWREADY
+    output                                    S_AXI_TA_AWREADY,
+
+    // Slave AXI Ports TF
+    input                                     S_AXI_FT_ACLK,
+    input                                     S_AXI_FT_ARESETN,
+    input      [C_S_AXI_ADDR_WIDTH-1 : 0]     S_AXI_FT_AWADDR,
+    input                                     S_AXI_FT_AWVALID,
+    input      [C_S_AXI_DATA_WIDTH-1 : 0]     S_AXI_FT_WDATA,
+    input      [C_S_AXI_DATA_WIDTH/8-1 : 0]   S_AXI_FT_WSTRB,
+    input                                     S_AXI_FT_WVALID,
+    input                                     S_AXI_FT_BREADY,
+    input      [C_S_AXI_ADDR_WIDTH-1 : 0]     S_AXI_FT_ARADDR,
+    input                                     S_AXI_FT_ARVALID,
+    input                                     S_AXI_FT_RREADY,
+    output                                    S_AXI_FT_ARREADY,
+    output     [C_S_AXI_DATA_WIDTH-1 : 0]     S_AXI_FT_RDATA,
+    output     [1 : 0]                        S_AXI_FT_RRESP,
+    output                                    S_AXI_FT_RVALID,
+    output                                    S_AXI_FT_WREADY,
+    output     [1 :0]                         S_AXI_FT_BRESP,
+    output                                    S_AXI_FT_BVALID,
+    output                                    S_AXI_FT_AWREADY
 
 );
 
@@ -89,6 +110,7 @@ localparam AXI_CLK_PERIOD_NS=10;
 localparam RC_BASEADDR = 32'h00000000;
 localparam TG_BASEADDR = 32'h10000000;
 localparam TA_BASEADDR = 32'h20000000;
+localparam FT_BASEADDR = 32'h30000000;
 
 
 wire clk_;
@@ -97,9 +119,13 @@ wire [47:0] sec_;
 wire [29:0] nsec_;
 time       cur_time;
 
-wire [8 - 1:0] gmii_d;
-wire gmii_en;
-wire gmii_er;
+wire [8 - 1:0] gmii_d_ta;
+wire gmii_en_ta;
+wire gmii_er_ta;
+
+wire [8 - 1:0] gmii_d_tg;
+wire gmii_en_tg;
+wire gmii_er_tg;
 
 
 reg [31:0] data;
@@ -159,9 +185,9 @@ traffic_generator_gmii #(
                            .clk(clk),
                            .resetn(resetn_),
 
-                           .gmii_d(gmii_d),
-                           .gmii_en(gmii_en),
-                           .gmii_er(gmii_er),
+                           .gmii_d(gmii_d_tg),
+                           .gmii_en(gmii_en_tg),
+                           .gmii_er(gmii_er_tg),
 
                            .sec(sec_),
                            .nsec(nsec_),
@@ -200,9 +226,9 @@ traffic_analyzer_gmii #(
                           .clk(clk_),
                           .resetn(resetn_),
 
-                          .gmii_d(gmii_d),
-                          .gmii_en(gmii_en),
-                          .gmii_er(gmii_er),
+                          .gmii_d(gmii_d_ta),
+                          .gmii_en(gmii_en_ta),
+                          .gmii_er(gmii_er_ta),
 
                           .sec(sec_),
                           .nsec(nsec_),
@@ -227,6 +253,44 @@ traffic_analyzer_gmii #(
                           .S_AXI_BRESP(S_AXI_TA_BRESP),
                           .S_AXI_BVALID(S_AXI_TA_BVALID),
                           .S_AXI_AWREADY(S_AXI_TA_AWREADY)
+                      );
+
+filter_gmii #(
+           .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
+           .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH),
+           .C_BASEADDR(FT_BASEADDR)
+                      ) dut0
+                      (
+                          .clk(clk_),
+
+                          .gmii_d_in(gmii_d_tg),
+                          .gmii_en_in(gmii_en_tg),
+                          .gmii_er_in(gmii_er_tg),
+
+                          .gmii_d_out(gmii_d_ta),
+                          .gmii_en_out(gmii_en_ta),
+                          .gmii_er_out(gmii_er_ta),
+
+                          // AXI Lite ports
+                          .S_AXI_ACLK(S_AXI_FT_ACLK),
+                          .S_AXI_ARESETN(S_AXI_FT_ARESETN),
+                          .S_AXI_AWADDR(S_AXI_FT_AWADDR),
+                          .S_AXI_AWVALID(S_AXI_FT_AWVALID),
+                          .S_AXI_WDATA(S_AXI_FT_WDATA),
+                          .S_AXI_WSTRB(S_AXI_FT_WSTRB),
+                          .S_AXI_WVALID(S_AXI_FT_WVALID),
+                          .S_AXI_BREADY(S_AXI_FT_BREADY),
+                          .S_AXI_ARADDR(S_AXI_FT_ARADDR),
+                          .S_AXI_ARVALID(S_AXI_FT_ARVALID),
+                          .S_AXI_RREADY(S_AXI_FT_RREADY),
+                          .S_AXI_ARREADY(S_AXI_FT_ARREADY),
+                          .S_AXI_RDATA(S_AXI_FT_RDATA),
+                          .S_AXI_RRESP(S_AXI_FT_RRESP),
+                          .S_AXI_RVALID(S_AXI_FT_RVALID),
+                          .S_AXI_WREADY(S_AXI_FT_WREADY),
+                          .S_AXI_BRESP(S_AXI_FT_BRESP),
+                          .S_AXI_BVALID(S_AXI_FT_BVALID),
+                          .S_AXI_AWREADY(S_AXI_FT_AWREADY)
                       );
 
 endmodule

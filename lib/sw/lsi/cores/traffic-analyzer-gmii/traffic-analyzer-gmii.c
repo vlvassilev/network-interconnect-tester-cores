@@ -36,9 +36,9 @@
 #define REG_LATENCY_SEC_ADDR 0xB0
 #define REG_LATENCY_NSEC_ADDR 0xB8
 #define REG_LAST_SEQUENCE_ERROR_EXPECTED_ADDR 0xC0
-#define REG_LAST_SEQUENCE_ERROR_RECEIVED_ADDR 0xD0
-#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_ADDR	0xE0
-#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_ADDR	0xF0
+#define REG_LAST_SEQUENCE_ERROR_RECEIVED_ADDR 0xC8
+#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_SEC_ADDR	0xD0
+#define REG_LAST_SEQUENCE_ERROR_TIMESTAMP_NSEC_ADDR	0xD8
 
 static struct option const long_options[] =
 {
@@ -77,6 +77,7 @@ int main(int argc, char** argv)
     uint32_t latency_max_nsec;
     uint64_t latency_sec;
     uint32_t latency_nsec;
+    uint64_t timestamp_sec;
     uint32_t timestamp_nsec;
     uint64_t last_sequence_error_expected;
     uint64_t last_sequence_error_received;
@@ -167,6 +168,9 @@ int main(int argc, char** argv)
         latency_sec = (uint64_t)msb<<32 | lsb;
 
         ioreg_read(ioreg_id, REG_TIMESTAMP_NSEC_ADDR, &timestamp_nsec);
+        ioreg_read(ioreg_id, REG_TIMESTAMP_SEC_ADDR, &msb);
+        ioreg_read(ioreg_id, REG_TIMESTAMP_SEC_ADDR+4, &lsb);
+        timestamp_sec = (uint64_t)msb<<32 | lsb;
 
         ioreg_read(ioreg_id, REG_FRAME_SIZE_ADDR, &frame_size);
 
@@ -217,8 +221,11 @@ int main(int argc, char** argv)
                 latency_nsec);
 
         if(1) {
-            printf("<capture><timestamp0><nsec>%u</nsec></timestamp0><sequence-number>%llu</sequence-number><data>",
-                    timestamp_nsec,
+            char date_and_time_str[] = "2024-11-05T12:34:56.000000000Z+";
+            ieee_1588_to_yang_date_and_time(timestamp_sec, timestamp_nsec, date_and_time_str);
+
+            printf("<capture><timestamp>%s</timestamp><sequence-number>%llu</sequence-number><data>",
+                    date_and_time_str,
                     pkts);
 
             for(i=0;i<(frame_size/4);i++) {

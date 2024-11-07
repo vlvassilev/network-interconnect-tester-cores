@@ -1,3 +1,10 @@
+network-interconnect-tester-cores (0.54) stable; urgency=medium
+
+  * Added filter_gmii test core for emulating simple DUT
+  * Fixed <timestamp> for captured frames
+
+ -- Vladimir Vassilev <vladimir@lightside-instruments.com>  Thu, 07 Nov 2024 02:36:02 +0100
+
 network-interconnect-tester-cores (0.53) stable; urgency=medium
 
   * Added <last-sequence-error> container implementation added in -05

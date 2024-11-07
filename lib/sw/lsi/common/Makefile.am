@@ -5,9 +5,9 @@ if SIMULATION
 
 SUBDIRS=simulation
 
-bin_PROGRAMS += sim-run sim-finish
+bin_PROGRAMS += sim-run sim-finish sim-devmem32
 
-devmem32_SOURCES = sim-ioreg.c \
+sim_devmem32_SOURCES = sim-ioreg.c \
 sim-devmem32.c
 
 sim_run_SOURCES = \

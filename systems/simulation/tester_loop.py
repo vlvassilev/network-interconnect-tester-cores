@@ -19,6 +19,7 @@ REG_PKTS_ADDR = 0x00000020
 axi_master_rc = None
 axi_master_tg = None
 axi_master_ta = None
+axi_master_ft = None
 
 def axi_offset_from_address(address):
     return address & 0x0FFFFFFF
@@ -27,6 +28,7 @@ def axi_handle_from_address(address):
     global axi_master_rc
     global axi_master_tg
     global axi_master_ta
+    global axi_master_ft
 
     if(address < 0x10000000):
         return axi_master_rc
@@ -34,6 +36,8 @@ def axi_handle_from_address(address):
         return axi_master_tg
     elif(address < 0x30000000):
         return axi_master_ta
+    elif(address < 0x40000000):
+        return axi_master_ft
     else:
         print("invalid address=0x%08X"%address)
         return None
@@ -122,17 +126,28 @@ async def generate_clock_axi_ta(dut):
         dut.S_AXI_TA_ACLK.value = 0
         await Timer(AXI_CLK_PERIOD_NS/2, units="ns")
 
+async def generate_clock_axi_ft(dut):
+    """Generate clock pulses."""
+
+    while(True):
+        dut.S_AXI_FT_ACLK.value = 1
+        await Timer(AXI_CLK_PERIOD_NS/2, units="ns")
+        dut.S_AXI_FT_ACLK.value = 0
+        await Timer(AXI_CLK_PERIOD_NS/2, units="ns")
+
 @cocotb.test()
 async def flip_register(dut):
 
     global axi_master_rc
     global axi_master_tg
     global axi_master_ta
+    global axi_master_ft
 
     await cocotb.start(generate_clock(dut))  # controls dut.clk.value, runs the clock "in the background"
     await cocotb.start(generate_clock_axi(dut))  # controls dut.S_AXI_ACLK.value, run the AXI clock "in the background"
     await cocotb.start(generate_clock_axi_tg(dut))  # controls dut.S_AXI_TG_ACLK.value, run the AXI clock "in the background"
     await cocotb.start(generate_clock_axi_ta(dut))  # controls dut.S_AXI_TA_ACLK.value, run the AXI clock "in the background"
+    await cocotb.start(generate_clock_axi_ft(dut))  # controls dut.S_AXI_FT_ACLK.value, run the AXI clock "in the background"
 
     dut.pps.value = 0
     dut.pps2.value = 0
@@ -140,6 +155,7 @@ async def flip_register(dut):
     dut.S_AXI_ARESETN.value=1
     dut.S_AXI_TG_ARESETN.value=1
     dut.S_AXI_TA_ARESETN.value=1
+    dut.S_AXI_FT_ARESETN.value=1
 
 
 
@@ -153,10 +169,12 @@ async def flip_register(dut):
     dut.S_AXI_ARESETN.value=0
     dut.S_AXI_TG_ARESETN.value=0
     dut.S_AXI_TA_ARESETN.value=0
+    dut.S_AXI_FT_ARESETN.value=0
     await Timer(2*CLK_PERIOD_NS, units="ns")  # wait a bit
     dut.S_AXI_ARESETN.value=1
     dut.S_AXI_TG_ARESETN.value=1
     dut.S_AXI_TA_ARESETN.value=1
+    dut.S_AXI_FT_ARESETN.value=1
 
 
     await Timer(2*CLK_PERIOD_NS, units="ns")  # wait a bit
@@ -164,6 +182,7 @@ async def flip_register(dut):
     axi_master_rc = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "S_AXI"),dut.S_AXI_ACLK, dut.S_AXI_ARESETN, reset_active_level=False)
     axi_master_tg = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "S_AXI_TG"),dut.S_AXI_TG_ACLK, dut.S_AXI_TG_ARESETN, reset_active_level=False)
     axi_master_ta = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "S_AXI_TA"),dut.S_AXI_TA_ACLK, dut.S_AXI_TA_ARESETN, reset_active_level=False)
+    axi_master_ft = AxiLiteMaster(AxiLiteBus.from_prefix(dut, "S_AXI_FT"),dut.S_AXI_FT_ACLK, dut.S_AXI_FT_ARESETN, reset_active_level=False)
 
     await axi_master_rc.write(REG_FLIP_ADDR, int(0x12345678).to_bytes(4, 'big') )
 

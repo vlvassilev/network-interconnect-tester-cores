@@ -283,6 +283,10 @@ always @(posedge clk) begin
 
         testframe_pkts <= 0;
         sequence_errors <= 0;
+        last_sequence_error_expected <= 0;
+        last_sequence_error_received <= 0;
+        last_sequence_error_timestamp_sec <= 0;
+        last_sequence_error_timestamp_nsec <= 0;
 
         pkts_reg <= 0;
         octets_reg <= 0;
@@ -298,6 +302,10 @@ always @(posedge clk) begin
 
         testframe_pkts_reg <= 0;
         sequence_errors_reg <= 0;
+        last_sequence_error_expected_reg <= 0;
+        last_sequence_error_received_reg <= 0;
+        last_sequence_error_timestamp_sec_reg <= 0;
+        last_sequence_error_timestamp_nsec_reg <= 0;
 
         expected_sequence_num <= 0;
 

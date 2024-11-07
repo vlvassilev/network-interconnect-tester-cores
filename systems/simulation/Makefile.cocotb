@@ -6,6 +6,7 @@ $(PWD)/ \
 $(PWD)/../../lib/hw/lsi/cores/rtclock/hdl/ \
 $(PWD)/../../lib/hw/lsi/cores/traffic_analyzer_gmii/hdl/ \
 $(PWD)/../../lib/hw/lsi/cores/traffic_generator_gmii/hdl/  \
+$(PWD)/../../lib/hw/lsi/cores/filter_gmii/hdl/  \
 $(PWD)/../../lib/hw/lsi/common/hdl
 
 VERILOG_SOURCES += \
@@ -13,6 +14,7 @@ $(PWD)/tester_loop.v \
 $(PWD)/../../lib/hw/lsi/cores/rtclock/hdl/rtclock.v \
 $(PWD)/../../lib/hw/lsi/cores/traffic_generator_gmii/hdl/traffic_generator_gmii.v \
 $(PWD)/../../lib/hw/lsi/cores/traffic_analyzer_gmii/hdl/traffic_analyzer_gmii.v \
+$(PWD)/../../lib/hw/lsi/cores/filter_gmii/hdl/filter_gmii.v \
 $(PWD)/../../lib/hw/lsi/cores/traffic_analyzer_gmii/hdl/bram_io.v \
 $(PWD)/../../lib/hw/lsi/cores/traffic_analyzer_gmii/hdl/testframe_parser.v
 # use VHDL_SOURCES for VHDL files
